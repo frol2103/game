@@ -1,0 +1,34 @@
+version: "2"
+
+services:
+
+  back:
+    build: ./back
+    volumes:
+      - $HOME:/var/home/:rw
+      - ..:/src
+    user: $UID
+    working_dir: /src/back
+    ports:
+      - 9000:9000
+    command: ["run"]
+    stdin_open: true
+
+  front:
+    build: ./front
+    ports:
+      - 4200:4200
+    volumes: 
+      - ../front:/src
+    user: $UID
+    command: sh -c "npm install && ng serve --proxy-config /src/src/environments/docker.proxy.json --host 0.0.0.0 --disable-host-check"
+
+  db:
+    image: mysql:8.0
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=db
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=pass

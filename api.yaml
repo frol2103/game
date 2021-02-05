@@ -1,0 +1,80 @@
+swagger: "2.0"
+info:
+  description: ""
+  version: "1.0.0"
+  title: "Chaman"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "chaman.frol.be"
+basePath: "/api"
+tags:
+- name: "field"
+  description: "Field information"
+- name: "template"
+  description: "Template information"
+- name: "item"
+  description: "complete item form"
+schemes:
+- "https"
+- "http"
+paths:
+  /field:
+    get:
+      tags:
+      - "field"
+      summary: "Get a field"
+      description: ""
+      operationId: "getField"
+      produces:
+      - "application/json"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/Field"
+
+
+definitions:
+  Field:
+    type: "object"
+    properties:
+      uuid:
+        type: "string"
+        description: "single uuid acrross all version of the field"
+        format: "uuid"
+      versionUuid:
+        type: "string"
+        description: "version specific uuid of the field"
+        format: "uuid"
+      reference:
+        type: "string"
+      dataType:
+        type: "string"
+      
+      
+  Template:
+    type: "object"
+    properties:
+      uuid:
+        type: string
+      parent:
+        type: array
+        items:
+          $ref: "#/definitions/Template"
+      content:
+        type: array
+        items: 
+          $ref: "#/definitions/FieldContent"
+          
+  FieldContent:
+    type: "object"
+    properties:
+      fieldUuid:
+        type: string
+      value:
+        description: "value of the type"
+      valueOrigin:
+        type: string
+        format: uuid
+    
