@@ -3,14 +3,18 @@ import { Configuration } from './configuration';
 import { HttpClient } from '@angular/common/http';
 
 
-import { FieldService } from './api/field.service';
+import { AuthService } from './api/auth.service';
+import { EsquisserService } from './api/esquisser.service';
+import { GameService } from './api/game.service';
 
 @NgModule({
   imports:      [],
   declarations: [],
   exports:      [],
   providers: [
-    FieldService ]
+    AuthService,
+    EsquisserService,
+    GameService ]
 })
 export class ApiModule {
     public static forRoot(configurationFactory: () => Configuration): ModuleWithProviders {

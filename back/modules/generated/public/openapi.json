@@ -1,110 +1,429 @@
 {
   "openapi" : "3.0.1",
   "info" : {
-    "description" : "",
+    "contact" : {
+      "email" : "game@frol.be"
+    },
+    "description" : "online game platform",
     "license" : {
       "name" : "Apache 2.0",
       "url" : "http://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "title" : "Chaman",
+    "title" : "Game",
     "version" : "1.0.0"
   },
   "servers" : [ {
-    "url" : "https://chaman.frol.be/api"
+    "url" : "https://game.frol.be/api"
   }, {
-    "url" : "http://chaman.frol.be/api"
+    "url" : "http://game.frol.be/api"
   } ],
   "tags" : [ {
-    "description" : "Field information",
-    "name" : "field"
+    "description" : "authentification",
+    "name" : "auth"
   }, {
-    "description" : "Template information",
-    "name" : "template"
+    "description" : "anything about games in general",
+    "name" : "game"
   }, {
-    "description" : "complete item form",
-    "name" : "item"
+    "description" : "Operations about esquisser game",
+    "name" : "esquisser"
   } ],
   "paths" : {
-    "/field" : {
+    "/login" : {
+      "post" : {
+        "operationId" : "login",
+        "requestBody" : {
+          "content" : {
+            "*/*" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/AuthUser"
+              }
+            }
+          },
+          "description" : "login information",
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "content" : { },
+            "description" : "ok"
+          }
+        },
+        "summary" : "login",
+        "tags" : [ "auth" ],
+        "x-codegen-request-body-name" : "authUser"
+      }
+    },
+    "/game" : {
       "get" : {
-        "operationId" : "getField",
+        "operationId" : "getAllGames",
         "responses" : {
           "200" : {
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/Field"
+                  "items" : {
+                    "$ref" : "#/components/schemas/GameDescription"
+                  },
+                  "type" : "array"
                 }
               }
             },
-            "description" : "OK"
+            "description" : "ok"
           }
         },
-        "summary" : "Get a field",
-        "tags" : [ "field" ]
+        "summary" : "Get all my games",
+        "tags" : [ "game" ]
+      }
+    },
+    "/game/{uuid}/join" : {
+      "get" : {
+        "operationId" : "joinGame",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "uuid",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "items" : {
+                    "$ref" : "#/components/schemas/Game"
+                  },
+                  "type" : "array"
+                }
+              }
+            },
+            "description" : "ok"
+          }
+        },
+        "summary" : "join a games",
+        "tags" : [ "game" ]
+      }
+    },
+    "/game/{uuid}/start" : {
+      "get" : {
+        "operationId" : "startGame",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "uuid",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "items" : {
+                    "$ref" : "#/components/schemas/Game"
+                  },
+                  "type" : "array"
+                }
+              }
+            },
+            "description" : "ok"
+          }
+        },
+        "summary" : "start the game",
+        "tags" : [ "game" ]
+      }
+    },
+    "/game/esquisse/{uuid}" : {
+      "get" : {
+        "operationId" : "getGame",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "uuid",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "items" : {
+                    "$ref" : "#/components/schemas/EsquisserGame"
+                  },
+                  "type" : "array"
+                }
+              }
+            },
+            "description" : "ok"
+          }
+        },
+        "summary" : "Get an esquisse game",
+        "tags" : [ "esquisser" ]
+      }
+    },
+    "/game/esquisse/{uuid}/text" : {
+      "post" : {
+        "operationId" : "addTextRound",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "uuid",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "*/*" : {
+              "schema" : {
+                "type" : "string"
+              }
+            }
+          },
+          "description" : "the text",
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "items" : {
+                    "$ref" : "#/components/schemas/EsquisserGame"
+                  },
+                  "type" : "array"
+                }
+              }
+            },
+            "description" : "ok"
+          }
+        },
+        "summary" : "add text round in esquisse game",
+        "tags" : [ "esquisser" ],
+        "x-codegen-request-body-name" : "text"
+      }
+    },
+    "/game/esquisse/{uuid}/drawing" : {
+      "post" : {
+        "operationId" : "addDrawingRound",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "uuid",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "*/*" : {
+              "schema" : {
+                "type" : "string"
+              }
+            }
+          },
+          "description" : "the text",
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "items" : {
+                    "$ref" : "#/components/schemas/EsquisserGame"
+                  },
+                  "type" : "array"
+                }
+              }
+            },
+            "description" : "ok"
+          }
+        },
+        "summary" : "add drawing round in esquisser game",
+        "tags" : [ "esquisser" ],
+        "x-codegen-request-body-name" : "text"
       }
     }
   },
   "components" : {
     "schemas" : {
-      "Field" : {
+      "User" : {
         "example" : {
-          "versionUuid" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
-          "reference" : "reference",
-          "dataType" : "dataType",
-          "uuid" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91"
+          "name" : "name",
+          "id" : 0
         },
         "properties" : {
-          "uuid" : {
-            "description" : "single uuid acrross all version of the field",
-            "format" : "uuid",
-            "type" : "string"
+          "id" : {
+            "format" : "int64",
+            "type" : "integer"
           },
-          "versionUuid" : {
-            "description" : "version specific uuid of the field",
-            "format" : "uuid",
+          "name" : {
+            "type" : "string"
+          }
+        },
+        "type" : "object"
+      },
+      "AuthUser" : {
+        "example" : {
+          "reference" : "reference",
+          "name" : "name"
+        },
+        "properties" : {
+          "name" : {
             "type" : "string"
           },
           "reference" : {
             "type" : "string"
-          },
-          "dataType" : {
-            "type" : "string"
           }
         },
         "type" : "object"
       },
-      "Template" : {
+      "GameDescription" : {
+        "example" : {
+          "gameType" : "esquisser",
+          "startTime" : "2000-01-23T04:56:07.000+00:00",
+          "id" : 0,
+          "uuid" : "uuid",
+          "status" : "toStart"
+        },
         "properties" : {
+          "id" : {
+            "format" : "int64",
+            "type" : "integer"
+          },
           "uuid" : {
             "type" : "string"
           },
-          "parent" : {
-            "items" : {
-              "$ref" : "#/components/schemas/Template"
-            },
-            "type" : "array"
+          "startTime" : {
+            "format" : "date-time",
+            "type" : "string"
           },
-          "content" : {
+          "status" : {
+            "enum" : [ "toStart", "inPlay", "finished" ],
+            "type" : "string"
+          },
+          "gameType" : {
+            "enum" : [ "esquisser" ],
+            "type" : "string"
+          }
+        },
+        "type" : "object"
+      },
+      "Game" : {
+        "example" : {
+          "description" : {
+            "gameType" : "esquisser",
+            "startTime" : "2000-01-23T04:56:07.000+00:00",
+            "id" : 0,
+            "uuid" : "uuid",
+            "status" : "toStart"
+          },
+          "users" : [ {
+            "name" : "name",
+            "id" : 0
+          }, {
+            "name" : "name",
+            "id" : 0
+          } ]
+        },
+        "properties" : {
+          "description" : {
+            "$ref" : "#/components/schemas/GameDescription"
+          },
+          "users" : {
             "items" : {
-              "$ref" : "#/components/schemas/FieldContent"
+              "$ref" : "#/components/schemas/User"
             },
             "type" : "array"
           }
         },
         "type" : "object"
       },
-      "FieldContent" : {
+      "EsquisserGame" : {
+        "example" : {
+          "game" : {
+            "description" : {
+              "gameType" : "esquisser",
+              "startTime" : "2000-01-23T04:56:07.000+00:00",
+              "id" : 0,
+              "uuid" : "uuid",
+              "status" : "toStart"
+            },
+            "users" : [ {
+              "name" : "name",
+              "id" : 0
+            }, {
+              "name" : "name",
+              "id" : 0
+            } ]
+          },
+          "rounds" : [ {
+            "originalUser" : {
+              "name" : "name",
+              "id" : 0
+            },
+            "drawing" : "drawing",
+            "roundUser" : {
+              "name" : "name",
+              "id" : 0
+            },
+            "text" : "text"
+          }, {
+            "originalUser" : {
+              "name" : "name",
+              "id" : 0
+            },
+            "drawing" : "drawing",
+            "roundUser" : {
+              "name" : "name",
+              "id" : 0
+            },
+            "text" : "text"
+          } ]
+        },
         "properties" : {
-          "fieldUuid" : {
+          "game" : {
+            "$ref" : "#/components/schemas/Game"
+          },
+          "rounds" : {
+            "items" : {
+              "$ref" : "#/components/schemas/EsquisserRound"
+            },
+            "type" : "array"
+          }
+        },
+        "type" : "object"
+      },
+      "EsquisserRound" : {
+        "example" : {
+          "originalUser" : {
+            "name" : "name",
+            "id" : 0
+          },
+          "drawing" : "drawing",
+          "roundUser" : {
+            "name" : "name",
+            "id" : 0
+          },
+          "text" : "text"
+        },
+        "properties" : {
+          "originalUser" : {
+            "$ref" : "#/components/schemas/User"
+          },
+          "roundUser" : {
+            "$ref" : "#/components/schemas/User"
+          },
+          "text" : {
             "type" : "string"
           },
-          "value" : {
-            "description" : "value of the type",
-            "type" : "object"
-          },
-          "valueOrigin" : {
-            "format" : "uuid",
+          "drawing" : {
+            "description" : "url of photo",
             "type" : "string"
           }
         },

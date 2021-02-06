@@ -3,9 +3,21 @@
 # ~~~~
 
 
-# Routes for Field API
+# Routes for Auth API
 
-GET /api/field    be.frol.chaman.FieldApiController.getField()
+POST /api/login                          be.frol.chaman.AuthApiController.login()
+
+# Routes for Esquisser API
+
+POST /api/game/esquisse/:uuid/drawing    be.frol.chaman.EsquisserApiController.addDrawingRound(uuid: String)
+POST /api/game/esquisse/:uuid/text       be.frol.chaman.EsquisserApiController.addTextRound(uuid: String)
+GET /api/game/esquisse/:uuid             be.frol.chaman.EsquisserApiController.getGame(uuid: String)
+
+# Routes for Game API
+
+GET /api/game                            be.frol.chaman.GameApiController.getAllGames()
+GET /api/game/:uuid/join                 be.frol.chaman.GameApiController.joinGame(uuid: String)
+GET /api/game/:uuid/start                be.frol.chaman.GameApiController.startGame(uuid: String)
 
 # Map static resources from the /public folder to the /assets URL path
 GET /assets/*file           controllers.Assets.at(file)

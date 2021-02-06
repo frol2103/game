@@ -1,80 +1,262 @@
 swagger: "2.0"
 info:
-  description: ""
+  description: "online game platform"
   version: "1.0.0"
-  title: "Chaman"
+  title: "Game"
+  contact:
+    email: "game@frol.be"
   license:
     name: "Apache 2.0"
     url: "http://www.apache.org/licenses/LICENSE-2.0.html"
-host: "chaman.frol.be"
+host: "game.frol.be"
 basePath: "/api"
 tags:
-- name: "field"
-  description: "Field information"
-- name: "template"
-  description: "Template information"
-- name: "item"
-  description: "complete item form"
+- name: "auth"
+  description: "authentification"
+- name: "game"
+  description: "anything about games in general"
+- name: "esquisser"
+  description: "Operations about esquisser game"
 schemes:
 - "https"
 - "http"
 paths:
-  /field:
+  /login:
+    post:
+      tags:
+      - "auth"
+      summary: "login"
+      description: ""
+      operationId: "login"
+      parameters:
+      - in: "body"
+        name: "authUser"
+        description: "login information"
+        required: true
+        schema:
+          $ref: "#/definitions/AuthUser"
+      responses: 
+        "200":
+          description: "ok"
+          
+  /game:
     get:
       tags:
-      - "field"
-      summary: "Get a field"
+      - "game"
+      summary: "Get all my games"
       description: ""
-      operationId: "getField"
+      operationId: "getAllGames"
       produces:
       - "application/json"
       responses:
         "200":
-          description: "OK"
+          description: "ok"
           schema:
-            $ref: "#/definitions/Field"
+            type: array
+            items: 
+              $ref: "#/definitions/GameDescription"
+              
+  /game/{uuid}/join:
+    get:
+      tags:
+      - "game"
+      summary: "join a games"
+      description: ""
+      operationId: "joinGame"
+      parameters:
+      - name: "uuid"
+        in: "path"
+        required: true
+        type: "string"
+      produces:
+      - "application/json"
+      responses:
+        "200":
+          description: "ok"
+          schema:
+            type: array
+            items: 
+              $ref: "#/definitions/Game"
+  
+  /game/{uuid}/start:
+    get:
+      tags:
+      - "game"
+      summary: "start the game"
+      description: ""
+      operationId: "startGame"
+      parameters:
+      - name: "uuid"
+        in: "path"
+        required: true
+        type: "string"
+      produces:
+      - "application/json"
+      responses:
+        "200":
+          description: "ok"
+          schema:
+            type: array
+            items: 
+              $ref: "#/definitions/Game"
+              
+  /game/esquisse/{uuid}:
+    get:
+      tags:
+      - "esquisser"
+      summary: "Get an esquisse game"
+      description: ""
+      operationId: "getGame"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "uuid"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "ok"
+          schema:
+            type: array
+            items: 
+              $ref: "#/definitions/EsquisserGame"
+  
+  /game/esquisse/{uuid}/text:
+    post:
+      tags:
+      - "esquisser"
+      summary: "add text round in esquisse game"
+      description: ""
+      operationId: "addTextRound"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "uuid"
+        in: "path"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "text"
+        description: "the text"
+        required: true
+        schema:
+          type: string
 
+      responses:
+        "200":
+          description: "ok"
+          schema:
+            type: array
+            items: 
+              $ref: "#/definitions/EsquisserGame"
+              
+  /game/esquisse/{uuid}/drawing:
+    post:
+      tags:
+      - "esquisser"
+      summary: "add drawing round in esquisser game"
+      description: ""
+      operationId: "addDrawingRound"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "uuid"
+        in: "path"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "text"
+        description: "the text"
+        required: true
+        schema:
+          type: string
 
+      responses:
+        "200":
+          description: "ok"
+          schema:
+            type: array
+            items: 
+              $ref: "#/definitions/EsquisserGame"
+  
+  
+  
+   
 definitions:
-  Field:
+  User:
     type: "object"
     properties:
-      uuid:
+      id:
+        type: "integer"
+        format: "int64"
+      name: 
         type: "string"
-        description: "single uuid acrross all version of the field"
-        format: "uuid"
-      versionUuid:
+        
+  AuthUser:
+    type: "object"
+    properties: 
+      name:
         type: "string"
-        description: "version specific uuid of the field"
-        format: "uuid"
-      reference:
-        type: "string"
-      dataType:
-        type: "string"
-      
-      
-  Template:
+      reference: 
+        type: "string"  
+
+  GameDescription:
     type: "object"
     properties:
+      id:
+        type: "integer"
+        format: "int64"
       uuid:
-        type: string
-      parent:
+        type: "string"
+      startTime:
+        type: "string"
+        format: "date-time"
+      status:
+        type: "string"
+        enum:
+        - "toStart"
+        - "inPlay"
+        - "finished"
+      gameType:
+        type: "string"
+        enum:
+        - "esquisser"
+      
+  Game:
+    type: "object"
+    properties:
+      description:
+        $ref: "#/definitions/GameDescription"
+      users:
         type: array
         items:
-          $ref: "#/definitions/Template"
-      content:
-        type: array
-        items: 
-          $ref: "#/definitions/FieldContent"
-          
-  FieldContent:
+          $ref: "#/definitions/User"
+
+  
+  EsquisserGame:
     type: "object"
     properties:
-      fieldUuid:
+      game:
+        $ref: "#/definitions/Game"
+      rounds: 
+        type: array
+        items:
+          $ref: "#/definitions/EsquisserRound"
+  
+  
+  EsquisserRound:
+    type: "object"
+    properties:
+      originalUser:
+        $ref: "#/definitions/User"
+      roundUser:
+        $ref: "#/definitions/User"
+      text:
         type: string
-      value:
-        description: "value of the type"
-      valueOrigin:
+      drawing:
         type: string
-        format: uuid
+        description: url of photo
     
+    
+  
