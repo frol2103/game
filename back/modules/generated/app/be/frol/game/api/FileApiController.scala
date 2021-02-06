@@ -4,33 +4,16 @@ import org.openapitools.OpenApiExceptions
 import javax.inject.{Inject, Singleton}
 import play.api.libs.json._
 import play.api.mvc._
-import be.frol.game.model.User
 
 @javax.annotation.Generated(value = Array("org.openapitools.codegen.languages.ScalaPlayFrameworkServerCodegen"), date = "2021-02-06T23:03:08.023Z[Etc/UTC]")
 @Singleton
-class AuthApiController @Inject()(cc: ControllerComponents, api: AuthApi) extends AbstractController(cc) {
+class FileApiController @Inject()(cc: ControllerComponents, api: FileApi) extends AbstractController(cc) {
   /**
-    * GET /api/user
+    * GET /api/file/:id
     */
-  def getConnectedUser(): Action[AnyContent] = Action { request =>
-    def executeApi(): User = {
-      api.getConnectedUser()
-    }
-
-    val result = executeApi()
-    val json = Json.toJson(result)
-    Ok(json)
-  }
-
-  /**
-    * POST /api/login
-    */
-  def login(): Action[AnyContent] = Action { request =>
+  def getFile(id: String): Action[AnyContent] = Action { request =>
     def executeApi(): Unit = {
-      val username = request.body.asJson.map(_.as[String]).getOrElse {
-        throw new OpenApiExceptions.MissingRequiredParameterException("body", "username")
-      }
-      api.login(username)
+      api.getFile(id)
     }
 
     executeApi()

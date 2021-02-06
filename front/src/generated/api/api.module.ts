@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 
 
 import { AuthService } from './api/auth.service';
+import { FileService } from './api/file.service';
 import { GameService } from './api/game.service';
 import { LostInTranslationService } from './api/lostInTranslation.service';
 
@@ -13,6 +14,7 @@ import { LostInTranslationService } from './api/lostInTranslation.service';
   exports:      [],
   providers: [
     AuthService,
+    FileService,
     GameService,
     LostInTranslationService ]
 })

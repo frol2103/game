@@ -236,8 +236,23 @@ paths:
             type: array
             items: 
               $ref: "#/definitions/LostInTranslationGame"
-  
-  
+
+  /file/{id}:
+    get:
+      tags:
+        - "file"
+      summary: "get a file"
+      description: "get a file"
+      operationId: "getFile"
+      parameters:
+        - name: "id"
+          in: "path"
+          required: true
+          type: "string"
+      responses:
+        "200":
+          description: "ok"
+
   
    
 definitions:

@@ -329,6 +329,28 @@
         "summary" : "add drawing round in lostInTranslation game",
         "tags" : [ "lostInTranslation" ]
       }
+    },
+    "/file/{id}" : {
+      "get" : {
+        "description" : "get a file",
+        "operationId" : "getFile",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "id",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : { },
+            "description" : "ok"
+          }
+        },
+        "summary" : "get a file",
+        "tags" : [ "file" ]
+      }
     }
   },
   "components" : {
