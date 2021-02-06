@@ -14,5 +14,6 @@
 export interface User { 
     id?: number;
     name?: string;
+    canAdministrageGame?: boolean;
 }
 

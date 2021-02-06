@@ -51,6 +51,52 @@ export class GameService {
 
 
     /**
+     * create a new game
+     * @param game the game to create
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public createAGame(game: GameDescription, observe?: 'body', reportProgress?: boolean): Observable<Game>;
+    public createAGame(game: GameDescription, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Game>>;
+    public createAGame(game: GameDescription, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Game>>;
+    public createAGame(game: GameDescription, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+        if (game === null || game === undefined) {
+            throw new Error('Required parameter game was null or undefined when calling createAGame.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        const httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected !== undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.post<Game>(`${this.configuration.basePath}/game/create`,
+            game,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
      * Get all my games
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
@@ -73,6 +119,42 @@ export class GameService {
 
 
         return this.httpClient.get<Array<GameDescription>>(`${this.configuration.basePath}/game`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * get a games
+     * @param uuid 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public getGame(uuid: string, observe?: 'body', reportProgress?: boolean): Observable<Game>;
+    public getGame(uuid: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Game>>;
+    public getGame(uuid: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Game>>;
+    public getGame(uuid: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+        if (uuid === null || uuid === undefined) {
+            throw new Error('Required parameter uuid was null or undefined when calling getGame.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        const httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+
+        return this.httpClient.get<Game>(`${this.configuration.basePath}/game/${encodeURIComponent(String(uuid))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,

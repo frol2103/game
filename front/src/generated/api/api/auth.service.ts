@@ -17,7 +17,7 @@ import { HttpClient, HttpHeaders, HttpParams,
 import { CustomHttpParameterCodec }                          from '../encoder';
 import { Observable }                                        from 'rxjs';
 
-import { AuthUser } from '../model/authUser';
+import { User } from '../model/user';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
@@ -50,17 +50,49 @@ export class AuthService {
 
 
     /**
-     * login
-     * @param authUser login information
+     * connected user
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public login(authUser: AuthUser, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public login(authUser: AuthUser, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public login(authUser: AuthUser, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public login(authUser: AuthUser, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
-        if (authUser === null || authUser === undefined) {
-            throw new Error('Required parameter authUser was null or undefined when calling login.');
+    public getConnectedUser(observe?: 'body', reportProgress?: boolean): Observable<User>;
+    public getConnectedUser(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<User>>;
+    public getConnectedUser(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<User>>;
+    public getConnectedUser(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        const httpHeaderAccepts: string[] = [
+            '*/*'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+
+        return this.httpClient.get<User>(`${this.configuration.basePath}/user`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * login
+     * @param username login information
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public login(username: string, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public login(username: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public login(username: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public login(username: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+        if (username === null || username === undefined) {
+            throw new Error('Required parameter username was null or undefined when calling login.');
         }
 
         let headers = this.defaultHeaders;
@@ -83,7 +115,7 @@ export class AuthService {
         }
 
         return this.httpClient.post<any>(`${this.configuration.basePath}/login`,
-            authUser,
+            username,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,

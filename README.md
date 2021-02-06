@@ -17,3 +17,8 @@ generate api
 ```bash
 dcg run --rm back "; project generated; openapiGenerate"; dcg run --rm back "; project generateAngularClient; openapiGenerate";
 ```
+
+generate tables
+```bash
+dcg run --rm back "genTables"
+```

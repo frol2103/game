@@ -30,32 +30,89 @@ paths:
       operationId: "login"
       parameters:
       - in: "body"
-        name: "authUser"
+        name: "username"
         description: "login information"
         required: true
         schema:
-          $ref: "#/definitions/AuthUser"
+          type: "string"
       responses: 
         "200":
           description: "ok"
-          
+
+  /user:
+    get:
+      tags:
+        - "auth"
+      summary: "connected user"
+      description: ""
+      operationId: "getConnectedUser"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/User"
+
   /game:
     get:
       tags:
-      - "game"
+        - "game"
       summary: "Get all my games"
       description: ""
       operationId: "getAllGames"
       produces:
-      - "application/json"
+        - "application/json"
       responses:
         "200":
           description: "ok"
           schema:
             type: array
-            items: 
+            items:
               $ref: "#/definitions/GameDescription"
-              
+
+  /game/create:
+    post:
+      tags:
+      - "game"
+      summary: "create a new game"
+      description: ""
+      operationId: "create a game"
+      consumes:
+        - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+        - in: "body"
+          name: "game"
+          description: "the game to create"
+          required: true
+          schema:
+            $ref : "#/definitions/GameDescription"
+      responses:
+        "200":
+          description: "ok"
+          schema:
+            $ref: "#/definitions/Game"
+
+  /game/{uuid}:
+    get:
+      tags:
+        - "game"
+      summary: "get a games"
+      description: ""
+      operationId: "getGame"
+      parameters:
+        - name: "uuid"
+          in: "path"
+          required: true
+          type: "string"
+      produces:
+        - "application/json"
+      responses:
+        "200":
+          description: "ok"
+          schema:
+            $ref: "#/definitions/Game"
+
   /game/{uuid}/join:
     get:
       tags:
@@ -192,14 +249,8 @@ definitions:
         format: "int64"
       name: 
         type: "string"
-        
-  AuthUser:
-    type: "object"
-    properties: 
-      name:
-        type: "string"
-      reference: 
-        type: "string"  
+      canAdministrageGame:
+        type: "boolean"
 
   GameDescription:
     type: "object"

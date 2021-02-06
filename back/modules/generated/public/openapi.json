@@ -35,7 +35,7 @@
           "content" : {
             "*/*" : {
               "schema" : {
-                "$ref" : "#/components/schemas/AuthUser"
+                "type" : "string"
               }
             }
           },
@@ -50,7 +50,26 @@
         },
         "summary" : "login",
         "tags" : [ "auth" ],
-        "x-codegen-request-body-name" : "authUser"
+        "x-codegen-request-body-name" : "username"
+      }
+    },
+    "/user" : {
+      "get" : {
+        "operationId" : "getConnectedUser",
+        "responses" : {
+          "200" : {
+            "content" : {
+              "*/*" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/User"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "summary" : "connected user",
+        "tags" : [ "auth" ]
       }
     },
     "/game" : {
@@ -72,6 +91,64 @@
           }
         },
         "summary" : "Get all my games",
+        "tags" : [ "game" ]
+      }
+    },
+    "/game/create" : {
+      "post" : {
+        "operationId" : "create a game",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/GameDescription"
+              }
+            }
+          },
+          "description" : "the game to create",
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Game"
+                }
+              }
+            },
+            "description" : "ok"
+          }
+        },
+        "summary" : "create a new game",
+        "tags" : [ "game" ],
+        "x-codegen-request-body-name" : "game"
+      }
+    },
+    "/game/{uuid}" : {
+      "get" : {
+        "operationId" : "getGame",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "uuid",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Game"
+                }
+              }
+            },
+            "description" : "ok"
+          }
+        },
+        "summary" : "get a games",
         "tags" : [ "game" ]
       }
     },
@@ -254,6 +331,7 @@
     "schemas" : {
       "User" : {
         "example" : {
+          "canAdministrageGame" : true,
           "name" : "name",
           "id" : 0
         },
@@ -264,21 +342,9 @@
           },
           "name" : {
             "type" : "string"
-          }
-        },
-        "type" : "object"
-      },
-      "AuthUser" : {
-        "example" : {
-          "reference" : "reference",
-          "name" : "name"
-        },
-        "properties" : {
-          "name" : {
-            "type" : "string"
           },
-          "reference" : {
-            "type" : "string"
+          "canAdministrageGame" : {
+            "type" : "boolean"
           }
         },
         "type" : "object"
@@ -324,9 +390,11 @@
             "status" : "toStart"
           },
           "users" : [ {
+            "canAdministrageGame" : true,
             "name" : "name",
             "id" : 0
           }, {
+            "canAdministrageGame" : true,
             "name" : "name",
             "id" : 0
           } ]
@@ -355,31 +423,37 @@
               "status" : "toStart"
             },
             "users" : [ {
+              "canAdministrageGame" : true,
               "name" : "name",
               "id" : 0
             }, {
+              "canAdministrageGame" : true,
               "name" : "name",
               "id" : 0
             } ]
           },
           "rounds" : [ {
             "originalUser" : {
+              "canAdministrageGame" : true,
               "name" : "name",
               "id" : 0
             },
             "drawing" : "drawing",
             "roundUser" : {
+              "canAdministrageGame" : true,
               "name" : "name",
               "id" : 0
             },
             "text" : "text"
           }, {
             "originalUser" : {
+              "canAdministrageGame" : true,
               "name" : "name",
               "id" : 0
             },
             "drawing" : "drawing",
             "roundUser" : {
+              "canAdministrageGame" : true,
               "name" : "name",
               "id" : 0
             },
@@ -402,11 +476,13 @@
       "LostInTranslationRound" : {
         "example" : {
           "originalUser" : {
+            "canAdministrageGame" : true,
             "name" : "name",
             "id" : 0
           },
           "drawing" : "drawing",
           "roundUser" : {
+            "canAdministrageGame" : true,
             "name" : "name",
             "id" : 0
           },
