@@ -15,8 +15,8 @@ tags:
   description: "authentification"
 - name: "game"
   description: "anything about games in general"
-- name: "esquisser"
-  description: "Operations about esquisser game"
+- name: "lostInTranslation"
+  description: "Operations about lostInTranslation game"
 schemes:
 - "https"
 - "http"
@@ -100,11 +100,11 @@ paths:
             items: 
               $ref: "#/definitions/Game"
               
-  /game/esquisse/{uuid}:
+  /game/LostInTranslation/{uuid}:
     get:
       tags:
-      - "esquisser"
-      summary: "Get an esquisse game"
+      - "lostInTranslation"
+      summary: "Get an LostInTranslation game"
       description: ""
       operationId: "getGame"
       produces:
@@ -120,13 +120,13 @@ paths:
           schema:
             type: array
             items: 
-              $ref: "#/definitions/EsquisserGame"
+              $ref: "#/definitions/LostInTranslationGame"
   
-  /game/esquisse/{uuid}/text:
+  /game/LostInTranslation/{uuid}/text:
     post:
       tags:
-      - "esquisser"
-      summary: "add text round in esquisse game"
+      - "lostInTranslation"
+      summary: "add text round in LostInTranslation game"
       description: ""
       operationId: "addTextRound"
       produces:
@@ -149,13 +149,13 @@ paths:
           schema:
             type: array
             items: 
-              $ref: "#/definitions/EsquisserGame"
+              $ref: "#/definitions/LostInTranslationGame"
               
-  /game/esquisse/{uuid}/drawing:
+  /game/LostInTranslation/{uuid}/drawing:
     post:
       tags:
-      - "esquisser"
-      summary: "add drawing round in esquisser game"
+      - "lostInTranslation"
+      summary: "add drawing round in lostInTranslation game"
       description: ""
       operationId: "addDrawingRound"
       produces:
@@ -178,7 +178,7 @@ paths:
           schema:
             type: array
             items: 
-              $ref: "#/definitions/EsquisserGame"
+              $ref: "#/definitions/LostInTranslationGame"
   
   
   
@@ -221,7 +221,7 @@ definitions:
       gameType:
         type: "string"
         enum:
-        - "esquisser"
+        - "lostInTranslation"
       
   Game:
     type: "object"
@@ -234,7 +234,7 @@ definitions:
           $ref: "#/definitions/User"
 
   
-  EsquisserGame:
+  LostInTranslationGame:
     type: "object"
     properties:
       game:
@@ -242,10 +242,10 @@ definitions:
       rounds: 
         type: array
         items:
-          $ref: "#/definitions/EsquisserRound"
+          $ref: "#/definitions/LostInTranslationRound"
   
   
-  EsquisserRound:
+  LostInTranslationRound:
     type: "object"
     properties:
       originalUser:
@@ -259,4 +259,3 @@ definitions:
         description: url of photo
     
     
-  

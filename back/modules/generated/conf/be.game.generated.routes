@@ -5,19 +5,19 @@
 
 # Routes for Auth API
 
-POST /api/login                          be.frol.game.AuthApiController.login()
-
-# Routes for Esquisser API
-
-POST /api/game/esquisse/:uuid/drawing    be.frol.game.EsquisserApiController.addDrawingRound(uuid: String)
-POST /api/game/esquisse/:uuid/text       be.frol.game.EsquisserApiController.addTextRound(uuid: String)
-GET /api/game/esquisse/:uuid             be.frol.game.EsquisserApiController.getGame(uuid: String)
+POST /api/login                                   be.frol.game.AuthApiController.login()
 
 # Routes for Game API
 
-GET /api/game                            be.frol.game.GameApiController.getAllGames()
-GET /api/game/:uuid/join                 be.frol.game.GameApiController.joinGame(uuid: String)
-GET /api/game/:uuid/start                be.frol.game.GameApiController.startGame(uuid: String)
+GET /api/game                                     be.frol.game.GameApiController.getAllGames()
+GET /api/game/:uuid/join                          be.frol.game.GameApiController.joinGame(uuid: String)
+GET /api/game/:uuid/start                         be.frol.game.GameApiController.startGame(uuid: String)
+
+# Routes for LostInTranslation API
+
+POST /api/game/LostInTranslation/:uuid/drawing    be.frol.game.LostInTranslationApiController.addDrawingRound(uuid: String)
+POST /api/game/LostInTranslation/:uuid/text       be.frol.game.LostInTranslationApiController.addTextRound(uuid: String)
+GET /api/game/LostInTranslation/:uuid             be.frol.game.LostInTranslationApiController.getGame(uuid: String)
 
 # Map static resources from the /public folder to the /assets URL path
 GET /assets/*file           controllers.Assets.at(file)

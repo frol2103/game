@@ -4,16 +4,16 @@ import org.openapitools.OpenApiExceptions
 import javax.inject.{Inject, Singleton}
 import play.api.libs.json._
 import play.api.mvc._
-import model.EsquisserGame
+import model.LostInTranslationGame
 
-@javax.annotation.Generated(value = Array("org.openapitools.codegen.languages.ScalaPlayFrameworkServerCodegen"), date = "2021-02-06T08:42:09.258Z[Etc/UTC]")
+@javax.annotation.Generated(value = Array("org.openapitools.codegen.languages.ScalaPlayFrameworkServerCodegen"), date = "2021-02-06T08:46:12.954Z[Etc/UTC]")
 @Singleton
-class EsquisserApiController @Inject()(cc: ControllerComponents, api: EsquisserApi) extends AbstractController(cc) {
+class LostInTranslationApiController @Inject()(cc: ControllerComponents, api: LostInTranslationApi) extends AbstractController(cc) {
   /**
-    * POST /api/game/esquisse/:uuid/drawing
+    * POST /api/game/LostInTranslation/:uuid/drawing
     */
   def addDrawingRound(uuid: String): Action[AnyContent] = Action { request =>
-    def executeApi(): List[EsquisserGame] = {
+    def executeApi(): List[LostInTranslationGame] = {
       val text = request.body.asJson.map(_.as[String]).getOrElse {
         throw new OpenApiExceptions.MissingRequiredParameterException("body", "text")
       }
@@ -26,10 +26,10 @@ class EsquisserApiController @Inject()(cc: ControllerComponents, api: EsquisserA
   }
 
   /**
-    * POST /api/game/esquisse/:uuid/text
+    * POST /api/game/LostInTranslation/:uuid/text
     */
   def addTextRound(uuid: String): Action[AnyContent] = Action { request =>
-    def executeApi(): List[EsquisserGame] = {
+    def executeApi(): List[LostInTranslationGame] = {
       val text = request.body.asJson.map(_.as[String]).getOrElse {
         throw new OpenApiExceptions.MissingRequiredParameterException("body", "text")
       }
@@ -42,10 +42,10 @@ class EsquisserApiController @Inject()(cc: ControllerComponents, api: EsquisserA
   }
 
   /**
-    * GET /api/game/esquisse/:uuid
+    * GET /api/game/LostInTranslation/:uuid
     */
   def getGame(uuid: String): Action[AnyContent] = Action { request =>
-    def executeApi(): List[EsquisserGame] = {
+    def executeApi(): List[LostInTranslationGame] = {
       api.getGame(uuid)
     }
 

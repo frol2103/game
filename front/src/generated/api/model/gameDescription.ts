@@ -25,9 +25,9 @@ export namespace GameDescription {
         InPlay: 'inPlay' as StatusEnum,
         Finished: 'finished' as StatusEnum
     };
-    export type GameTypeEnum = 'esquisser';
+    export type GameTypeEnum = 'lostInTranslation';
     export const GameTypeEnum = {
-        Esquisser: 'esquisser' as GameTypeEnum
+        LostInTranslation: 'lostInTranslation' as GameTypeEnum
     };
 }
 

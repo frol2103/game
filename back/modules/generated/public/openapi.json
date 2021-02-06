@@ -24,8 +24,8 @@
     "description" : "anything about games in general",
     "name" : "game"
   }, {
-    "description" : "Operations about esquisser game",
-    "name" : "esquisser"
+    "description" : "Operations about lostInTranslation game",
+    "name" : "lostInTranslation"
   } ],
   "paths" : {
     "/login" : {
@@ -135,7 +135,7 @@
         "tags" : [ "game" ]
       }
     },
-    "/game/esquisse/{uuid}" : {
+    "/game/LostInTranslation/{uuid}" : {
       "get" : {
         "operationId" : "getGame",
         "parameters" : [ {
@@ -152,7 +152,7 @@
               "application/json" : {
                 "schema" : {
                   "items" : {
-                    "$ref" : "#/components/schemas/EsquisserGame"
+                    "$ref" : "#/components/schemas/LostInTranslationGame"
                   },
                   "type" : "array"
                 }
@@ -161,11 +161,11 @@
             "description" : "ok"
           }
         },
-        "summary" : "Get an esquisse game",
-        "tags" : [ "esquisser" ]
+        "summary" : "Get an LostInTranslation game",
+        "tags" : [ "lostInTranslation" ]
       }
     },
-    "/game/esquisse/{uuid}/text" : {
+    "/game/LostInTranslation/{uuid}/text" : {
       "post" : {
         "operationId" : "addTextRound",
         "parameters" : [ {
@@ -193,7 +193,7 @@
               "application/json" : {
                 "schema" : {
                   "items" : {
-                    "$ref" : "#/components/schemas/EsquisserGame"
+                    "$ref" : "#/components/schemas/LostInTranslationGame"
                   },
                   "type" : "array"
                 }
@@ -202,12 +202,12 @@
             "description" : "ok"
           }
         },
-        "summary" : "add text round in esquisse game",
-        "tags" : [ "esquisser" ],
+        "summary" : "add text round in LostInTranslation game",
+        "tags" : [ "lostInTranslation" ],
         "x-codegen-request-body-name" : "text"
       }
     },
-    "/game/esquisse/{uuid}/drawing" : {
+    "/game/LostInTranslation/{uuid}/drawing" : {
       "post" : {
         "operationId" : "addDrawingRound",
         "parameters" : [ {
@@ -235,7 +235,7 @@
               "application/json" : {
                 "schema" : {
                   "items" : {
-                    "$ref" : "#/components/schemas/EsquisserGame"
+                    "$ref" : "#/components/schemas/LostInTranslationGame"
                   },
                   "type" : "array"
                 }
@@ -244,8 +244,8 @@
             "description" : "ok"
           }
         },
-        "summary" : "add drawing round in esquisser game",
-        "tags" : [ "esquisser" ],
+        "summary" : "add drawing round in lostInTranslation game",
+        "tags" : [ "lostInTranslation" ],
         "x-codegen-request-body-name" : "text"
       }
     }
@@ -285,7 +285,7 @@
       },
       "GameDescription" : {
         "example" : {
-          "gameType" : "esquisser",
+          "gameType" : "lostInTranslation",
           "startTime" : "2000-01-23T04:56:07.000+00:00",
           "id" : 0,
           "uuid" : "uuid",
@@ -308,7 +308,7 @@
             "type" : "string"
           },
           "gameType" : {
-            "enum" : [ "esquisser" ],
+            "enum" : [ "lostInTranslation" ],
             "type" : "string"
           }
         },
@@ -317,7 +317,7 @@
       "Game" : {
         "example" : {
           "description" : {
-            "gameType" : "esquisser",
+            "gameType" : "lostInTranslation",
             "startTime" : "2000-01-23T04:56:07.000+00:00",
             "id" : 0,
             "uuid" : "uuid",
@@ -344,11 +344,11 @@
         },
         "type" : "object"
       },
-      "EsquisserGame" : {
+      "LostInTranslationGame" : {
         "example" : {
           "game" : {
             "description" : {
-              "gameType" : "esquisser",
+              "gameType" : "lostInTranslation",
               "startTime" : "2000-01-23T04:56:07.000+00:00",
               "id" : 0,
               "uuid" : "uuid",
@@ -392,14 +392,14 @@
           },
           "rounds" : {
             "items" : {
-              "$ref" : "#/components/schemas/EsquisserRound"
+              "$ref" : "#/components/schemas/LostInTranslationRound"
             },
             "type" : "array"
           }
         },
         "type" : "object"
       },
-      "EsquisserRound" : {
+      "LostInTranslationRound" : {
         "example" : {
           "originalUser" : {
             "name" : "name",

@@ -9,16 +9,12 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { User } from './user';
+import { LostInTranslationRound } from './lostInTranslationRound';
+import { Game } from './game';
 
 
-export interface EsquisserRound { 
-    originalUser?: User;
-    roundUser?: User;
-    text?: string;
-    /**
-     * url of photo
-     */
-    drawing?: string;
+export interface LostInTranslationGame { 
+    game?: Game;
+    rounds?: Array<LostInTranslationRound>;
 }
 

@@ -4,8 +4,8 @@ import { HttpClient } from '@angular/common/http';
 
 
 import { AuthService } from './api/auth.service';
-import { EsquisserService } from './api/esquisser.service';
 import { GameService } from './api/game.service';
+import { LostInTranslationService } from './api/lostInTranslation.service';
 
 @NgModule({
   imports:      [],
@@ -13,8 +13,8 @@ import { GameService } from './api/game.service';
   exports:      [],
   providers: [
     AuthService,
-    EsquisserService,
-    GameService ]
+    GameService,
+    LostInTranslationService ]
 })
 export class ApiModule {
     public static forRoot(configurationFactory: () => Configuration): ModuleWithProviders {
