@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="sbt: org.webjars:swagger-ui:3.36.2:jar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.cache/coursier/v1/https/repo1.maven.org/maven2/org/webjars/swagger-ui/3.36.2/swagger-ui-3.36.2.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.cache/coursier/v1/https/repo1.maven.org/maven2/org/webjars/swagger-ui/3.36.2/swagger-ui-3.36.2-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES />
+  </library>
+</component>
