@@ -36,10 +36,10 @@ lazy val generated = (project in generatedApiPath).enablePlugins(PlayScala)
     openapiOutputDir := generatedApiPath,
     openapiGeneratorName := "scala-play-server",
     openapiAdditionalProperties := Map(
-      "routesFileName" -> "be.chaman.generated.routes"),
+      "routesFileName" -> "be.game.generated.routes"),
     openapiArtifactId := Some("generated-api"),
     openapiArtifactVersion := Some("1.0-SNAPSHOT"),
-    openapiApiPackage := Some("be.frol.chaman"),
+    openapiApiPackage := Some("be.frol.game"),
   )
 
 libraryDependencies ++= Seq(
@@ -57,7 +57,7 @@ slick := {
   val url = "jdbc:mysql://db:3306/db?allowPublicKeyRetrieval=true&useSSL=false"
   val jdbcDriver = "com.mysql.jdbc.Driver"
   val slickDriver = "slick.jdbc.MySQLProfile"
-  val pkg = "be.frol.chaman.tables"
+  val pkg = "be.frol.game.tables"
   val fname = outputDir + "tables/Tables.scala"
   val user = "user"
   val password = "pass"

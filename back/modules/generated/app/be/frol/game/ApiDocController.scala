@@ -1,4 +1,4 @@
-package be.frol.chaman
+package be.frol.game
 
 import javax.inject.{Inject, Singleton}
 import play.api.mvc._
