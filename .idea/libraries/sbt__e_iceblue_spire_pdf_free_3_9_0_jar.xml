@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="sbt: e-iceblue:spire.pdf.free:3.9.0:jar">
-    <CLASSES>
-      <root url="jar://$USER_HOME$/.cache/coursier/v1/http/repo.e-iceblue.com/nexus/content/groups/public/e-iceblue/spire.pdf.free/3.9.0/spire.pdf.free-3.9.0.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>

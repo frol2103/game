@@ -54,7 +54,7 @@ lazy val slick = TaskKey[Seq[File]]("gen-tables")
 
 slick := {
   val outputDir = file("app").getPath
-  val url = "jdbc:mysql://db:3306/fse?allowPublicKeyRetrieval=true&useSSL=false"
+  val url = "jdbc:mysql://db:3306/db?allowPublicKeyRetrieval=true&useSSL=false"
   val jdbcDriver = "com.mysql.jdbc.Driver"
   val slickDriver = "slick.jdbc.MySQLProfile"
   val pkg = "be.frol.chaman.tables"
