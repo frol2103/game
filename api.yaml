@@ -322,6 +322,6 @@ definitions:
         type: string
       drawing:
         type: string
-        description: url of photo
+        description: id of the drawing file, use file api to recover it
     
     
