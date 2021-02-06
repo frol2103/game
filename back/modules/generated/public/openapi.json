@@ -1,0 +1,115 @@
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "description" : "",
+    "license" : {
+      "name" : "Apache 2.0",
+      "url" : "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "title" : "Chaman",
+    "version" : "1.0.0"
+  },
+  "servers" : [ {
+    "url" : "https://chaman.frol.be/api"
+  }, {
+    "url" : "http://chaman.frol.be/api"
+  } ],
+  "tags" : [ {
+    "description" : "Field information",
+    "name" : "field"
+  }, {
+    "description" : "Template information",
+    "name" : "template"
+  }, {
+    "description" : "complete item form",
+    "name" : "item"
+  } ],
+  "paths" : {
+    "/field" : {
+      "get" : {
+        "operationId" : "getField",
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Field"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "summary" : "Get a field",
+        "tags" : [ "field" ]
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "Field" : {
+        "example" : {
+          "versionUuid" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+          "reference" : "reference",
+          "dataType" : "dataType",
+          "uuid" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91"
+        },
+        "properties" : {
+          "uuid" : {
+            "description" : "single uuid acrross all version of the field",
+            "format" : "uuid",
+            "type" : "string"
+          },
+          "versionUuid" : {
+            "description" : "version specific uuid of the field",
+            "format" : "uuid",
+            "type" : "string"
+          },
+          "reference" : {
+            "type" : "string"
+          },
+          "dataType" : {
+            "type" : "string"
+          }
+        },
+        "type" : "object"
+      },
+      "Template" : {
+        "properties" : {
+          "uuid" : {
+            "type" : "string"
+          },
+          "parent" : {
+            "items" : {
+              "$ref" : "#/components/schemas/Template"
+            },
+            "type" : "array"
+          },
+          "content" : {
+            "items" : {
+              "$ref" : "#/components/schemas/FieldContent"
+            },
+            "type" : "array"
+          }
+        },
+        "type" : "object"
+      },
+      "FieldContent" : {
+        "properties" : {
+          "fieldUuid" : {
+            "type" : "string"
+          },
+          "value" : {
+            "description" : "value of the type",
+            "type" : "object"
+          },
+          "valueOrigin" : {
+            "format" : "uuid",
+            "type" : "string"
+          }
+        },
+        "type" : "object"
+      }
+    }
+  }
+}
