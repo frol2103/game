@@ -19,9 +19,12 @@ class ParentController(
 
   import api._
 
-  def currentUser(implicit request: Request[_]) =
-    Tables.User.filter(_.uuid === request.session.get("user").getOrElse(throw new AuthentificationError("Not authentified")))
+  def  currentUserUUID(implicit request: Request[_]) = request.session.get("user").getOrElse(throw new AuthentificationError("Not authentified"))
+
+  def currentUser(implicit request: Request[_]) = {
+    Tables.User.filter(_.uuid === currentUserUUID)
       .result.head
+  }
 
 
   def run[Output](block: Request[_] => Future[Output])

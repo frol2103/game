@@ -173,7 +173,7 @@ paths:
         type: "string"
       responses:
         "200":
-          description: "ok"
+          description: "ok, lost in ctranslation game contains 1 round with no text nor drawing for the first round, 1 round with text or drawing when there is an action to do, all rounds when the match is finished and no round when there is not playable move (the previous player has not made its play)"
           schema:
             type: array
             items: 

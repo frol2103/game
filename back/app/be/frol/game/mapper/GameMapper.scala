@@ -1,6 +1,6 @@
 package be.frol.game.mapper
 
-import be.frol.game.model.{Game, GameDescription, User}
+import be.frol.game.model.{Game, GameDescription, RichGame, User}
 import be.frol.game.tables.Tables
 import be.frol.game.utils.DateUtils._
 
@@ -23,5 +23,7 @@ object GameMapper {
       Option(GameDescription.Status.withName(g.state)),
       Option(GameDescription.GameType.withName(g.gameType)))
   }
+
+  def toDto(g: RichGame) :Game= toDto(g.game->g.users.map(u => u.uig->u.u))
 
 }

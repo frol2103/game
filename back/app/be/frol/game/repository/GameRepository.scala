@@ -2,7 +2,7 @@ package be.frol.game.repository
 
 import be.frol.game.DbContext
 import be.frol.game.error.FunctionalError
-import be.frol.game.model.GameDescription
+import be.frol.game.model.{GameDescription, RichGame}
 import be.frol.game.tables.Tables
 import be.frol.game.tables.Tables._
 import be.frol.game.utils.DateUtils
@@ -22,6 +22,8 @@ class GameRepository @Inject()(
     ((Tables.Game returning Tables.Game.map(_.id)
       into ((v, id) => v.copy(id = id))) += p)
   }
+
+  def update(g : Tables.GameRow) = Tables.Game.filter(_.id === g.id).update(g)
 
   def add(p: Tables.UserInGameRow)(implicit executionContext: ExecutionContext) = {
     ((Tables.UserInGame returning Tables.UserInGame.map(_.id)
@@ -73,7 +75,11 @@ class GameRepository @Inject()(
     isAdmin.zip(game).flatMap {
       case (isAdmin, _) if !isAdmin => DBIO.failed(new FunctionalError("You cannot start the game"))
       case (_, game) if game.state != GameDescription.Status.ToStart.toString => DBIO.failed(new FunctionalError("Game already started"))
-      case (_, game) => Game.filter(_.id === game.id).update(game.copy(state = GameDescription.Status.InPlay.toString))
+      case (_, game) => update(game.copy(state = GameDescription.Status.InPlay.toString))
     }
+  }
+
+  def markFinished(game: RichGame): DBIO[_] = {
+    update(game.game.copy(state = GameDescription.Status.Finished.toString))
   }
 }
