@@ -1,7 +1,19 @@
-# Chaos
+# Game
 
-Chaos is an app to manage chaos.
+simple online game
 
-The purpose is to have a way to index pocessions and map them to a physical place to be able to find them in the chaos of my home.
+```bash
+export PATH_TO_GAME=~/projects/game
 
+export UID
 
+alias dcg="docker-compose -f $PATH_TO_GAME/dev-env/docker-compose.yml"
+
+alias dbGame="docker-compose -f $PATH_TO_GAME/dev-env/docker-compose.yml exec db mysql -h localhost -uuser -ppass db"
+
+```
+
+generate api
+```bash
+dcg run --rm back "; project generated; openapiGenerate"; dcg run --rm back "; project generateAngularClient; openapiGenerate";
+```
