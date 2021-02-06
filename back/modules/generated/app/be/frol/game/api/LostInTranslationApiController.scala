@@ -5,8 +5,9 @@ import javax.inject.{Inject, Singleton}
 import play.api.libs.json._
 import play.api.mvc._
 import be.frol.game.model.LostInTranslationGame
+import play.api.libs.Files.TemporaryFile
 
-@javax.annotation.Generated(value = Array("org.openapitools.codegen.languages.ScalaPlayFrameworkServerCodegen"), date = "2021-02-06T14:29:07.988Z[Etc/UTC]")
+@javax.annotation.Generated(value = Array("org.openapitools.codegen.languages.ScalaPlayFrameworkServerCodegen"), date = "2021-02-06T22:43:22.950Z[Etc/UTC]")
 @Singleton
 class LostInTranslationApiController @Inject()(cc: ControllerComponents, api: LostInTranslationApi) extends AbstractController(cc) {
   /**
@@ -14,10 +15,11 @@ class LostInTranslationApiController @Inject()(cc: ControllerComponents, api: Lo
     */
   def addDrawingRound(uuid: String): Action[AnyContent] = Action { request =>
     def executeApi(): List[LostInTranslationGame] = {
-      val text = request.body.asJson.map(_.as[String]).getOrElse {
-        throw new OpenApiExceptions.MissingRequiredParameterException("body", "text")
-      }
-      api.addDrawingRound(uuid, text)
+      val file = request.body.asMultipartFormData.flatMap(_.file("file").map(_.ref: TemporaryFile))
+        .getOrElse {
+          throw new OpenApiExceptions.MissingRequiredParameterException("file", "form")
+        }
+      api.addDrawingRound(uuid, file)
     }
 
     val result = executeApi()

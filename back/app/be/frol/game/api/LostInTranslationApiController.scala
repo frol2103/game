@@ -3,16 +3,21 @@ package be.frol.game.api
 import be.frol.game.error.FunctionalError
 import be.frol.game.mapper.LitGameMapper.toLitDto
 import be.frol.game.model.{LitRichGame, LostInTranslationGame, RichGame}
-import be.frol.game.repository.{GameRepository, LitRepository}
+import be.frol.game.repository.{FileRepository, GameRepository, LitRepository}
 import be.frol.game.tables.Tables
 import be.frol.game.tables.Tables._
-import be.frol.game.{DbContext, ParentController}
+import be.frol.game.utils.DateUtils
+import be.frol.game.utils.OptionUtils._
+import be.frol.game.{DbContext, ParentController, tables}
 import com.google.inject.{Inject, Singleton}
 import play.api.db.slick.DatabaseConfigProvider
+import play.api.libs.json.Json
 import play.api.mvc.{ControllerComponents, Request}
 
-import scala.concurrent.ExecutionContext
-import be.frol.game.utils.OptionUtils._
+import java.nio.file.Files
+import java.util.UUID
+import javax.sql.rowset.serial.SerialBlob
+import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
 class LostInTranslationApiController @Inject()(
@@ -20,6 +25,7 @@ class LostInTranslationApiController @Inject()(
                                                 val cc: ControllerComponents,
                                                 val gameService: GameRepository,
                                                 val litRepository: LitRepository,
+                                                val fileRepository: FileRepository,
                                               )(implicit
                                                 executionContext: ExecutionContext
                                               )
@@ -27,14 +33,33 @@ class LostInTranslationApiController @Inject()(
 
   import api._
 
-  def addDrawingRound(uuid: String) = ???
+  def addDrawingRound(uuid: String) = Action.async(parse.multipartFormData) { implicit request =>
+    val file = request.body.file("file").getOrThrow("missing file")
+    val fileUuid=uuid
+    db.run(
+      currentUser.flatMap(u =>
+        fileRepository.add(new tables.Tables.FileRow(
+          fileUuid,
+          new SerialBlob(Files.readAllBytes(file.ref.path)),
+          file.filename,
+          file.contentType.getOrElse(""),
+          u.id, DateUtils.ts))
+      ).flatMap(f => playRound(uuid, None, Some(fileUuid)))
+        .transactionally
+    ).map(Json.toJson(_)).map(Ok(_))
+  }
 
-  def addTextRound(uuid: String) = runWithInput[String,LostInTranslationGame](implicit request => db.run(
+  def addTextRound(uuid: String) = runWithInput[String, LostInTranslationGame](implicit request =>
+    db.run(playRound(uuid, Some(request.body), None).transactionally)
+  )
+
+  private def playRound(uuid: String, text: Option[String], fileId: Option[String])(implicit request: Request[_]) = {
     getLitGame(uuid).flatMap(
-      litg => litRepository.add(litg.nextRoundFor(currentUserUUID).map(deriveRound(litg, _, currentUserUUID, Some(request.body), None))
+      litg => litRepository.add(litg.nextRoundFor(currentUserUUID).map(deriveRound(litg, _, currentUserUUID, text, fileId))
         .getOrThrow("no round to play"))
     ).flatMap(_ => getCurrentGameInfo(uuid))
-  ))
+
+  }
 
   def deriveRound(litg: LitRichGame, fromRound: LitRoundRow, currentUserUuid: String, text: Option[String], fileId: Option[String]) =
     fromRound.copy(id = 0, fkUserId = litg.user(currentUserUuid).get.u.id, text = text, fkFileId = fileId)
@@ -47,7 +72,7 @@ class LostInTranslationApiController @Inject()(
     )
   }
 
-  private def getCurrentGameInfo(uuid: String)(implicit request:Request[_]) = {
+  private def getCurrentGameInfo(uuid: String)(implicit request: Request[_]) = {
     getLitGame(uuid)
       .flatMap(markFinishedIfNecessary(_))
       .map {
