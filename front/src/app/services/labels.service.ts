@@ -22,6 +22,8 @@ export class LabelsService {
     'start_game_button': "Start the game now",
     'game_joining_title': "Game lobby",
     'game_joining_description': "The game host will start the game soon.",
+    'game_home_title': "Welcome",
+    'create_game_button': "Create a new game",
   }
 
   public translate(key: string) : string {

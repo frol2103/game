@@ -13,4 +13,7 @@ export class UsersListComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  isReady() {
+    return this.roomService.game && this.roomService.ready
+  }
 }

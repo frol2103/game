@@ -21,15 +21,16 @@ export class RoomService {
     gameDescription.gameType = GameDescription.GameTypeEnum.LostInTranslation
     let observable = this.backendGameService.createAGame(gameDescription);
     observable
-        .pipe(finalize(() => this.ready=true))
-        .subscribe(game => this.gameCreated(game), error => this.game = null)
+        .subscribe(game => this.gameUpdated(game), error => this.game = null)
     return observable
   }
 
 
-  private gameCreated(game: Game) {
+  private gameUpdated(game: Game) {
     this.refreshActive = true;
+    this.ready = true;
     this.game = game;
+    console.log("The game state will now be refreshed every second, current game is game : "+JSON.stringify(game))
   }
 
   public startGame() {
@@ -46,6 +47,20 @@ export class RoomService {
     }
   }
 
+  join(gameUuid: string) {
+    let observable = this.backendGameService.joinGame(gameUuid);
+    observable
+        .subscribe(games => {
+          console.log("Joined game : "+JSON.stringify(games))
+          // @ts-ignore
+          this.gameUpdated(games)
+        }, error => this.game = null)
+    return observable
+  }
+
+  refreshCurrentGame() {
+
+  }
 }
 
 class NewGame implements GameDescription {

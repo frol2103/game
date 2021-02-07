@@ -135,9 +135,7 @@ paths:
         "200":
           description: "ok"
           schema:
-            type: array
-            items: 
-              $ref: "#/definitions/Game"
+            $ref: "#/definitions/Game"
   
   /game/{uuid}/start:
     get:
@@ -157,9 +155,7 @@ paths:
         "200":
           description: "ok"
           schema:
-            type: array
-            items: 
-              $ref: "#/definitions/Game"
+            $ref: "#/definitions/Game"
               
   /game/LostInTranslation/{uuid}:
     get:

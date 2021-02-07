@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {LoginService, UserCreationForm} from "../../../services/login.service";
 import {RoomService} from "../../../services/room.service";
 
@@ -7,11 +7,14 @@ import {RoomService} from "../../../services/room.service";
     templateUrl: './game-creation.component.html',
     styleUrls: ['./game-creation.component.css']
 })
-export class GameCreationComponent {
+export class GameCreationComponent implements OnInit {
     inviteUrl: string = window.location.protocol + "//" + window.location.host+'/join?game='
 
     constructor(public loginService: LoginService, public roomService : RoomService) {
-        roomService.createLostInTranslationGame()
+    }
+
+    ngOnInit(): void {
+        this.roomService.createLostInTranslationGame()
             .subscribe(game => this.inviteUrl=this.inviteUrl + game.description?.uuid)
     }
 
