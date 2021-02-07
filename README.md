@@ -13,6 +13,11 @@ alias dbGame="docker-compose -f $PATH_TO_GAME/dev-env/docker-compose.yml exec db
 
 ```
 
+On windows (you can add this to your powershell `$profile` file): 
+```powershell 
+Function dcg {docker-compose -f C:\Users\coren\IdeaProjects\game\dev-env\docker-compose.yml $args}
+```
+
 generate api
 ```bash
 dcg run --rm back "; project generated; openapiGenerate"; dcg run --rm back "; project generateAngularClient; openapiGenerate";

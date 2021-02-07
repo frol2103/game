@@ -1,11 +1,14 @@
 version: "2"
 
+volumes:
+  sbt_cache:
+
 services:
 
   back:
     build: ./back
     volumes:
-      - $HOME:/var/home/:rw
+      - sbt_cache:/var/home/:rw
       - ..:/src
     user: $UID
     working_dir: /src/back
@@ -21,12 +24,14 @@ services:
     volumes: 
       - ../front:/src
     user: $UID
-    command: sh -c "npm install && ng serve --proxy-config /src/src/environments/docker.proxy.json --host 0.0.0.0 --disable-host-check"
+    command: sh -c "npm install && ng serve --proxy-config /src/src/environments/docker.proxy.json --host 0.0.0.0 --disable-host-check --poll 500"
 
   db:
     image: mysql:8.0
     command: --default-authentication-plugin=mysql_native_password
     restart: always
+    ports:
+      - 9006:3306
     environment:
       - MYSQL_ROOT_PASSWORD=root
       - MYSQL_DATABASE=db

@@ -3,6 +3,8 @@ generated-api
 *.swp
 tmp_build
 front/dist
+front/package-lock.json
+*.orig
 
 logs
 target

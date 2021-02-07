@@ -63,7 +63,7 @@ export class AuthService {
 
         // to determine the Accept header
         const httpHeaderAccepts: string[] = [
-            '*/*'
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected !== undefined) {
@@ -108,6 +108,7 @@ export class AuthService {
 
         // to determine the Content-Type header
         const consumes: string[] = [
+            'application/json'
         ];
         const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
         if (httpContentTypeSelected !== undefined) {

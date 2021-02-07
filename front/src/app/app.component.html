@@ -1,9 +1,22 @@
-<nav class="navbar navbar-dark bg-dark">
-  <a class="navbar-brand" href="#">
-    {{ 'page_title' | translate }}
-  </a>
-</nav>
-<div>
-  TODO
+<div *ngIf="!loginService.ready">
+  Waiting for user authentication info...
 </div>
+<div *ngIf="loginService.ready">
+  <nav class="navbar navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">
+      {{ 'page_title' | translate }}
+    </a>
+    <span class="navbar-brand" *ngIf="loginService.user != null"><i class="fas fa-user"></i> {{ loginService.user.name }}</span>
+  </nav>
+  <div>
+    <div *ngIf="loginService.user == null">
+      <user-login></user-login>
+    </div>
+    <div *ngIf="loginService.user != null">
+      <game-home></game-home>
+    </div>
+  </div>
+</div>
+
+
 
