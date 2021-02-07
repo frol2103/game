@@ -1,56 +1,73 @@
-<div class="card m-2">
-  <div class="card-header">
-    {{ 'game_creation_title' | translate }}
-  </div>
-  <div class="card-body">
-
-    <div class="card-header">
-      {{ 'invite_people_title' | translate }}
-    </div>
-    <div class="card-body">
-      <p>
-        {{ 'game_creation_description' | translate }}
-      </p>
-      <p>
-        {{ 'game_creation_invite_url_label' | translate }}
-      </p>
-
-
-      <form>
-        <div class="input-group">
-          <input type="text" class="form-control" readonly="true"
-                 [value]="inviteUrl" id="copy-input"/>
-          <span class="input-group-btn">
-              <button class="btn btn-default"
-                      type="button"
-                      id="copy-button"
-                      data-toggle="tooltip"
-                      data-placement="button"
-                      (click)="copyUrlToClipboard()"
-                      title="{{ 'copy' | translate }}">
-                {{ 'copy' | translate }}
-              </button>
-        </span>
-        </div>
-      </form>
-
-
-    </div>
-
-    <div class="card-header">
-      {{ 'gstart_game_title' | translate }}
-    </div>
-    <div class="card-body">
-      <p>
-        {{ 'people_in_the_room' | translate }}
-      </p>
-      <ul>
-        <li> TODO : display list of people that joined the game </li>
-      </ul>
-
-      <button type="button" (click)="start()" class="btn btn-primary m-2 "> {{ 'start_game_button' | translate }}</button>
-    </div>
-  </div>
-
+<div *ngIf="!isReady()" class="text-center align-middle p-5">
+  <i class="fa fa-spinner fa-5x rotate" title="{{ 'waiting' | translate }}"></i>
 </div>
+<div *ngIf="isReady()">
+  <div class="card m-2">
+    <div class="card-header">
+      {{ 'game_creation_title' | translate }}
+    </div>
+    <div class="card-body">
+
+      <div class="card-header">
+        {{ 'invite_people_title' | translate }}
+      </div>
+      <div class="card-body">
+        <p>
+          {{ 'game_creation_description' | translate }}
+        </p>
+        <p>
+          {{ 'game_creation_invite_url_label' | translate }}
+        </p>
+
+
+        <form>
+          <div class="form-group row">
+            <div class="input-group col-xs-12 col-md-6">
+              <input type="text" class="form-control" readonly="true"
+                     [value]="inviteUrl" id="copy-input"/>
+              <div class="input-group-append">
+                <button class="btn btn-secondary"
+                        type="button"
+                        id="copy-button"
+                        data-toggle="tooltip"
+                        data-placement="button"
+                        (click)="copyUrlToClipboard()"
+                        title="{{ 'copy' | translate }}">
+                  {{ 'copy' | translate }}
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+
+
+      </div>
+
+      <div class="card-header">
+        {{ 'gstart_game_title' | translate }}
+      </div>
+      <div class="card-body row">
+        <div class="col-md-6">
+          <div>
+            {{ 'start_the_game_descr' | translate }}
+          </div>
+          <div class="text-right">
+            <button type="button" (click)="start()" class="btn btn-primary m-2 "> {{ 'start_game_button' | translate }}</button>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <p>
+            {{ 'people_in_the_room' | translate }}
+          </p>
+          <ul>
+            <li *ngFor="let user of roomService.game.users"> <i *ngIf="!user.canAdministrageGame" class="fas fa-user"></i> <i *ngIf="user.canAdministrageGame" class="fas fa-crown"></i>  {{ user.name }} </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
 

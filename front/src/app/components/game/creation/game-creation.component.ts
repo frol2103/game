@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {LoginService, UserCreationForm} from "../../../services/login.service";
+import {RoomService} from "../../../services/room.service";
 
 @Component({
     selector: 'game-home',
@@ -7,9 +8,15 @@ import {LoginService, UserCreationForm} from "../../../services/login.service";
     styleUrls: ['./game-creation.component.css']
 })
 export class GameCreationComponent {
-    inviteUrl: string = 'http://todo?game=todo'
+    inviteUrl: string = window.location.protocol + "//" + window.location.host+'?game='
 
-    constructor(public loginService: LoginService) {
+    constructor(public loginService: LoginService, public roomService : RoomService) {
+        roomService.createLostInTranslationGame()
+            .subscribe(game => this.inviteUrl=this.inviteUrl + game.description?.uuid)
+    }
+
+    isReady() {
+        return this.roomService.ready
     }
 
     copyUrlToClipboard() {
