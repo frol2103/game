@@ -1,24 +1,17 @@
 sudo: required
-
 language: scala
-
 services:
-    - docker
+- docker
 env:
   DOCKER_COMPOSE_VERSION: 1.8.0
-
-
 script:
-
-    - mkidr -p ./.sbt_cache
-
-    . export GAME_SBT_CACHE_VOLUME="./sbt_cache"
-
-    - ./build/buildBack.bash
-
-    - docker tag gameback:latest frol2103/gameback:$(git rev-parse HEAD)
-
+- mkidr -p ./.sbt_cache
+- export GAME_SBT_CACHE_VOLUME="./sbt_cache"
+- "./build/buildBack.bash"
+- docker tag gameback:latest frol2103/gameback:$(git rev-parse HEAD)
 notifications:
   email:
     on_success: always
-    on_failure: always 
+    on_failure: always
+dd:
+  secure: OCNi6UiQ+fdRpDGaVc9tPuejH9RnyKQdgOF1LJP9BQ1AqcCV2KSz0zDWoW03g5AEEewrmQFzdO27FmuX+USW/c6qyUhkTkIpRkugNpNDtlzOLp5tTcewdpuwm9+6CeTpxwk6CmzpBghT07b33gJyFI4TkHbgC+avjuKJMlNRhLnUSHeVbLNBYtXmVP4cK5H2e6orB+ZP4EGGSla75TM4Oaf7VnE958mUuspbWO8fa8dIUhEUzEGRg/9N2EG7E2iUVLgvPfURFffR6O8UYl+gtUWkZ6tEIeT+bVfz6A3tSr6aCRz1j/MkljKWMgtLcf6EFKaMvsz2pF4N6K5hrVxbii1kChDwN/vFz5xUcG6auwPRhkpNmohsfV7lZaXBwEW9DvIbyH24lWTNNLD02HJSogvF3oDNI/OguzJwCmp10yx8yQk9gT0bZHOpBJJP4EDYI6XYj30InIMxwGpswgcd7+/rw2621rE+u99et37iGKX4kWkbKMB+AXaLMOwrIy0VMgwcVu7qauD4DLbO//S6+hAumKOl4m/PWZh9atcRJ3QYkXeS3S52L/TAJMGE/kCv4ji8AdsAQsEjJJrl4u/09nuIZCuyT2AegwYTzbYD0ffKZbnV96xLvkDn6H6DoZAczIdk0dVKS9/OygbMZ3ydZKx8GZ1H/qQA/0lJfo8EtLE=
