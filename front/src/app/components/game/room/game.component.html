@@ -1,0 +1,25 @@
+<div *ngIf="isInLobbyBeforeGame()">
+  <div class="card m-2">
+    <div class="card-header">
+      {{ 'game_joining_title' | translate }}
+    </div>
+
+    <div class="card-body">
+      <div>
+        {{ 'game_joining_description' | translate }}
+      </div>
+      <div>
+        {{ 'people_in_the_room' | translate }}
+      </div>
+      <users-list></users-list>
+    </div>
+  </div>
+</div>
+<div *ngIf="isInLobbyAfterGame()">
+  TODO : display post-game summary
+</div>
+<div *ngIf="isInLobbyDuringGame()">
+  TODO : display game interface
+</div>
+
+

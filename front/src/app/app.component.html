@@ -1,9 +1,9 @@
-<div *ngIf="!loginService.ready">
-  Waiting for user authentication info...
+<div *ngIf="!isReady()" class="text-center align-middle p-5">
+  <i class="fa fa-spinner fa-5x rotate" title="{{ 'waiting' | translate }}"></i>
 </div>
-<div *ngIf="loginService.ready">
+<div *ngIf="isReady()">
   <nav class="navbar navbar-dark bg-dark">
-    <a class="navbar-brand" href="#">
+    <a class="navbar-brand" routerLink="/create" routerLinkActive="active">
       {{ 'page_title' | translate }}
     </a>
     <span class="navbar-brand" *ngIf="loginService.user != null"><i class="fas fa-user"></i> {{ loginService.user.name }}</span>
@@ -13,7 +13,7 @@
       <user-login></user-login>
     </div>
     <div *ngIf="loginService.user != null">
-      <game-home></game-home>
+      <router-outlet></router-outlet>
     </div>
   </div>
 </div>

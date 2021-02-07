@@ -2,7 +2,7 @@ FROM node:15.0-alpine
 
 RUN apk update \
   && apk add --update alpine-sdk \
-  && npm install -g @angular/cli@9.1.0 \
+  && npm install -g @angular/cli@11.0.3 \
   && apk del alpine-sdk \
   && rm -rf /tmp/* /var/cache/apk/* *.tar.gz ~/.npm \
   && sed -i -e "s/bin\/ash/bin\/sh/" /etc/passwd
