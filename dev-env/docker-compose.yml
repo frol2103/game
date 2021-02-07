@@ -8,7 +8,7 @@ services:
   back:
     build: ./back
     volumes:
-      - ../dev-env/sbt_cache:/var/home/:rw
+      - ${GAME_SBT_CACHE_VOLUME}:/var/home/:rw
       - ..:/src
     user: $UID
     working_dir: /src/back
