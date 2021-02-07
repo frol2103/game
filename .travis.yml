@@ -12,6 +12,8 @@ script:
 
     - ./buildBack.bash
 
+    - docker tag gameback:latest frol2103/gameback:$(git rev-parse HEAD)
+
 notifications:
   email:
     on_success: always
