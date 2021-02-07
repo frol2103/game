@@ -525,7 +525,7 @@
             "type" : "string"
           },
           "drawing" : {
-            "description" : "url of photo",
+            "description" : "id of the drawing file, use file api to recover it",
             "type" : "string"
           }
         },

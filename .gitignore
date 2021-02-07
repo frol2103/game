@@ -1,6 +1,8 @@
 generated-api
 /front/front*.tgz
 *.swp
+tmp_build
+front/dist
 
 logs
 target

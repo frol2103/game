@@ -1,0 +1,9 @@
+FROM openjdk:8-slim-buster
+
+CMD apt update && apt install -y wkhtmltopdf
+
+COPY ./backend/ /app
+
+CMD /app/bin/backend
+
+
