@@ -2,6 +2,7 @@ version: "2"
 
 volumes:
   sbt_cache:
+    name: sbt_cache
 
 services:
 

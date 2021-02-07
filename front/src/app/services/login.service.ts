@@ -25,8 +25,8 @@ export class LoginService {
         .subscribe(user => this.user = user, error => this.user = null)
   }
 
-  public createUser(form: UserCreationForm) {
-    this.backendAuthService.login('"'+form.name+'"')
+  public createUser(form: UserCreationForm) : Promise<any> {
+    return this.backendAuthService.login('"'+form.name+'"')
         .toPromise()
         .finally(() => {
           this.markNotReady()
