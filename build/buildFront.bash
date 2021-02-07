@@ -21,7 +21,7 @@ export UID
 
 info build front
 cd $DIR/..
-echo "n" | docker-compose -f dev-env/docker-compose.yml run --rm --entrypoint npm front --silent install
+echo "n" | docker-compose -f dev-env/docker-compose.yml run --rm --entrypoint npm front --force install
 docker-compose -f dev-env/docker-compose.yml run --rm front ng build --prod
 
 rm -rf tmp_build || echo ""
