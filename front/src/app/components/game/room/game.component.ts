@@ -16,23 +16,26 @@ export class GameComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.roomService.refreshCurrentGame().then(game => this.joinIfNoGameInProgress(game))
+        let gameUuid = this.route.snapshot.queryParams.game
+        if(gameUuid) {
+            console.log('Will join game with id from url : '+gameUuid)
+            this.roomService.join(gameUuid)
+                .toPromise()
+                .then(game => this.redirectIfNeeded(game))
+        } else {
+            console.log('No game uuid in url, will stay in current game : '+this.roomService.game)
+            if(this.roomService.game) {
+                this.redirectIfNeeded(this.roomService.game)
+            } else {
+                this.roomService.goToLatestGame()
+                    .then(game => this.redirectIfNeeded(game))
+            }
+        }
     }
 
-    private joinIfNoGameInProgress(game: Game | null) {
-        if(!game) {
-            let gameUuid = this.route.snapshot.queryParams.game
-            if(gameUuid) {
-                console.log('Will join game '+gameUuid)
-                this.roomService.join(gameUuid)
-            }
-        } else {
-            //todo: if alreayd in a game maybe prompt the user to leave current game and join the new one instead
-            console.log("The user is already in game "+game.description?.uuid)
-
-            if(game.description?.status == "toStart" && game.users?.filter(u => u.id == this.loginService.user?.id && u.canAdministrageGame).length) {
-                this.router.navigate(['/create'])
-            }
+    private redirectIfNeeded(game: Game | null) {
+        if(game?.description?.status == "toStart" && game?.users?.filter(u => u.id == this.loginService.user?.id && u.canAdministrageGame).length) {
+            this.router.navigate(['/create'])
         }
     }
 

@@ -1,5 +1,7 @@
 import {Component} from '@angular/core';
 import {LoginService} from "../../services/login.service";
+import {RoomService} from "../../services/room.service";
+import {Router} from "@angular/router";
 
 @Component({
     selector: 'game-home',
@@ -9,11 +11,16 @@ import {LoginService} from "../../services/login.service";
 export class GameHomeComponent {
     inviteUrl: string = ''
 
-    constructor(public loginService: LoginService) {
+    constructor(public loginService: LoginService, public roomService : RoomService, private router : Router) {
     }
 
     start() {
 
+    }
+
+    createGame() {
+        this.roomService.createLostInTranslationGame()
+            .subscribe(game => this.router.navigate(['/create']))
     }
 }
 

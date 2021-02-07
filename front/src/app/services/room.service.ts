@@ -26,11 +26,14 @@ export class RoomService {
   }
 
 
-  private gameUpdated(game: Game) {
-    this.refreshActive = true;
-    this.ready = true;
+  private gameUpdated(game: Game | null) : Game | null {
+    if(game) {
+      this.refreshActive = true;
+      this.ready = true;
+      console.log("The game state will now be refreshed every second, current game is game : "+JSON.stringify(game))
+    }
     this.game = game;
-    console.log("The game state will now be refreshed every second, current game is game : "+JSON.stringify(game))
+    return game
   }
 
   public startGame() {
@@ -57,19 +60,18 @@ export class RoomService {
     return observable
   }
 
-  refreshCurrentGame() : Promise<Game|null> {
+  goToLatestGame() {
     return this.backendGameService.getAllGames()
         .toPromise()
         .then(games => {
-          if(games && games.length && games[0].uuid) {
-            console.log("Will go back to active game for user : "+games[0].uuid)
-            let gameObservable = this.backendGameService.getGame(games[0].uuid);
-            gameObservable.subscribe(game => this.gameUpdated(game))
+          if(games && games.length && games[games.length-1].uuid) {
+            let gameObservable = this.backendGameService.getGame(games[games.length-1].uuid!);
             return gameObservable.toPromise()
           } else {
             return Promise.resolve(null)
           }
         })
+        .then(game => this.gameUpdated(game))
   }
 }
 

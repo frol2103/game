@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {LoginService, UserCreationForm} from "../../../services/login.service";
 import {RoomService} from "../../../services/room.service";
+import {throwError} from "rxjs";
+import {Router} from "@angular/router";
 
 @Component({
     selector: 'game-creation',
@@ -10,19 +12,20 @@ import {RoomService} from "../../../services/room.service";
 export class GameCreationComponent implements OnInit {
     inviteUrl: string = window.location.protocol + "//" + window.location.host+'/join?game='
 
-    constructor(public loginService: LoginService, public roomService : RoomService) {
+    constructor(public loginService: LoginService, public roomService : RoomService, private router : Router) {
     }
 
     ngOnInit(): void {
-        this.roomService.refreshCurrentGame()
-            .then(game => {
-                if(!game) {
-                    this.roomService.createLostInTranslationGame()
-                        .subscribe(game => this.inviteUrl=this.inviteUrl + game.description?.uuid)
-                    } else {
-                    this.inviteUrl=this.inviteUrl + game.description?.uuid
-                }
-                })
+        let game = this.roomService.game;
+        if(!game) {
+            throwError('An active game is mandatory to access the game creation interface')
+        }
+
+        if(game?.description?.status != "toStart" || !game?.users?.filter(u => u.id == this.loginService.user?.id && u.canAdministrageGame).length) {
+            this.router.navigate(['/current'])
+        }
+
+        this.inviteUrl=this.inviteUrl + game?.description?.uuid
     }
 
     isReady() {

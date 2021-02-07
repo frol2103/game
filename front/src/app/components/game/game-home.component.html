@@ -6,7 +6,7 @@
 <!--  TODO : display list of current games and/or finished games here to go to an existing game-->
 
   <div class="card-body">
-    <button type="button" routerLink="/create" routerLinkActive="active" class="btn btn-primary m-2 "> {{ 'create_game_button' | translate }}</button>
+    <button type="button" (click)="createGame()" class="btn btn-primary m-2 "> {{ 'create_game_button' | translate }}</button>
 <!--    <button type="button" routerLink="/join" routerLinkActive="active" class="btn btn-primary m-2 "> {{ 'join_game_button' | translate }}</button>-->
   </div>
 
