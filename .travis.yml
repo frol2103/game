@@ -1,0 +1,18 @@
+sudo: required
+
+language: scala
+
+services:
+    - docker
+env:
+  DOCKER_COMPOSE_VERSION: 1.8.0
+
+
+script:
+
+    - ./buildBack.bash
+
+notifications:
+  email:
+    on_success: always
+    on_failure: always 
