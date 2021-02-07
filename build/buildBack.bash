@@ -23,9 +23,9 @@ info build back
 
 
 cd $DIR/..
-docker-compose -f dev-env/docker-compose.yml run --rm back clean
-docker-compose -f dev-env/docker-compose.yml run --rm back "; project generated; openapiGenerate"
-docker-compose -f dev-env/docker-compose.yml run --rm back clean dist
+docker-compose -f dev-env/docker-compose.yml run --rm back --no-color clean
+docker-compose -f dev-env/docker-compose.yml run --rm back --no-color"; project generated; openapiGenerate"
+docker-compose -f dev-env/docker-compose.yml run --rm back --no-colorclean dist
 rm -rf tmp_build || echo ""
 mkdir tmp_build
 
