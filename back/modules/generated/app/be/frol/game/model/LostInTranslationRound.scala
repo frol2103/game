@@ -4,9 +4,9 @@ import play.api.libs.json._
 
 /**
   * Represents the Swagger definition for LostInTranslationRound.
-  * @param drawing url of photo
+  * @param drawing id of the drawing file, use file api to recover it
   */
-@javax.annotation.Generated(value = Array("org.openapitools.codegen.languages.ScalaPlayFrameworkServerCodegen"), date = "2021-02-06T23:03:08.023Z[Etc/UTC]")
+@javax.annotation.Generated(value = Array("org.openapitools.codegen.languages.ScalaPlayFrameworkServerCodegen"), date = "2021-02-07T13:39:39.939Z[Etc/UTC]")
 case class LostInTranslationRound(
   originalUser: Option[User],
   roundUser: Option[User],

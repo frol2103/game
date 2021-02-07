@@ -9,12 +9,14 @@ import {ApiModule, BASE_PATH} from "../generated/api";
 import {HttpClientModule} from "@angular/common/http";
 import {environment} from "../environments/environment";
 import {UserLoginComponent} from "./components/user/user-login.component";
+import {GameHomeComponent} from "./components/game/game-home.component";
 
 @NgModule({
     declarations: [
         AppComponent,
         TranslatePipe,
-        UserLoginComponent
+        UserLoginComponent,
+        GameHomeComponent
     ],
     imports: [
         FormsModule,

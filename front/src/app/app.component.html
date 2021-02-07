@@ -6,14 +6,14 @@
     <a class="navbar-brand" href="#">
       {{ 'page_title' | translate }}
     </a>
-    <span class="navbar-brand" *ngIf="loginService.user != null">{{ loginService.user.name }}</span>
+    <span class="navbar-brand" *ngIf="loginService.user != null"><i class="fas fa-user"></i> {{ loginService.user.name }}</span>
   </nav>
   <div>
     <div *ngIf="loginService.user == null">
       <user-login></user-login>
     </div>
     <div *ngIf="loginService.user != null">
-      TODO: user is lo
+      <game-home></game-home>
     </div>
   </div>
 </div>

@@ -28,6 +28,8 @@ paths:
       summary: "login"
       description: ""
       operationId: "login"
+      consumes:
+        - "application/json"
       parameters:
       - in: "body"
         name: "username"
@@ -46,6 +48,8 @@ paths:
       summary: "connected user"
       description: ""
       operationId: "getConnectedUser"
+      produces:
+        - "application/json"
       responses:
         "200":
           description: "OK"

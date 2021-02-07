@@ -17,7 +17,7 @@ export interface LostInTranslationRound {
     roundUser?: User;
     text?: string;
     /**
-     * url of photo
+     * id of the drawing file, use file api to recover it
      */
     drawing?: string;
 }
