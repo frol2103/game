@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {LoginService, UserCreationForm} from "../../services/login.service";
+import {LoginService} from "../../services/login.service";
 
 @Component({
     selector: 'game-home',
@@ -7,8 +7,13 @@ import {LoginService, UserCreationForm} from "../../services/login.service";
     styleUrls: ['./game-home.component.css']
 })
 export class GameHomeComponent {
-    constructor() {
+    inviteUrl: string = ''
+
+    constructor(public loginService: LoginService) {
+    }
+
+    start() {
+
     }
 }
-
 
