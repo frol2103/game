@@ -46,7 +46,7 @@ class GameRepository @Inject()(
   }
 
   def getAllGamesFor(user: Tables.UserRow) = {
-    Tables.Game.join(Tables.UserInGame).on { case (g, u) => g.id === u.id }.filter(_._2.fkUserId === user.id).map(_._1).result
+    Tables.Game.join(Tables.UserInGame).on { case (g, u) => g.id === u.fkGameId }.filter(_._2.fkUserId === user.id).map(_._1).result
   }
 
   def join(gameUuid: String, user: UserRow) = {
