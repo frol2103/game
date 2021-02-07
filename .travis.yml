@@ -9,10 +9,10 @@ script:
 - export GAME_SBT_CACHE_VOLUME=$HOME
 - "./build/buildBack.bash"
 - docker tag gameback:latest frol2103/gameback:$(git rev-parse HEAD)
-- "./build/buildFront.bash"
-- docker tag gamefront:latest frol2103/gamefront:$(git rev-parse HEAD)
 - echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
 - docker push frol2103/gameback:$(git rev-parse HEAD)
+- "./build/buildFront.bash"
+- docker tag gamefront:latest frol2103/gamefront:$(git rev-parse HEAD)
 - docker push frol2103/gamefront:$(git rev-parse HEAD)
 notifications:
   email:
