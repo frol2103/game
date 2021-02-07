@@ -30,7 +30,7 @@ rm -rf tmp_build || echo ""
 mkdir tmp_build
 
 docker run --user $(id -u)  --rm -v $PWD:/unzip garthk/unzip back/target/universal/back*.zip -d tmp_build
-mv tmp_build/back* tmp_build/
+mv tmp_build/back* tmp_build/back
 cp build/Dockerfile.back tmp_build
 
 cd $DIR/../tmp_build
