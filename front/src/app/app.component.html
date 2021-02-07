@@ -1,9 +1,21 @@
-<nav class="navbar navbar-dark bg-dark">
-  <a class="navbar-brand" href="#">
-    {{ 'page_title' | translate }}
-  </a>
-</nav>
-<div>
-  TODO
+<div *ngIf="!loginService.ready">
+  Waiting for user authentication info... {{ loginService.user | json }} ready {{ loginService.ready | json }}
 </div>
+<div *ngIf="loginService.ready">
+  <nav class="navbar navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">
+      {{ 'page_title' | translate }}
+    </a>
+  </nav>
+  <div>
+    <div *ngIf="loginService.user == null">
+      <user-login></user-login>
+    </div>
+    <div *ngIf="loginService.user != null">
+      TODO: user is lo
+    </div>
+  </div>
+</div>
+
+
 

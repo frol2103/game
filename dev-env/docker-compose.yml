@@ -24,7 +24,7 @@ services:
     volumes: 
       - ../front:/src
     user: $UID
-    command: sh -c "npm install && ng serve --proxy-config /src/src/environments/docker.proxy.json --host 0.0.0.0 --disable-host-check"
+    command: sh -c "npm install && ng serve --proxy-config /src/src/environments/docker.proxy.json --host 0.0.0.0 --disable-host-check --poll 500"
 
   db:
     image: mysql:8.0
