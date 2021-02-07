@@ -32,6 +32,12 @@ export class RoomService {
     this.game = game;
   }
 
+  public startGame() {
+    if(this.refreshActive && this.game?.description?.uuid) {
+      this.backendGameService.startGame(this.game?.description?.uuid)
+    }
+  }
+
   public fetchGameInfo() {
     if(this.refreshActive && this.game?.description?.uuid) {
       this.backendGameService.getGame(this.game?.description?.uuid)

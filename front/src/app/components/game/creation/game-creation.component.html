@@ -60,9 +60,8 @@
           <p>
             {{ 'people_in_the_room' | translate }}
           </p>
-          <ul>
-            <li *ngFor="let user of roomService.game.users"> <i *ngIf="!user.canAdministrageGame" class="fas fa-user"></i> <i *ngIf="user.canAdministrageGame" class="fas fa-crown"></i>  {{ user.name }} </li>
-          </ul>
+          <users-list/>
+
         </div>
       </div>
     </div>

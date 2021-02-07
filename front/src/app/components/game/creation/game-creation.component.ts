@@ -8,7 +8,7 @@ import {RoomService} from "../../../services/room.service";
     styleUrls: ['./game-creation.component.css']
 })
 export class GameCreationComponent {
-    inviteUrl: string = window.location.protocol + "//" + window.location.host+'?game='
+    inviteUrl: string = window.location.protocol + "//" + window.location.host+'/join?game='
 
     constructor(public loginService: LoginService, public roomService : RoomService) {
         roomService.createLostInTranslationGame()
@@ -32,7 +32,7 @@ export class GameCreationComponent {
     }
 
     start() {
-
+        this.roomService.startGame()
     }
 }
 

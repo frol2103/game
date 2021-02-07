@@ -20,6 +20,8 @@ export class LabelsService {
     'people_in_the_room': "These are the current players : ",
     'start_the_game_descr': "Wait for everyone to be listed. Once you start the game your friends won't be able to join anymore until the next game.",
     'start_game_button': "Start the game now",
+    'game_joining_title': "Game lobby",
+    'game_joining_description': "The game host will start the game soon.",
   }
 
   public translate(key: string) : string {
