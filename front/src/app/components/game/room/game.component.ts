@@ -2,7 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {LoginService, UserCreationForm} from "../../../services/login.service";
 import {RoomService} from "../../../services/room.service";
 import {ActivatedRoute, Router} from "@angular/router";
-import {Game} from "../../../../generated/api";
+import {Game, GameDescription} from "../../../../generated/api";
+import StatusEnum = GameDescription.StatusEnum;
 
 @Component({
     selector: 'game-home',
@@ -33,6 +34,18 @@ export class GameComponent implements OnInit {
                 this.router.navigate(['/create'])
             }
         }
+    }
+
+    isInLobbyBeforeGame() {
+        return this.roomService.ready && this.roomService.game?.description?.status == StatusEnum.ToStart
+    }
+
+    isInLobbyAfterGame() {
+        return this.roomService.ready && this.roomService.game?.description?.status == StatusEnum.Finished
+    }
+
+    isInLobbyDuringGame() {
+        return this.roomService.ready && this.roomService.game?.description?.status == StatusEnum.InPlay
     }
 
 }
