@@ -5,6 +5,7 @@ tmp_build
 front/dist
 front/package-lock.json
 *.orig
+sbt_cache
 
 logs
 target
