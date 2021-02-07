@@ -12,4 +12,8 @@ export class AppComponent {
   constructor(private titleService: Title, private labelsService: LabelsService, public loginService:LoginService) {
     titleService.setTitle(labelsService.translate("page_title"))
   }
+
+  isReady() {
+    return this.loginService.ready
+  }
 }

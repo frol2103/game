@@ -2,13 +2,14 @@ version: "2"
 
 volumes:
   sbt_cache:
+    name: sbt_cache
 
 services:
 
   back:
     build: ./back
     volumes:
-      - ../dev-env/sbt_cache:/var/home/:rw
+      - sbt_cache:/var/home/:rw
       - ..:/src
     user: $UID
     working_dir: /src/back
