@@ -24,6 +24,7 @@ export class LabelsService {
     'game_joining_description': "The game host will start the game soon.",
     'game_home_title': "Welcome",
     'create_game_button': "Create a new game",
+    'lostInTranslation_label': "Lost in transcription",
   }
 
   public translate(key: string) : string {

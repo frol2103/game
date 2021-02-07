@@ -61,8 +61,7 @@ export class RoomService {
   }
 
   goToLatestGame() {
-    return this.backendGameService.getAllGames()
-        .toPromise()
+    return this.getAllGames()
         .then(games => {
           if(games && games.length && games[games.length-1].uuid) {
             let gameObservable = this.backendGameService.getGame(games[games.length-1].uuid!);
@@ -72,6 +71,11 @@ export class RoomService {
           }
         })
         .then(game => this.gameUpdated(game))
+  }
+
+  getAllGames() : Promise<Array<GameDescription>> {
+    return this.backendGameService.getAllGames()
+        .toPromise();
   }
 }
 
