@@ -10,7 +10,7 @@ env:
 
 script:
 
-    - ./buildBack.bash
+    - ./build/buildBack.bash
 
     - docker tag gameback:latest frol2103/gameback:$(git rev-parse HEAD)
 
