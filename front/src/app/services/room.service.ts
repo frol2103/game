@@ -48,18 +48,28 @@ export class RoomService {
   }
 
   join(gameUuid: string) {
-    let observable = this.backendGameService.joinGame(gameUuid);
+    let observable = this.backendGameService.joinGame(gameUuid)
     observable
-        .subscribe(games => {
-          console.log("Joined game : "+JSON.stringify(games))
-          // @ts-ignore
-          this.gameUpdated(games)
+        .subscribe(game => {
+          console.log("Joined game : "+JSON.stringify(game))
+          this.gameUpdated(game)
         }, error => this.game = null)
     return observable
   }
 
-  refreshCurrentGame() {
-
+  refreshCurrentGame() : Promise<Game|null> {
+    return this.backendGameService.getAllGames()
+        .toPromise()
+        .then(games => {
+          if(games && games.length && games[0].uuid) {
+            console.log("Will go back to active game for user : "+games[0].uuid)
+            let gameObservable = this.backendGameService.getGame(games[0].uuid);
+            gameObservable.subscribe(game => this.gameUpdated(game))
+            return gameObservable.toPromise()
+          } else {
+            return Promise.resolve(null)
+          }
+        })
   }
 }
 

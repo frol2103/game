@@ -170,9 +170,9 @@ export class GameService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public joinGame(uuid: string, observe?: 'body', reportProgress?: boolean): Observable<Array<Game>>;
-    public joinGame(uuid: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Game>>>;
-    public joinGame(uuid: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Game>>>;
+    public joinGame(uuid: string, observe?: 'body', reportProgress?: boolean): Observable<Game>;
+    public joinGame(uuid: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Game>>;
+    public joinGame(uuid: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Game>>;
     public joinGame(uuid: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
         if (uuid === null || uuid === undefined) {
             throw new Error('Required parameter uuid was null or undefined when calling joinGame.');
@@ -190,7 +190,7 @@ export class GameService {
         }
 
 
-        return this.httpClient.get<Array<Game>>(`${this.configuration.basePath}/game/${encodeURIComponent(String(uuid))}/join`,
+        return this.httpClient.get<Game>(`${this.configuration.basePath}/game/${encodeURIComponent(String(uuid))}/join`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
@@ -206,9 +206,9 @@ export class GameService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public startGame(uuid: string, observe?: 'body', reportProgress?: boolean): Observable<Array<Game>>;
-    public startGame(uuid: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Game>>>;
-    public startGame(uuid: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Game>>>;
+    public startGame(uuid: string, observe?: 'body', reportProgress?: boolean): Observable<Game>;
+    public startGame(uuid: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Game>>;
+    public startGame(uuid: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Game>>;
     public startGame(uuid: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
         if (uuid === null || uuid === undefined) {
             throw new Error('Required parameter uuid was null or undefined when calling startGame.');
@@ -226,7 +226,7 @@ export class GameService {
         }
 
 
-        return this.httpClient.get<Array<Game>>(`${this.configuration.basePath}/game/${encodeURIComponent(String(uuid))}/start`,
+        return this.httpClient.get<Game>(`${this.configuration.basePath}/game/${encodeURIComponent(String(uuid))}/start`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,

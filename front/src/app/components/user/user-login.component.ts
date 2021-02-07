@@ -10,7 +10,7 @@ let conso = 'bcfgjklmnprstxz';
     styleUrls: ['./user-login.component.css']
 })
 export class UserLoginComponent {
-    form = new UserCreationForm(randomString(1, conso)+randomString(1, vowels)+randomString(1, conso)+randomString(1, vowels)+randomString(1, conso)+randomString(2, vowels))
+    form = new UserCreationForm(randomString(1, conso)+randomString(1, vowels)+randomString(1, conso)+randomString(1, vowels)+randomString(1, conso))
 
     constructor(public loginService: LoginService) {
     }

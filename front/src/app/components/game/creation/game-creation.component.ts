@@ -3,7 +3,7 @@ import {LoginService, UserCreationForm} from "../../../services/login.service";
 import {RoomService} from "../../../services/room.service";
 
 @Component({
-    selector: 'game-home',
+    selector: 'game-creation',
     templateUrl: './game-creation.component.html',
     styleUrls: ['./game-creation.component.css']
 })
@@ -14,8 +14,15 @@ export class GameCreationComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        this.roomService.createLostInTranslationGame()
-            .subscribe(game => this.inviteUrl=this.inviteUrl + game.description?.uuid)
+        this.roomService.refreshCurrentGame()
+            .then(game => {
+                if(!game) {
+                    this.roomService.createLostInTranslationGame()
+                        .subscribe(game => this.inviteUrl=this.inviteUrl + game.description?.uuid)
+                    } else {
+                    this.inviteUrl=this.inviteUrl + game.description?.uuid
+                }
+                })
     }
 
     isReady() {

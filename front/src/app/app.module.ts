@@ -19,6 +19,7 @@ const routes: Routes = [
     { path: 'home', component: GameHomeComponent },
     { path: 'create', component: GameCreationComponent },
     { path: 'join', component: GameComponent },
+    { path: 'current', component: GameComponent },
     { path: '**', component: GameHomeComponent }
 ]
 

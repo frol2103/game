@@ -6,7 +6,7 @@ import be.frol.game.model.GameDescription
 /**
   * Provides a default implementation for [[GameApi]].
   */
-@javax.annotation.Generated(value = Array("org.openapitools.codegen.languages.ScalaPlayFrameworkServerCodegen"), date = "2021-02-07T13:39:39.939Z[Etc/UTC]")
+@javax.annotation.Generated(value = Array("org.openapitools.codegen.languages.ScalaPlayFrameworkServerCodegen"), date = "2021-02-07T21:48:50.699Z[Etc/UTC]")
 class GameApiImpl extends GameApi {
   /**
     * @inheritdoc
@@ -38,18 +38,18 @@ class GameApiImpl extends GameApi {
   /**
     * @inheritdoc
     */
-  override def joinGame(uuid: String): List[Game] = {
+  override def joinGame(uuid: String): Game = {
     // TODO: Implement better logic
 
-    List.empty[Game]
+    Game(None, None)
   }
 
   /**
     * @inheritdoc
     */
-  override def startGame(uuid: String): List[Game] = {
+  override def startGame(uuid: String): Game = {
     // TODO: Implement better logic
 
-    List.empty[Game]
+    Game(None, None)
   }
 }
