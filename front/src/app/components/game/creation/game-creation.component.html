@@ -3,18 +3,53 @@
     {{ 'game_creation_title' | translate }}
   </div>
   <div class="card-body">
-    <p>
-      {{ 'game_creation_description' | translate }}
-    </p>
-    <p>
-      {{ 'game_creation_invite_url_label' | translate }}
-    </p>
 
-    <pre>
-        <code> {{ inviteUrl }} </code>
-    </pre>
+    <div class="card-header">
+      {{ 'invite_people_title' | translate }}
+    </div>
+    <div class="card-body">
+      <p>
+        {{ 'game_creation_description' | translate }}
+      </p>
+      <p>
+        {{ 'game_creation_invite_url_label' | translate }}
+      </p>
 
-    <button type="button" (click)="start()" class="btn btn-primary m-2 "> {{ 'start_game_button' | translate }}</button>
+
+      <form>
+        <div class="input-group">
+          <input type="text" class="form-control" readonly="true"
+                 [value]="inviteUrl" id="copy-input"/>
+          <span class="input-group-btn">
+              <button class="btn btn-default"
+                      type="button"
+                      id="copy-button"
+                      data-toggle="tooltip"
+                      data-placement="button"
+                      (click)="copyUrlToClipboard()"
+                      title="{{ 'copy' | translate }}">
+                {{ 'copy' | translate }}
+              </button>
+        </span>
+        </div>
+      </form>
+
+
+    </div>
+
+    <div class="card-header">
+      {{ 'gstart_game_title' | translate }}
+    </div>
+    <div class="card-body">
+      <p>
+        {{ 'people_in_the_room' | translate }}
+      </p>
+      <ul>
+        <li> TODO : display list of people that joined the game </li>
+      </ul>
+
+      <button type="button" (click)="start()" class="btn btn-primary m-2 "> {{ 'start_game_button' | translate }}</button>
+    </div>
   </div>
 
 </div>
