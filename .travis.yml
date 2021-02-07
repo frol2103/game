@@ -4,7 +4,7 @@ services:
 env:
   DOCKER_COMPOSE_VERSION: 1.8.0
 script:
-- mkidr -p ./sbt_cache/.sbt/boot
+- mkdir -p ./sbt_cache/.sbt/boot
 - export GAME_SBT_CACHE_VOLUME="./sbt_cache"
 - "./build/buildBack.bash"
 - docker tag gameback:latest frol2103/gameback:$(git rev-parse HEAD)
