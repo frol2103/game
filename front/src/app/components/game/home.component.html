@@ -27,7 +27,7 @@
             <td class="p-1">{{ game.startTime | date:'medium' }}</td>
             <td class="p-1">{{ game.gameType + '_label' | translate }}</td>
             <td class="p-1">{{ game.status + '_label' | translate }}</td>
-            <td class="p-1"><button type="button" style="width:100%" (click)="openGame(game.uuid)" class="btn btn-primary" [title]="game.uuid">
+            <td class="p-1"><button type="button" style="width:100%" (click)="openGame(game.uuid!)" class="btn btn-primary" [title]="game.uuid!">
               {{ 'open_game_button' | translate }}
             </button>
             </td>
