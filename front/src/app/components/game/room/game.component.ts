@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {LoginService} from "../../../services/login.service";
 import {RoomService} from "../../../services/room.service";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -10,10 +10,15 @@ import StatusEnum = GameDescription.StatusEnum;
     templateUrl: './game.component.html',
     styleUrls: ['./game.component.css']
 })
-export class GameComponent implements OnInit {
+export class GameComponent implements OnInit, OnDestroy {
     isAdmin: boolean = false
 
     constructor(public loginService: LoginService, public roomService: RoomService, private route: ActivatedRoute, private router: Router) {
+    }
+
+    ngOnDestroy(): void {
+        //warning: if we need room or user slist info outside of this component this will need to be removed, currently we don't use ngroute for the game interfaces so it works
+        this.roomService.destroy()
     }
 
     ngOnInit(): void {

@@ -42,11 +42,16 @@ export class LitService {
   }
 
   private updateGame(game: LostInTranslationGame) {
-    this.isFirstRound = game.rounds?.length == 1
-    this.isTextRound = game.rounds!.length! % 2 == 1
-    this.isWaitingForOtherPlayers = false
-    //todo: not enough info in current rounds list to know what the round is
-
+    if(! game.rounds || !game.rounds.length) {
+      this.isWaitingForOtherPlayers = true
+      this.isFirstRound = false
+    } else {
+      this.isWaitingForOtherPlayers = false
+      let currentRound = game.rounds![0]!;
+      //todo: not enough info in current rounds list to know what the round is
+      this.isFirstRound = currentRound.roundUser!.id == currentRound.originalUser!.id
+      this.isTextRound = true
+    }
     return this.game = game;
   }
 

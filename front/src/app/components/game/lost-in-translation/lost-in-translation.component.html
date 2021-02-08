@@ -3,66 +3,86 @@
 </div>
 <div *ngIf="lostInTranslationService.game">
 
-
-
-    <div class="card m-2" *ngIf="lostInTranslationService.isTextRound">
-        <div class="card-header">
-            {{ 'lit_text_round_title' | translate }}
-        </div>
-
-        <div class="card-body" >
-            <div *ngIf="lostInTranslationService.isFirstRound">
-                <div class="m-2">
-                    {{ 'lit_first_text_round_instructions' | translate }}
-                </div>
-            </div>
-            <div *ngIf="!lostInTranslationService.isFirstRound">
-                <div class="m-2">
-                    {{ 'lit_text_round_instructions' | translate }}
-                </div>
-
-                <div class="m-2">
-                    TODO : display drawing to describe here
-                </div>
+    <div *ngIf="!lostInTranslationService.isWaitingForOtherPlayers">
+        <div class="card m-2" *ngIf="lostInTranslationService.isTextRound">
+            <div class="card-header">
+                {{ 'lit_text_round_title' | translate }}
             </div>
 
-            <form (ngSubmit)="sendText()">
-                <div class="form-group">
-                    <div class="input-group">
-                        <input type="text" class="form-control" id="text"
-                               [placeholder]="'lit_text_round_placeholder' | translate"
-                               required
-                               [(ngModel)]="text" name="text">
-                        <div class="input-group-append">
-                            <button type="submit" class="btn btn-primary ">
-                                <i class="fas fa-check"></i>
-                                {{ 'lit_text_round_send_button' | translate }}
-                            </button>
-                        </div>
+            <div class="card-body" >
+                <div *ngIf="lostInTranslationService.isFirstRound">
+                    <div class="m-2">
+                        {{ 'lit_first_text_round_instructions' | translate }}
+                    </div>
+                </div>
+                <div *ngIf="!lostInTranslationService.isFirstRound">
+                    <div class="m-2">
+                        {{ 'lit_text_round_instructions' | translate }}
                     </div>
 
+                    <div class="m-2">
+                        TODO : display drawing to describe here
+                    </div>
                 </div>
-            </form>
+
+                <form (ngSubmit)="sendText()">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="text"
+                                   [placeholder]="'lit_text_round_placeholder' | translate"
+                                   required
+                                   [(ngModel)]="text" name="text">
+                            <div class="input-group-append">
+                                <button type="submit" class="btn btn-primary ">
+                                    <i class="fas fa-check"></i>
+                                    {{ 'lit_text_round_send_button' | translate }}
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+
+            </div>
 
         </div>
 
+
+        <div class="card m-2" *ngIf="!lostInTranslationService.isTextRound">
+            <div class="card-header">
+                {{ 'lit_draw_round_title' | translate }}
+            </div>
+
+            <div class="card-body">
+                <div>
+                    {{ 'game_draw_description' | translate }}
+                </div>
+                <div>
+                    TODO: input for drawing
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="lostInTranslationService.isWaitingForOtherPlayers">
+        <div class="card m-2">
+            <div class="card-header">
+                {{ 'lit_waiting_title' | translate }}
+            </div>
+
+            <div class="card-body">
+                <div>
+                    {{ 'lit_waiting_for_other_player_description' | translate }}
+                </div>
+                <div>
+                    TODO : display users in room with status of their current round
+                </div>
+            </div>
+        </div>
     </div>
 
 
-    <div class="card m-2" *ngIf="!lostInTranslationService.isTextRound">
-        <div class="card-header">
-            {{ 'lit_draw_round_title' | translate }}
-        </div>
 
-        <div class="card-body">
-            <div>
-                {{ 'game_joining_description' | translate }}
-            </div>
-            <div>
-                {{ 'people_in_the_room' | translate }}
-            </div>
-        </div>
-    </div>
 
     <p>DEBUG: </p>
     <p>

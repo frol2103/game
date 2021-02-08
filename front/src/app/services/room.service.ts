@@ -41,6 +41,10 @@ export class RoomService {
     }
   }
 
+  destroy() {
+    this.refreshActive = false
+  }
+
   public fetchGameInfo() {
     let uuid = this.game?.description?.uuid;
     if(this.refreshActive && uuid) {
