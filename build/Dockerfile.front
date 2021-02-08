@@ -3,8 +3,11 @@ FROM httpd:2.4
 RUN mkdir -p /usr/local/apache2/conf/sites/
 RUN echo 'IncludeOptional /conf/sites/*.conf' | tee -a /usr/local/apache2/conf/httpd.conf
 
-COPY resources/front/proxyBack.conf /conf/sites/proxyBack.conf
+RUN apt-get update && apt-get install -y gnupg software-properties-common && add-apt-repository -y ppa:certbot/certbot && apt-get install -y python-certbot-apache
+
+COPY resources/front/game.frol.be.conf /conf/sites/game.frol.be.conf
 
 COPY ./front/ /usr/local/apache2/htdocs/
+
 
 

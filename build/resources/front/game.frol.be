@@ -1,6 +1,8 @@
 
 <VirtualHost *:80>
 
+	ServerName game.frol.be
+
 	LoadModule proxy_module modules/mod_proxy.so
 	LoadModule proxy_ajp_module modules/mod_proxy_ajp.so
 	LoadModule proxy_http_module modules/mod_proxy_http.so
