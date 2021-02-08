@@ -6,7 +6,7 @@ import java.time.OffsetDateTime
 /**
   * Represents the Swagger definition for GameDescription.
   */
-@javax.annotation.Generated(value = Array("org.openapitools.codegen.languages.ScalaPlayFrameworkServerCodegen"), date = "2021-02-08T16:44:35.029Z[Etc/UTC]")
+@javax.annotation.Generated(value = Array("org.openapitools.codegen.languages.ScalaPlayFrameworkServerCodegen"), date = "2021-02-08T18:07:22.741Z[Etc/UTC]")
 case class GameDescription(
   id: Option[Long],
   uuid: Option[String],

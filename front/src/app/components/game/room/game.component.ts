@@ -21,9 +21,8 @@ export class GameComponent implements OnInit {
         if (gameUuid) {
             console.log('Will join game with id from url : ' + gameUuid)
             this.roomService.join(gameUuid)
-                .then(game => this.updateRole(game))
+                .then(game => this.updateRole(game!))
         } else {
-
             if (this.roomService.game) {
                 console.log('No game uuid in url, will stay in current game : ' + this.roomService.game)
                 this.updateRole(this.roomService.game)
@@ -34,8 +33,8 @@ export class GameComponent implements OnInit {
         }
     }
 
-    private updateRole(game: Game | null) {
-        this.isAdmin = game?.users?.filter(u => u.id == this.loginService.user?.id && u.canAdministrageGame).length > 0
+    private updateRole(game: Game) {
+        this.isAdmin = game.users!.filter(u => u.id == this.loginService.user?.id && u.canAdministrageGame).length > 0
     }
 
     isInLobbyBeforeGame() {

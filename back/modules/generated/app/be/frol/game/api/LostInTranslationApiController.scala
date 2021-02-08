@@ -7,14 +7,14 @@ import play.api.mvc._
 import be.frol.game.model.LostInTranslationGame
 import play.api.libs.Files.TemporaryFile
 
-@javax.annotation.Generated(value = Array("org.openapitools.codegen.languages.ScalaPlayFrameworkServerCodegen"), date = "2021-02-08T16:44:35.029Z[Etc/UTC]")
+@javax.annotation.Generated(value = Array("org.openapitools.codegen.languages.ScalaPlayFrameworkServerCodegen"), date = "2021-02-08T18:07:22.741Z[Etc/UTC]")
 @Singleton
 class LostInTranslationApiController @Inject()(cc: ControllerComponents, api: LostInTranslationApi) extends AbstractController(cc) {
   /**
     * POST /api/game/LostInTranslation/:uuid/drawing
     */
   def addDrawingRound(uuid: String): Action[AnyContent] = Action { request =>
-    def executeApi(): List[LostInTranslationGame] = {
+    def executeApi(): LostInTranslationGame = {
       val file = request.body.asMultipartFormData.flatMap(_.file("file").map(_.ref: TemporaryFile))
         .getOrElse {
           throw new OpenApiExceptions.MissingRequiredParameterException("file", "form")
@@ -31,7 +31,7 @@ class LostInTranslationApiController @Inject()(cc: ControllerComponents, api: Lo
     * POST /api/game/LostInTranslation/:uuid/text
     */
   def addTextRound(uuid: String): Action[AnyContent] = Action { request =>
-    def executeApi(): List[LostInTranslationGame] = {
+    def executeApi(): LostInTranslationGame = {
       val text = request.body.asJson.map(_.as[String]).getOrElse {
         throw new OpenApiExceptions.MissingRequiredParameterException("body", "text")
       }
@@ -47,7 +47,7 @@ class LostInTranslationApiController @Inject()(cc: ControllerComponents, api: Lo
     * GET /api/game/LostInTranslation/:uuid
     */
   def getGame(uuid: String): Action[AnyContent] = Action { request =>
-    def executeApi(): List[LostInTranslationGame] = {
+    def executeApi(): LostInTranslationGame = {
       api.getGame(uuid)
     }
 

@@ -222,10 +222,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "items" : {
-                    "$ref" : "#/components/schemas/LostInTranslationGame"
-                  },
-                  "type" : "array"
+                  "$ref" : "#/components/schemas/LostInTranslationGame"
                 }
               }
             },
@@ -263,10 +260,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "items" : {
-                    "$ref" : "#/components/schemas/LostInTranslationGame"
-                  },
-                  "type" : "array"
+                  "$ref" : "#/components/schemas/LostInTranslationGame"
                 }
               }
             },
@@ -310,10 +304,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "items" : {
-                    "$ref" : "#/components/schemas/LostInTranslationGame"
-                  },
-                  "type" : "array"
+                  "$ref" : "#/components/schemas/LostInTranslationGame"
                 }
               }
             },

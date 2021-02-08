@@ -22,10 +22,10 @@
   </div>
 </div>
 <div *ngIf="isInLobbyAfterGame()">
-  TODO : display post-game summary
+  <lost-in-translation-finished *ngIf="roomService.game.description.gameType == 'lostInTranslation'"></lost-in-translation-finished>
 </div>
 <div *ngIf="isInLobbyDuringGame()">
-  TODO : display game interface
+  <lost-in-translation *ngIf="roomService.game.description.gameType == 'lostInTranslation'"></lost-in-translation>
 </div>
 
 

@@ -14,6 +14,8 @@ import {RouterModule, Routes} from "@angular/router";
 import {GameCreationComponent} from "./components/game/room/creation/game-creation.component";
 import {GameComponent} from "./components/game/room/game.component";
 import { UsersListComponent } from './components/game/users-list/users-list.component';
+import { LostInTranslationComponent } from './components/game/lost-in-translation/lost-in-translation.component';
+import { LostInTranslationFinishedComponent } from './components/game/lost-in-translation/finished/lost-in-translation-finished.component';
 
 const routes: Routes = [
     { path: 'home', component: HomeComponent },
@@ -30,7 +32,9 @@ const routes: Routes = [
         HomeComponent,
         GameCreationComponent,
         GameComponent,
-        UsersListComponent
+        UsersListComponent,
+        LostInTranslationComponent,
+        LostInTranslationFinishedComponent
     ],
     imports: [
         FormsModule,
