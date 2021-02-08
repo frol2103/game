@@ -9,18 +9,17 @@ import {ApiModule, BASE_PATH} from "../generated/api";
 import {HttpClientModule} from "@angular/common/http";
 import {environment} from "../environments/environment";
 import {UserLoginComponent} from "./components/user/user-login.component";
-import {GameHomeComponent} from "./components/game/game-home.component";
+import {HomeComponent} from "./components/game/home.component";
 import {RouterModule, Routes} from "@angular/router";
-import {GameCreationComponent} from "./components/game/creation/game-creation.component";
+import {GameCreationComponent} from "./components/game/room/creation/game-creation.component";
 import {GameComponent} from "./components/game/room/game.component";
 import { UsersListComponent } from './components/game/users-list/users-list.component';
 
 const routes: Routes = [
-    { path: 'home', component: GameHomeComponent },
-    { path: 'create', component: GameCreationComponent },
+    { path: 'home', component: HomeComponent },
     { path: 'join', component: GameComponent },
     { path: 'current', component: GameComponent },
-    { path: '**', component: GameHomeComponent }
+    { path: '**', component: HomeComponent }
 ]
 
 @NgModule({
@@ -28,7 +27,7 @@ const routes: Routes = [
         AppComponent,
         TranslatePipe,
         UserLoginComponent,
-        GameHomeComponent,
+        HomeComponent,
         GameCreationComponent,
         GameComponent,
         UsersListComponent

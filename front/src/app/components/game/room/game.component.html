@@ -1,17 +1,23 @@
 <div *ngIf="isInLobbyBeforeGame()">
-  <div class="card m-2">
-    <div class="card-header">
-      {{ 'game_joining_title' | translate }}
-    </div>
 
-    <div class="card-body">
-      <div>
-        {{ 'game_joining_description' | translate }}
+  <div *ngIf="isAdmin">
+    <game-creation></game-creation>
+  </div>
+  <div *ngIf="!isAdmin">
+    <div class="card m-2">
+      <div class="card-header">
+        {{ 'game_joining_title' | translate }}
       </div>
-      <div>
-        {{ 'people_in_the_room' | translate }}
+
+      <div class="card-body">
+        <div>
+          {{ 'game_joining_description' | translate }}
+        </div>
+        <div>
+          {{ 'people_in_the_room' | translate }}
+        </div>
+        <users-list></users-list>
       </div>
-      <users-list></users-list>
     </div>
   </div>
 </div>

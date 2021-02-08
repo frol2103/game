@@ -16,13 +16,12 @@ export class RoomService {
     timer(0, 1000).subscribe(time => this.fetchGameInfo())
   }
 
-  public createLostInTranslationGame() : Observable<Game> {
-    let gameDescription = new NewGame();
-    gameDescription.gameType = GameDescription.GameTypeEnum.LostInTranslation
-    let observable = this.backendGameService.createAGame(gameDescription);
-    observable
-        .subscribe(game => this.gameUpdated(game), error => this.game = null)
-    return observable
+  public createLostInTranslationGame() : Promise<Game> {
+    console.log("Creating new game")
+    let gamePromise = this.backendGameService.createAGame(new NewGame(GameDescription.GameTypeEnum.LostInTranslation))
+        .toPromise();
+    gamePromise.then(game => this.gameUpdated(game))
+    return gamePromise
   }
 
 
@@ -38,39 +37,40 @@ export class RoomService {
 
   public startGame() {
     if(this.refreshActive && this.game?.description?.uuid) {
-      this.backendGameService.startGame(this.game?.description?.uuid)
+      this.backendGameService.startGame(this.game?.description?.uuid).toPromise()
     }
   }
 
   public fetchGameInfo() {
-    if(this.refreshActive && this.game?.description?.uuid) {
-      this.backendGameService.getGame(this.game?.description?.uuid)
-          .pipe(finalize(() => this.ready=true))
-          .subscribe(game => this.game = game, error => this.game = null)
+    let uuid = this.game?.description?.uuid;
+    if(this.refreshActive && uuid) {
+      this.gotoGame(uuid);
     }
   }
 
-  join(gameUuid: string) {
-    let observable = this.backendGameService.joinGame(gameUuid)
-    observable
-        .subscribe(game => {
-          console.log("Joined game : "+JSON.stringify(game))
-          this.gameUpdated(game)
-        }, error => this.game = null)
-    return observable
+  private gotoGame(uuid: string) : Promise<Game> {
+    return this.backendGameService.getGame(uuid)
+        .toPromise()
+        .then(game => this.game = game)
+        .finally(() => this.ready = true)
   }
 
-  goToLatestGame() {
-    return this.getAllGames()
-        .then(games => {
-          if(games && games.length && games[games.length-1].uuid) {
-            let gameObservable = this.backendGameService.getGame(games[games.length-1].uuid!);
-            return gameObservable.toPromise()
-          } else {
-            return Promise.resolve(null)
-          }
+  join(gameUuid: string) : Promise<Game> {
+    return this.backendGameService.joinGame(gameUuid)
+        .toPromise()
+        .then(game => {
+          console.log("Joined game : "+JSON.stringify(game))
+          this.gameUpdated(game)
+          return game
         })
-        .then(game => this.gameUpdated(game))
+  }
+
+  setCurrent(gameUuid: string) {
+    if(this.game?.description?.uuid == gameUuid) {
+      return Promise.resolve(this.game)
+    } else {
+      return this.gotoGame(gameUuid)
+    }
   }
 
   getAllGames() : Promise<Array<GameDescription>> {
@@ -81,6 +81,10 @@ export class RoomService {
 
 class NewGame implements GameDescription {
   gameType?: GameDescription.GameTypeEnum
+
+  constructor(gameType: GameDescription.GameTypeEnum) {
+    this.gameType = gameType
+  }
 }
 
 

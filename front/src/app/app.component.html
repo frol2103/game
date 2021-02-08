@@ -3,7 +3,7 @@
 </div>
 <div *ngIf="isReady()">
   <nav class="navbar navbar-dark bg-dark">
-    <a class="navbar-brand" routerLink="/create" routerLinkActive="active">
+    <a class="navbar-brand" routerLink="/home" routerLinkActive="active">
       {{ 'page_title' | translate }}
     </a>
     <span class="navbar-brand" *ngIf="loginService.user != null"><i class="fas fa-user"></i> {{ loginService.user.name }}</span>
@@ -13,6 +13,12 @@
       <user-login></user-login>
     </div>
     <div *ngIf="loginService.user != null">
+      <div *ngIf="!isHome()">
+        <button type="button" routerLink="/home" routerLinkActive="active" class="btn btn-secondary m-2 ">
+          <i class="fa fa-arrow-left" aria-hidden="true"></i>
+           {{ 'go_back_button' | translate }}
+        </button>
+      </div>
       <router-outlet></router-outlet>
     </div>
   </div>

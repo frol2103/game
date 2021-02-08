@@ -25,6 +25,17 @@ export class LabelsService {
     'game_home_title': "Welcome",
     'create_game_button': "Create a new game",
     'lostInTranslation_label': "Lost in transcription",
+    'no_game': "You are not currently in any active game. You can either create your own game and invite friends or use an invite url to join a game.",
+    'active_games_list_title': "You are in these games : ",
+    'toStart_label': "Game not started",
+    'inPlay_label': "In progress",
+    'finished_label': "Finished",
+    'open_game_button': "Open",
+    'game_created': "Start time",
+    'game_type': "Type",
+    'game_status': "Status",
+    'active_games_list_below': "You can also create a new game or join another friend's game by using the invite url they sent you.",
+    'go_back_button': "Go back",
   }
 
   public translate(key: string) : string {
