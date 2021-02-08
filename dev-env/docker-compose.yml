@@ -1,5 +1,8 @@
 version: "2"
 
+volumes:
+  sbt_cache:
+
 services:
 
   back:
