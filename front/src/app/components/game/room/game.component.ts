@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {LoginService, UserCreationForm} from "../../../services/login.service";
+import {LoginService} from "../../../services/login.service";
 import {RoomService} from "../../../services/room.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {Game, GameDescription} from "../../../../generated/api";
@@ -11,32 +11,30 @@ import StatusEnum = GameDescription.StatusEnum;
     styleUrls: ['./game.component.css']
 })
 export class GameComponent implements OnInit {
+    isAdmin: boolean = false
 
-    constructor(public loginService: LoginService, public roomService : RoomService, private route: ActivatedRoute, private router: Router) {
+    constructor(public loginService: LoginService, public roomService: RoomService, private route: ActivatedRoute, private router: Router) {
     }
 
     ngOnInit(): void {
         let gameUuid = this.route.snapshot.queryParams.game
-        if(gameUuid) {
-            console.log('Will join game with id from url : '+gameUuid)
+        if (gameUuid) {
+            console.log('Will join game with id from url : ' + gameUuid)
             this.roomService.join(gameUuid)
-                .toPromise()
-                .then(game => this.redirectIfNeeded(game))
+                .then(game => this.updateRole(game!))
         } else {
-            console.log('No game uuid in url, will stay in current game : '+this.roomService.game)
-            if(this.roomService.game) {
-                this.redirectIfNeeded(this.roomService.game)
+            if (this.roomService.game) {
+                console.log('No game uuid in url, will stay in current game : ' + this.roomService.game)
+                this.updateRole(this.roomService.game)
             } else {
-                this.roomService.goToLatestGame()
-                    .then(game => this.redirectIfNeeded(game))
+                console.log('No game uuid in url, send user back to home to select a game')
+                this.router.navigate(['/home'])
             }
         }
     }
 
-    private redirectIfNeeded(game: Game | null) {
-        if(game?.description?.status == "toStart" && game?.users?.filter(u => u.id == this.loginService.user?.id && u.canAdministrageGame).length) {
-            this.router.navigate(['/create'])
-        }
+    private updateRole(game: Game) {
+        this.isAdmin = game.users!.filter(u => u.id == this.loginService.user?.id && u.canAdministrageGame).length > 0
     }
 
     isInLobbyBeforeGame() {

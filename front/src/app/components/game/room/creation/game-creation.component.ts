@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {LoginService, UserCreationForm} from "../../../services/login.service";
-import {RoomService} from "../../../services/room.service";
+import {LoginService, UserCreationForm} from "../../../../services/login.service";
+import {RoomService} from "../../../../services/room.service";
 import {throwError} from "rxjs";
 import {Router} from "@angular/router";
 
@@ -16,16 +16,12 @@ export class GameCreationComponent implements OnInit {
     }
 
     ngOnInit(): void {
-        let game = this.roomService.game;
-        if(!game) {
+        if(!this.roomService.game) {
             throwError('An active game is mandatory to access the game creation interface')
         }
+        let game = this.roomService.game!;
 
-        if(game?.description?.status != "toStart" || !game?.users?.filter(u => u.id == this.loginService.user?.id && u.canAdministrageGame).length) {
-            this.router.navigate(['/current'])
-        }
-
-        this.inviteUrl=this.inviteUrl + game?.description?.uuid
+        this.inviteUrl=this.inviteUrl + game.description?.uuid
     }
 
     isReady() {

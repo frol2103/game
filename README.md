@@ -27,3 +27,4 @@ generate tables
 ```bash
 dcg run --rm back "genTables"
 ```
+

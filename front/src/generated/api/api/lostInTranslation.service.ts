@@ -69,9 +69,9 @@ export class LostInTranslationService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public addDrawingRound(uuid: string, file: Blob, observe?: 'body', reportProgress?: boolean): Observable<Array<LostInTranslationGame>>;
-    public addDrawingRound(uuid: string, file: Blob, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<LostInTranslationGame>>>;
-    public addDrawingRound(uuid: string, file: Blob, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<LostInTranslationGame>>>;
+    public addDrawingRound(uuid: string, file: Blob, observe?: 'body', reportProgress?: boolean): Observable<LostInTranslationGame>;
+    public addDrawingRound(uuid: string, file: Blob, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<LostInTranslationGame>>;
+    public addDrawingRound(uuid: string, file: Blob, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<LostInTranslationGame>>;
     public addDrawingRound(uuid: string, file: Blob, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
         if (uuid === null || uuid === undefined) {
             throw new Error('Required parameter uuid was null or undefined when calling addDrawingRound.');
@@ -114,7 +114,7 @@ export class LostInTranslationService {
             formParams = formParams.append('file', <any>file) as any || formParams;
         }
 
-        return this.httpClient.post<Array<LostInTranslationGame>>(`${this.configuration.basePath}/game/LostInTranslation/${encodeURIComponent(String(uuid))}/drawing`,
+        return this.httpClient.post<LostInTranslationGame>(`${this.configuration.basePath}/game/LostInTranslation/${encodeURIComponent(String(uuid))}/drawing`,
             convertFormParamsToString ? formParams.toString() : formParams,
             {
                 withCredentials: this.configuration.withCredentials,
@@ -132,9 +132,9 @@ export class LostInTranslationService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public addTextRound(uuid: string, text: string, observe?: 'body', reportProgress?: boolean): Observable<Array<LostInTranslationGame>>;
-    public addTextRound(uuid: string, text: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<LostInTranslationGame>>>;
-    public addTextRound(uuid: string, text: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<LostInTranslationGame>>>;
+    public addTextRound(uuid: string, text: string, observe?: 'body', reportProgress?: boolean): Observable<LostInTranslationGame>;
+    public addTextRound(uuid: string, text: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<LostInTranslationGame>>;
+    public addTextRound(uuid: string, text: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<LostInTranslationGame>>;
     public addTextRound(uuid: string, text: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
         if (uuid === null || uuid === undefined) {
             throw new Error('Required parameter uuid was null or undefined when calling addTextRound.');
@@ -163,7 +163,7 @@ export class LostInTranslationService {
             headers = headers.set('Content-Type', httpContentTypeSelected);
         }
 
-        return this.httpClient.post<Array<LostInTranslationGame>>(`${this.configuration.basePath}/game/LostInTranslation/${encodeURIComponent(String(uuid))}/text`,
+        return this.httpClient.post<LostInTranslationGame>(`${this.configuration.basePath}/game/LostInTranslation/${encodeURIComponent(String(uuid))}/text`,
             text,
             {
                 withCredentials: this.configuration.withCredentials,
@@ -180,9 +180,9 @@ export class LostInTranslationService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getGame(uuid: string, observe?: 'body', reportProgress?: boolean): Observable<Array<LostInTranslationGame>>;
-    public getGame(uuid: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<LostInTranslationGame>>>;
-    public getGame(uuid: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<LostInTranslationGame>>>;
+    public getGame(uuid: string, observe?: 'body', reportProgress?: boolean): Observable<LostInTranslationGame>;
+    public getGame(uuid: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<LostInTranslationGame>>;
+    public getGame(uuid: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<LostInTranslationGame>>;
     public getGame(uuid: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
         if (uuid === null || uuid === undefined) {
             throw new Error('Required parameter uuid was null or undefined when calling getGame.');
@@ -200,7 +200,7 @@ export class LostInTranslationService {
         }
 
 
-        return this.httpClient.get<Array<LostInTranslationGame>>(`${this.configuration.basePath}/game/LostInTranslation/${encodeURIComponent(String(uuid))}`,
+        return this.httpClient.get<LostInTranslationGame>(`${this.configuration.basePath}/game/LostInTranslation/${encodeURIComponent(String(uuid))}`,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
