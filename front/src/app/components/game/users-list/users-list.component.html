@@ -1,5 +1,9 @@
 <ul *ngIf="isReady()">
-    <li *ngFor="let user of roomService.game.users"> <i *ngIf="!user.canAdministrageGame" class="fas fa-user"></i> <i *ngIf="user.canAdministrageGame" class="fas fa-crown"></i>  {{ user.name }} </li>
+    <li *ngFor="let user of roomService.game!.users!">
+        <i *ngIf="!user.canAdministrageGame" class="fas fa-user"></i>
+        <i *ngIf="user.canAdministrageGame" class="fas fa-crown"></i>
+        {{ user.name }}
+    </li>
 </ul>
 
 <div *ngIf="!isReady()">

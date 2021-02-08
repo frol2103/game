@@ -175,9 +175,7 @@ paths:
         "200":
           description: "ok, lost in ctranslation game contains 1 round with no text nor drawing for the first round, 1 round with text or drawing when there is an action to do, all rounds when the match is finished and no round when there is not playable move (the previous player has not made its play)"
           schema:
-            type: array
-            items: 
-              $ref: "#/definitions/LostInTranslationGame"
+            $ref: "#/definitions/LostInTranslationGame"
   
   /game/LostInTranslation/{uuid}/text:
     post:
@@ -204,9 +202,7 @@ paths:
         "200":
           description: "ok"
           schema:
-            type: array
-            items: 
-              $ref: "#/definitions/LostInTranslationGame"
+            $ref: "#/definitions/LostInTranslationGame"
               
   /game/LostInTranslation/{uuid}/drawing:
     post:
@@ -233,9 +229,7 @@ paths:
         "200":
           description: "ok"
           schema:
-            type: array
-            items: 
-              $ref: "#/definitions/LostInTranslationGame"
+            $ref: "#/definitions/LostInTranslationGame"
 
   /file/{id}:
     get:

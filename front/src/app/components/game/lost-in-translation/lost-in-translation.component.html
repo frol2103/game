@@ -1,0 +1,10 @@
+<div *ngIf="!lostInTranslationService.game">
+    <i class="fa fa-spinner fa-2x rotate m-4" title="{{ 'waiting' | translate }}"></i>
+</div>
+<div *ngIf="lostInTranslationService.game">
+    <p>TODO : display playing instructions for current game round </p>
+    <p>
+        {{ lostInTranslationService.game | json }}
+    </p>
+</div>
+

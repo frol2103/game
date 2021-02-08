@@ -1,0 +1,52 @@
+<div class="card m-2">
+  <div class="card-header">
+    {{ 'game_home_title' | translate }}
+  </div>
+
+
+  <div class="card-body">
+    <div *ngIf="!games.length">
+      {{ 'no_game' | translate }}
+    </div>
+    <div *ngIf="games.length">
+      <p>
+        {{ 'active_games_list_title' | translate }}
+      </p>
+
+      <table id="example" class="table table-striped table-bordered" style="width:100%">
+        <thead>
+          <tr>
+            <th class="p-1">{{ 'game_created' | translate }}</th>
+            <th class="p-1">{{ 'game_type' | translate }}</th>
+            <th class="p-1">{{ 'game_status' | translate }}</th>
+            <th class="p-1"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let game of games">
+            <td class="p-1">{{ game.startTime | date:'medium' }}</td>
+            <td class="p-1">{{ game.gameType + '_label' | translate }}</td>
+            <td class="p-1">{{ game.status + '_label' | translate }}</td>
+            <td class="p-1"><button type="button" style="width:100%" (click)="openGame(game.uuid)" class="btn btn-primary" [title]="game.uuid">
+              {{ 'open_game_button' | translate }}
+            </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p>
+        {{ 'active_games_list_below' | translate }}
+      </p>
+    </div>
+
+
+
+
+
+    <button type="button" [disabled]="createDisabled" (click)="createGame()" class="btn btn-primary m-2 "> {{ 'create_game_button' | translate }}</button>
+<!--    <button type="button" routerLink="/join" routerLinkActive="active" class="btn btn-primary m-2 "> {{ 'join_game_button' | translate }}</button>-->
+  </div>
+
+</div>
+
