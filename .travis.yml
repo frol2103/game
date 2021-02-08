@@ -9,9 +9,7 @@ script:
 - mkdir -p $HOME/.sbt/boot
 - export GAME_SBT_CACHE_VOLUME=$HOME
 - "bash -x ./build/buildBack.bash"
-- docker tag gameback:latest frol2103/gameback:$(git rev-parse HEAD)
 - "bash -x ./build/buildFront.bash"
-- docker tag gamefront:latest frol2103/gamefront:$(git rev-parse HEAD)
 - docker push frol2103/gameback:$(git rev-parse HEAD)
 - docker push frol2103/gamefront:$(git rev-parse HEAD)
 notifications:

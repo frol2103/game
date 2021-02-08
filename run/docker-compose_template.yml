@@ -3,14 +3,14 @@ version: "2"
 services:
 
   back:
-    image: gameback:latest
+    image: frol2103/gameback:#TAG#
     restart: always
     volumes:
         - /srv/conf/env.conf:/app/conf/env.conf
     command: ["/app/bin/back","-Dconfig.file=/app/conf/env.conf"]
         
   front:
-    image: gamefront:latest
+    image: frol2103/gamefront:#TAG#
     restart: always
     ports:
       - 80:80

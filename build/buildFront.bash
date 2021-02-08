@@ -32,6 +32,6 @@ cp build/Dockerfile.front tmp_build
 cp -r build/resources tmp_build
 
 cd $DIR/../tmp_build
-docker build -t gamefront:latest -f Dockerfile.front .
+docker build -t frol2103/gamefront:$(git rev-parse HEAD) -f Dockerfile.front .
 
 
