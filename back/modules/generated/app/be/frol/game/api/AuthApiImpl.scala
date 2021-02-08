@@ -5,7 +5,7 @@ import be.frol.game.model.User
 /**
   * Provides a default implementation for [[AuthApi]].
   */
-@javax.annotation.Generated(value = Array("org.openapitools.codegen.languages.ScalaPlayFrameworkServerCodegen"), date = "2021-02-08T18:07:22.741Z[Etc/UTC]")
+@javax.annotation.Generated(value = Array("org.openapitools.codegen.languages.ScalaPlayFrameworkServerCodegen"), date = "2021-02-08T22:13:04.614Z[Etc/UTC]")
 class AuthApiImpl extends AuthApi {
   /**
     * @inheritdoc

@@ -6,7 +6,7 @@ import play.api.libs.Files.TemporaryFile
 /**
   * Provides a default implementation for [[LostInTranslationApi]].
   */
-@javax.annotation.Generated(value = Array("org.openapitools.codegen.languages.ScalaPlayFrameworkServerCodegen"), date = "2021-02-08T18:07:22.741Z[Etc/UTC]")
+@javax.annotation.Generated(value = Array("org.openapitools.codegen.languages.ScalaPlayFrameworkServerCodegen"), date = "2021-02-08T22:13:04.614Z[Etc/UTC]")
 class LostInTranslationApiImpl extends LostInTranslationApi {
   /**
     * @inheritdoc

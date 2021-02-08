@@ -3,6 +3,7 @@ import {finalize} from "rxjs/operators";
 import {Game, GameDescription, GameService, LostInTranslationGame, LostInTranslationService} from "../../generated/api";
 import {Observable, timer} from "rxjs";
 import {RoomService} from "./room.service";
+import {LoginService} from "./login.service";
 
 
 @Injectable({
@@ -11,9 +12,12 @@ import {RoomService} from "./room.service";
 export class LitService {
   public game : LostInTranslationGame | null = null
   private refreshActive : boolean = false
+  isTextRound : boolean = true
+  isFirstRound : boolean = true
+  isWaitingForOtherPlayers : boolean = false
 
 
-  public constructor(public roomService : RoomService, private backendService : LostInTranslationService) {
+  public constructor(public roomService : RoomService, private backendService : LostInTranslationService, private login : LoginService) {
 
   }
 
@@ -33,10 +37,28 @@ export class LitService {
     if(this.refreshActive && uuid) {
       this.backendService.getGame(uuid)
           .toPromise()
-          .then(game => this.game = game)
+          .then(game => this.updateGame(game))
     }
   }
 
+  private updateGame(game: LostInTranslationGame) {
+    this.isFirstRound = game.rounds?.length == 1
+    this.isTextRound = game.rounds!.length! % 2 == 1
+    this.isWaitingForOtherPlayers = false
+    //todo: not enough info in current rounds list to know what the round is
+
+    return this.game = game;
+  }
+
+  sendText(text: string) : Promise<LostInTranslationGame> {
+    return this.backendService.addTextRound(this.game!.game!.description!.uuid!, '"'+text+'"')
+        .toPromise()
+  }
+
+  sendDrawing(drawing: Blob) : Promise<LostInTranslationGame> {
+    return this.backendService.addDrawingRound(this.game!.game!.description!.uuid!, drawing)
+        .toPromise()
+  }
 }
 
 

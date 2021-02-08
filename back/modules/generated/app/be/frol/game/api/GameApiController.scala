@@ -7,7 +7,7 @@ import play.api.mvc._
 import be.frol.game.model.Game
 import be.frol.game.model.GameDescription
 
-@javax.annotation.Generated(value = Array("org.openapitools.codegen.languages.ScalaPlayFrameworkServerCodegen"), date = "2021-02-08T18:07:22.741Z[Etc/UTC]")
+@javax.annotation.Generated(value = Array("org.openapitools.codegen.languages.ScalaPlayFrameworkServerCodegen"), date = "2021-02-08T22:13:04.614Z[Etc/UTC]")
 @Singleton
 class GameApiController @Inject()(cc: ControllerComponents, api: GameApi) extends AbstractController(cc) {
   /**

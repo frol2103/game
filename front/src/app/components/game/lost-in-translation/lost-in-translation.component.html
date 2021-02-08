@@ -2,7 +2,69 @@
     <i class="fa fa-spinner fa-2x rotate m-4" title="{{ 'waiting' | translate }}"></i>
 </div>
 <div *ngIf="lostInTranslationService.game">
-    <p>TODO : display playing instructions for current game round </p>
+
+
+
+    <div class="card m-2" *ngIf="lostInTranslationService.isTextRound">
+        <div class="card-header">
+            {{ 'lit_text_round_title' | translate }}
+        </div>
+
+        <div class="card-body" >
+            <div *ngIf="lostInTranslationService.isFirstRound">
+                <div class="m-2">
+                    {{ 'lit_first_text_round_instructions' | translate }}
+                </div>
+            </div>
+            <div *ngIf="!lostInTranslationService.isFirstRound">
+                <div class="m-2">
+                    {{ 'lit_text_round_instructions' | translate }}
+                </div>
+
+                <div class="m-2">
+                    TODO : display drawing to describe here
+                </div>
+            </div>
+
+            <form (ngSubmit)="sendText()">
+                <div class="form-group">
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="text"
+                               [placeholder]="'lit_text_round_placeholder' | translate"
+                               required
+                               [(ngModel)]="text" name="text">
+                        <div class="input-group-append">
+                            <button type="submit" class="btn btn-primary ">
+                                <i class="fas fa-check"></i>
+                                {{ 'lit_text_round_send_button' | translate }}
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <div class="card m-2" *ngIf="!lostInTranslationService.isTextRound">
+        <div class="card-header">
+            {{ 'lit_draw_round_title' | translate }}
+        </div>
+
+        <div class="card-body">
+            <div>
+                {{ 'game_joining_description' | translate }}
+            </div>
+            <div>
+                {{ 'people_in_the_room' | translate }}
+            </div>
+        </div>
+    </div>
+
+    <p>DEBUG: </p>
     <p>
         {{ lostInTranslationService.game | json }}
     </p>

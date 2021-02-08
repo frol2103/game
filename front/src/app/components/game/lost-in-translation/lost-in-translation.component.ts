@@ -1,6 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {RoomService} from "../../../services/room.service";
 import {LitService} from "../../../services/lit.service";
+import {LostInTranslationGame} from "../../../../generated/api";
 
 @Component({
   selector: 'lost-in-translation',
@@ -8,8 +9,8 @@ import {LitService} from "../../../services/lit.service";
   styleUrls: ['./lost-in-translation.component.css']
 })
 export class LostInTranslationComponent implements OnInit, OnDestroy {
-
   constructor(public lostInTranslationService: LitService) { }
+  text: string = '';
 
   ngOnInit(): void {
     this.lostInTranslationService.init()
@@ -17,6 +18,10 @@ export class LostInTranslationComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.lostInTranslationService.stop()
+  }
+
+  sendText() {
+    this.lostInTranslationService.sendText(this.text)
   }
 
 }

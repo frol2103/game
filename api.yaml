@@ -186,6 +186,8 @@ paths:
       operationId: "addTextRound"
       produces:
       - "application/json"
+      consumes:
+      - "application/json"
       parameters:
       - name: "uuid"
         in: "path"
