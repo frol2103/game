@@ -13,7 +13,7 @@
       <user-login></user-login>
     </div>
     <div *ngIf="loginService.user != null">
-      <div *ngIf="!isHome()">
+      <div *ngIf="!isHome()" class="d-none d-md-block">
         <button type="button" routerLink="/home" routerLinkActive="active" class="btn btn-secondary m-2 ">
           <i class="fa fa-arrow-left" aria-hidden="true"></i>
            {{ 'go_back_button' | translate }}
