@@ -36,6 +36,11 @@ export class LabelsService {
     'game_status': "Status",
     'active_games_list_below': "You can also create a new game or join another friend's game by using the invite url they sent you.",
     'go_back_button': "Go back",
+    'lit_text_round_title': "Start the game",
+    'lit_first_text_round_instructions': "Write a few words or a short sentence that the next player will have to draw.",
+    'lit_text_round_send_button': "Send",
+    'lit_waiting_title': "Waiting for other players...",
+    'lit_waiting_for_other_player_description': "You have completed your tasks before the other players. Wait for them to finish the round to go to the next round.",
   }
 
   public translate(key: string) : string {

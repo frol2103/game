@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {RoomService} from "../../../services/room.service";
 import {LitService} from "../../../services/lit.service";
 import {LostInTranslationGame} from "../../../../generated/api";
@@ -12,6 +12,8 @@ export class LostInTranslationComponent implements OnInit, OnDestroy {
   constructor(public lostInTranslationService: LitService) { }
   text: string = '';
 
+  @ViewChild('drawing') drawing: HTMLCanvasElement | null = null;
+
   ngOnInit(): void {
     this.lostInTranslationService.init()
   }
@@ -22,6 +24,10 @@ export class LostInTranslationComponent implements OnInit, OnDestroy {
 
   sendText() {
     this.lostInTranslationService.sendText(this.text)
+  }
+
+  sendDrawing() {
+    this.drawing!.toBlob(blob => this.lostInTranslationService.sendDrawing(blob!))
   }
 
 }

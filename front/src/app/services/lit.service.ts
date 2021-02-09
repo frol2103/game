@@ -1,6 +1,13 @@
 import { Injectable } from '@angular/core';
 import {finalize} from "rxjs/operators";
-import {Game, GameDescription, GameService, LostInTranslationGame, LostInTranslationService} from "../../generated/api";
+import {
+  Game,
+  GameDescription,
+  GameService,
+  LostInTranslationGame,
+  LostInTranslationRound,
+  LostInTranslationService
+} from "../../generated/api";
 import {Observable, timer} from "rxjs";
 import {RoomService} from "./room.service";
 import {LoginService} from "./login.service";
@@ -15,7 +22,6 @@ export class LitService {
   isTextRound : boolean = true
   isFirstRound : boolean = true
   isWaitingForOtherPlayers : boolean = false
-
 
   public constructor(public roomService : RoomService, private backendService : LostInTranslationService, private login : LoginService) {
 
@@ -42,17 +48,21 @@ export class LitService {
   }
 
   private updateGame(game: LostInTranslationGame) {
+    this.game = game
     if(! game.rounds || !game.rounds.length) {
       this.isWaitingForOtherPlayers = true
       this.isFirstRound = false
     } else {
       this.isWaitingForOtherPlayers = false
-      let currentRound = game.rounds![0]!;
-      //todo: not enough info in current rounds list to know what the round is
-      this.isFirstRound = currentRound.roundUser!.id == currentRound.originalUser!.id
-      this.isTextRound = true
+      let currentRound = this.getCurrentRound();
+      this.isFirstRound = !currentRound.drawing && !currentRound.text
+      this.isTextRound = this.isFirstRound || currentRound.drawing != null
     }
-    return this.game = game;
+    return game
+  }
+
+  getCurrentRound() : LostInTranslationRound {
+    return this.game!.rounds![0]!
   }
 
   sendText(text: string) : Promise<LostInTranslationGame> {

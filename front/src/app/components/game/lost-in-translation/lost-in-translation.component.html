@@ -29,7 +29,6 @@
                     <div class="form-group">
                         <div class="input-group">
                             <input type="text" class="form-control" id="text"
-                                   [placeholder]="'lit_text_round_placeholder' | translate"
                                    required
                                    [(ngModel)]="text" name="text">
                             <div class="input-group-append">
@@ -58,7 +57,14 @@
                     {{ 'game_draw_description' | translate }}
                 </div>
                 <div>
+                    {{ lostInTranslationService.getCurrentRound().text }}
+                </div>
+                <div>
                     TODO: input for drawing
+
+                    <canvas #drawing>
+
+                    </canvas>
                 </div>
             </div>
         </div>
@@ -75,7 +81,8 @@
                     {{ 'lit_waiting_for_other_player_description' | translate }}
                 </div>
                 <div>
-                    TODO : display users in room with status of their current round
+<!--                    todo: add param to indicate that users should be displayed with their current round count : 4/7 or ...-->
+                    <users-list></users-list>
                 </div>
             </div>
         </div>
