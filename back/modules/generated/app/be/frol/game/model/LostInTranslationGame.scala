@@ -5,10 +5,10 @@ import play.api.libs.json._
 /**
   * Represents the Swagger definition for LostInTranslationGame.
   */
-@javax.annotation.Generated(value = Array("org.openapitools.codegen.languages.ScalaPlayFrameworkServerCodegen"), date = "2021-02-08T18:07:22.741Z[Etc/UTC]")
+@javax.annotation.Generated(value = Array("org.openapitools.codegen.languages.ScalaPlayFrameworkServerCodegen"), date = "2021-02-09T19:22:57.725Z[Etc/UTC]")
 case class LostInTranslationGame(
   game: Option[Game],
-  rounds: Option[List[LostInTranslationRound]]
+  rounds: Option[List[LostInTranslationStory]]
 )
 
 object LostInTranslationGame {

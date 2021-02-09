@@ -94,18 +94,20 @@ trait Tables {
    *  @param fkOriginalUserId Database column fk_original_user_id SqlType(BIGINT)
    *  @param fkUserId Database column fk_user_id SqlType(BIGINT)
    *  @param text Database column text SqlType(VARCHAR), Length(255,true), Default(None)
-   *  @param fkFileId Database column fk_file_id SqlType(VARCHAR), Length(36,true), Default(None) */
-  case class LitRoundRow(id: Long, fkGameId: Long, fkOriginalUserId: Long, fkUserId: Long, text: Option[String] = None, fkFileId: Option[String] = None)
+   *  @param fkFileId Database column fk_file_id SqlType(VARCHAR), Length(36,true), Default(None)
+   *  @param timestamp Database column timestamp SqlType(TIMESTAMP)
+   *  @param storyId Database column story_id SqlType(VARCHAR), Length(255,true), Default(old) */
+  case class LitRoundRow(id: Long, fkGameId: Long, fkOriginalUserId: Long, fkUserId: Long, text: Option[String] = None, fkFileId: Option[String] = None, timestamp: Option[java.sql.Timestamp], storyId: String = "old")
   /** GetResult implicit for fetching LitRoundRow objects using plain SQL queries */
-  implicit def GetResultLitRoundRow(implicit e0: GR[Long], e1: GR[Option[String]]): GR[LitRoundRow] = GR{
+  implicit def GetResultLitRoundRow(implicit e0: GR[Long], e1: GR[Option[String]], e2: GR[Option[java.sql.Timestamp]], e3: GR[String]): GR[LitRoundRow] = GR{
     prs => import prs._
-    LitRoundRow.tupled((<<[Long], <<[Long], <<[Long], <<[Long], <<?[String], <<?[String]))
+    LitRoundRow.tupled((<<[Long], <<[Long], <<[Long], <<[Long], <<?[String], <<?[String], <<?[java.sql.Timestamp], <<[String]))
   }
   /** Table description of table lit_round. Objects of this class serve as prototypes for rows in queries. */
   class LitRound(_tableTag: Tag) extends profile.api.Table[LitRoundRow](_tableTag, Some("db"), "lit_round") {
-    def * = (id, fkGameId, fkOriginalUserId, fkUserId, text, fkFileId) <> (LitRoundRow.tupled, LitRoundRow.unapply)
+    def * = (id, fkGameId, fkOriginalUserId, fkUserId, text, fkFileId, timestamp, storyId) <> (LitRoundRow.tupled, LitRoundRow.unapply)
     /** Maps whole row to an option. Useful for outer joins. */
-    def ? = ((Rep.Some(id), Rep.Some(fkGameId), Rep.Some(fkOriginalUserId), Rep.Some(fkUserId), text, fkFileId)).shaped.<>({r=>import r._; _1.map(_=> LitRoundRow.tupled((_1.get, _2.get, _3.get, _4.get, _5, _6)))}, (_:Any) =>  throw new Exception("Inserting into ? projection not supported."))
+    def ? = ((Rep.Some(id), Rep.Some(fkGameId), Rep.Some(fkOriginalUserId), Rep.Some(fkUserId), text, fkFileId, timestamp, Rep.Some(storyId))).shaped.<>({r=>import r._; _1.map(_=> LitRoundRow.tupled((_1.get, _2.get, _3.get, _4.get, _5, _6, _7, _8.get)))}, (_:Any) =>  throw new Exception("Inserting into ? projection not supported."))
 
     /** Database column id SqlType(BIGINT), AutoInc, PrimaryKey */
     val id: Rep[Long] = column[Long]("id", O.AutoInc, O.PrimaryKey)
@@ -119,6 +121,10 @@ trait Tables {
     val text: Rep[Option[String]] = column[Option[String]]("text", O.Length(255,varying=true), O.Default(None))
     /** Database column fk_file_id SqlType(VARCHAR), Length(36,true), Default(None) */
     val fkFileId: Rep[Option[String]] = column[Option[String]]("fk_file_id", O.Length(36,varying=true), O.Default(None))
+    /** Database column timestamp SqlType(TIMESTAMP) */
+    val timestamp: Rep[Option[java.sql.Timestamp]] = column[Option[java.sql.Timestamp]]("timestamp")
+    /** Database column story_id SqlType(VARCHAR), Length(255,true), Default(old) */
+    val storyId: Rep[String] = column[String]("story_id", O.Length(255,varying=true), O.Default("old"))
 
     /** Foreign key referencing Game (database name lit_round_ibfk_3) */
     lazy val gameFk = foreignKey("lit_round_ibfk_3", fkGameId, Game)(r => r.id, onUpdate=ForeignKeyAction.NoAction, onDelete=ForeignKeyAction.NoAction)
@@ -230,6 +236,9 @@ trait Tables {
     lazy val gameFk = foreignKey("user_in_game_ibfk_2", fkGameId, Game)(r => r.id, onUpdate=ForeignKeyAction.NoAction, onDelete=ForeignKeyAction.NoAction)
     /** Foreign key referencing User (database name user_in_game_ibfk_1) */
     lazy val userFk = foreignKey("user_in_game_ibfk_1", fkUserId, User)(r => r.id, onUpdate=ForeignKeyAction.NoAction, onDelete=ForeignKeyAction.NoAction)
+
+    /** Uniqueness Index over (fkUserId,fkGameId) (database name user_in_game_unicity) */
+    val index1 = index("user_in_game_unicity", (fkUserId, fkGameId), unique=true)
   }
   /** Collection-like TableQuery object for table UserInGame */
   lazy val UserInGame = new TableQuery(tag => new UserInGame(tag))

@@ -15,10 +15,21 @@ import { User } from './user';
 export interface LostInTranslationRound { 
     originalUser?: User;
     roundUser?: User;
+    storyId?: string;
+    submissionDate?: Date;
+    roundType?: LostInTranslationRound.RoundTypeEnum;
     text?: string;
     /**
      * id of the drawing file, use file api to recover it
      */
     drawing?: string;
 }
+export namespace LostInTranslationRound {
+    export type RoundTypeEnum = 'text' | 'drawing';
+    export const RoundTypeEnum = {
+        Text: 'text' as RoundTypeEnum,
+        Drawing: 'drawing' as RoundTypeEnum
+    };
+}
+
 

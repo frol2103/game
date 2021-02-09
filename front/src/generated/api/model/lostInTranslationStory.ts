@@ -9,12 +9,13 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { Game } from './game';
-import { LostInTranslationStory } from './lostInTranslationStory';
+import { LostInTranslationRound } from './lostInTranslationRound';
+import { User } from './user';
 
 
-export interface LostInTranslationGame { 
-    game?: Game;
-    rounds?: Array<LostInTranslationStory>;
+export interface LostInTranslationStory { 
+    originalUser?: User;
+    storyId?: string;
+    rounds?: Array<LostInTranslationRound>;
 }
 

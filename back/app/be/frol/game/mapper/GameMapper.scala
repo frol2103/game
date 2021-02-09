@@ -11,7 +11,7 @@ object GameMapper {
 
   def toDto(users : List[(Tables.UserInGameRow, Tables.UserRow)]): List[User]= {
     users.map{ case (uInGame, u) =>
-      User(Option(u.id), Option(u.name), Option(uInGame.role.map(_ == "ADMIN").getOrElse(false)))
+      User(Option(u.uuid), Option(u.name), Option(uInGame.role.map(_ == "ADMIN").getOrElse(false)))
     }
   }
 

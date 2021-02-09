@@ -6,7 +6,7 @@ import be.frol.game.model.GameDescription
 /**
   * Provides a default implementation for [[GameApi]].
   */
-@javax.annotation.Generated(value = Array("org.openapitools.codegen.languages.ScalaPlayFrameworkServerCodegen"), date = "2021-02-08T18:07:22.741Z[Etc/UTC]")
+@javax.annotation.Generated(value = Array("org.openapitools.codegen.languages.ScalaPlayFrameworkServerCodegen"), date = "2021-02-09T19:22:57.725Z[Etc/UTC]")
 class GameApiImpl extends GameApi {
   /**
     * @inheritdoc
