@@ -1,10 +1,5 @@
-<div class="card m-2">
-  <div class="card-header">
-    {{ 'game_home_title' | translate }}
-  </div>
+<panel title="game_home_title">
 
-
-  <div class="card-body">
     <div *ngIf="!games.length">
       {{ 'no_game' | translate }}
     </div>
@@ -52,7 +47,6 @@
 
     <button type="button" [disabled]="createDisabled" (click)="createGame()" class="btn btn-primary m-2 "> {{ 'create_game_button' | translate }}</button>
 <!--    <button type="button" routerLink="/join" routerLinkActive="active" class="btn btn-primary m-2 "> {{ 'join_game_button' | translate }}</button>-->
-  </div>
 
-</div>
+</panel>
 

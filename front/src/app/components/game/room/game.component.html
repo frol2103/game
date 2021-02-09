@@ -1,29 +1,20 @@
 <div *ngIf="isInLobbyBeforeGame()">
-
-  <div *ngIf="isAdmin">
-    <game-creation></game-creation>
-  </div>
-  <div *ngIf="!isAdmin">
-    <div class="card m-2">
-      <div class="card-header">
-        {{ 'game_joining_title' | translate }}
+  <game-creation *ngIf="isAdmin"></game-creation>
+  <panel title="game_joining_title" *ngIf="!isAdmin">
+      <div>
+        {{ 'game_joining_description' | translate }}
       </div>
-
-      <div class="card-body">
-        <div>
-          {{ 'game_joining_description' | translate }}
-        </div>
-        <div>
-          {{ 'people_in_the_room' | translate }}
-        </div>
-        <users-list></users-list>
+      <div>
+        {{ 'people_in_the_room' | translate }}
       </div>
-    </div>
-  </div>
+      <users-list></users-list>
+  </panel>
 </div>
+
 <div *ngIf="isInLobbyAfterGame()">
   <lost-in-translation-finished *ngIf="roomService.game?.description?.gameType == 'lostInTranslation'"></lost-in-translation-finished>
 </div>
+
 <div *ngIf="isInLobbyDuringGame()">
   <lost-in-translation *ngIf="roomService.game?.description?.gameType == 'lostInTranslation'"></lost-in-translation>
 </div>

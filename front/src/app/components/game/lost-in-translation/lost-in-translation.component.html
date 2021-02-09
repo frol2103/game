@@ -4,13 +4,8 @@
 <div *ngIf="lostInTranslationService.game">
 
     <div *ngIf="!lostInTranslationService.isWaitingForOtherPlayers">
-        <div class="card m-2" *ngIf="lostInTranslationService.isTextRound">
-            <div class="card-header">
-                {{ 'lit_text_round_title' | translate }}
-            </div>
-
-            <div class="card-body" >
-                <div *ngIf="lostInTranslationService.isFirstRound">
+        <panel title="lit_text_round_title" *ngIf="lostInTranslationService.isTextRound">
+                            <div *ngIf="lostInTranslationService.isFirstRound">
                     <div class="m-2">
                         {{ 'lit_first_text_round_instructions' | translate }}
                     </div>
@@ -41,54 +36,35 @@
 
                     </div>
                 </form>
+        </panel>
 
+
+        <panel title="lit_draw_round_title" *ngIf="!lostInTranslationService.isTextRound">
+            <div>
+                {{ 'game_draw_description' | translate }}
             </div>
-
-        </div>
-
-
-        <div class="card m-2" *ngIf="!lostInTranslationService.isTextRound">
-            <div class="card-header">
-                {{ 'lit_draw_round_title' | translate }}
+            <div>
+                {{ lostInTranslationService.getCurrentRound().text }}
             </div>
+            <div>
+                TODO: input for drawing
 
-            <div class="card-body">
-                <div>
-                    {{ 'game_draw_description' | translate }}
-                </div>
-                <div>
-                    {{ lostInTranslationService.getCurrentRound().text }}
-                </div>
-                <div>
-                    TODO: input for drawing
+                <canvas #drawing>
 
-                    <canvas #drawing>
-
-                    </canvas>
-                </div>
+                </canvas>
             </div>
-        </div>
+        </panel>
     </div>
 
-    <div *ngIf="lostInTranslationService.isWaitingForOtherPlayers">
-        <div class="card m-2">
-            <div class="card-header">
-                {{ 'lit_waiting_title' | translate }}
-            </div>
-
-            <div class="card-body">
-                <div>
-                    {{ 'lit_waiting_for_other_player_description' | translate }}
-                </div>
-                <div>
+    <panel title="lit_waiting_title" *ngIf="lostInTranslationService.isWaitingForOtherPlayers">
+        <div>
+            {{ 'lit_waiting_for_other_player_description' | translate }}
+        </div>
+        <div>
 <!--                    todo: add param to indicate that users should be displayed with their current round count : 4/7 or ...-->
-                    <users-list></users-list>
-                </div>
-            </div>
+            <users-list></users-list>
         </div>
-    </div>
-
-
+    </panel>
 
 
     <p>DEBUG: </p>
