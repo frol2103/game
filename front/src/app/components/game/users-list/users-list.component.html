@@ -1,4 +1,4 @@
-<wait-for condition="isReady()" spinner-class="fa-2x">
+<wait-for [condition]="isReady()" spinner-class="fa-2x">
     <ul>
         <li *ngFor="let user of roomService.game!.users!">
             <i *ngIf="!user.canAdministrageGame" class="fas fa-user"></i>

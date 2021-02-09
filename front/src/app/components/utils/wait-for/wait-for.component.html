@@ -1,6 +1,6 @@
 <div *ngIf="condition">
     <ng-content></ng-content>
 </div>
-<div *ngIf="!condition">
+<div *ngIf="!condition" class="text-center m-4">
     <i class="fa fa-spinner {{ spinnerClass }} rotate"title="{{ 'waiting' | translate }}"></i>
 </div>

@@ -1,4 +1,4 @@
-<wait-for condition="lostInTranslationService.game" spinner-class="fa-2x">
+<wait-for [condition]="lostInTranslationService.game" spinner-class="fa-2x">
 
     <div *ngIf="!lostInTranslationService.isWaitingForOtherPlayers">
         <panel title="lit_text_round_title" *ngIf="lostInTranslationService.isTextRound">
