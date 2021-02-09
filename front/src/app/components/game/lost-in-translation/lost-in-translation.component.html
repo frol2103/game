@@ -1,7 +1,4 @@
-<div *ngIf="!lostInTranslationService.game">
-    <i class="fa fa-spinner fa-2x rotate m-4" title="{{ 'waiting' | translate }}"></i>
-</div>
-<div *ngIf="lostInTranslationService.game">
+<wait-for condition="lostInTranslationService.game" spinner-class="fa-2x">
 
     <div *ngIf="!lostInTranslationService.isWaitingForOtherPlayers">
         <panel title="lit_text_round_title" *ngIf="lostInTranslationService.isTextRound">
@@ -71,5 +68,5 @@
     <p>
         {{ lostInTranslationService.game | json }}
     </p>
-</div>
+</wait-for>
 

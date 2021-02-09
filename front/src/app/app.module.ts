@@ -18,6 +18,7 @@ import { LostInTranslationComponent } from './components/game/lost-in-translatio
 import { LostInTranslationFinishedComponent } from './components/game/lost-in-translation/finished/lost-in-translation-finished.component';
 import { UserLogoutComponent } from './components/user/user-logout/user-logout.component';
 import { PanelComponent } from './components/utils/panel/panel.component';
+import { WaitForComponent } from './components/utils/wait-for/wait-for.component';
 
 const routes: Routes = [
     { path: 'logout', component: UserLogoutComponent },
@@ -39,7 +40,8 @@ const routes: Routes = [
         LostInTranslationComponent,
         LostInTranslationFinishedComponent,
         UserLogoutComponent,
-        PanelComponent
+        PanelComponent,
+        WaitForComponent
     ],
     imports: [
         FormsModule,

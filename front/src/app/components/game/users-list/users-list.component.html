@@ -1,11 +1,9 @@
-<ul *ngIf="isReady()">
-    <li *ngFor="let user of roomService.game!.users!">
-        <i *ngIf="!user.canAdministrageGame" class="fas fa-user"></i>
-        <i *ngIf="user.canAdministrageGame" class="fas fa-crown"></i>
-        {{ user.name }}
-    </li>
-</ul>
-
-<div *ngIf="!isReady()">
-    <i class="fa fa-spinner fa-2x rotate m-4" title="{{ 'waiting' | translate }}"></i>
-</div>
+<wait-for condition="isReady()" spinner-class="fa-2x">
+    <ul>
+        <li *ngFor="let user of roomService.game!.users!">
+            <i *ngIf="!user.canAdministrageGame" class="fas fa-user"></i>
+            <i *ngIf="user.canAdministrageGame" class="fas fa-crown"></i>
+            {{ user.name }}
+        </li>
+    </ul>
+</wait-for>

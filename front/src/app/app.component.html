@@ -1,7 +1,4 @@
-<div *ngIf="!isReady()" class="text-center align-middle p-5">
-  <i class="fa fa-spinner fa-5x rotate" title="{{ 'waiting' | translate }}"></i>
-</div>
-<div *ngIf="isReady()">
+<wait-for condition="isReady()" spinner-class="fa-5x">
   <nav class="navbar navbar-dark bg-dark">
     <a class="navbar-brand" routerLink="/home" routerLinkActive="active">
       <i class="fa fa-pencil-alt" aria-hidden="true"></i>
@@ -48,7 +45,7 @@
     </div>
 
   </div>
-</div>
+</wait-for>
 
 
 
