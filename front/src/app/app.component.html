@@ -1,3 +1,4 @@
+
 <div *ngIf="!isReady()" class="text-center align-middle p-5">
   <i class="fa fa-spinner fa-5x rotate" title="{{ 'waiting' | translate }}"></i>
 </div>
@@ -8,7 +9,7 @@
     </a>
     <span class="navbar-brand" *ngIf="loginService.user != null"><i class="fas fa-user"></i> {{ loginService.user.name }}</span>
   </nav>
-  <div>
+  <div class="container">
     <div *ngIf="loginService.user == null">
       <user-login></user-login>
     </div>
@@ -16,13 +17,15 @@
       <div *ngIf="!isHome()" class="d-none d-md-block">
         <button type="button" routerLink="/home" routerLinkActive="active" class="btn btn-secondary m-2 ">
           <i class="fa fa-arrow-left" aria-hidden="true"></i>
-           {{ 'go_back_button' | translate }}
+          {{ 'go_back_button' | translate }}
         </button>
       </div>
       <router-outlet></router-outlet>
     </div>
   </div>
 </div>
+
+
 
 
 
