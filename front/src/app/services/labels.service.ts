@@ -7,7 +7,10 @@ import {Subject} from "rxjs";
 export class LabelsService {
 
   private labels : any = {
-    'page_title': "Paperless games",
+    'page_title': "Paper(less) games",
+    'navigate_home_button': "Go to welcome page",
+    'log_out_button': "Log out",
+    'log_out_confirm': "Are you sure ? If you logout you won't be able to come back to your games.",
     'login_form_title': "Choose a user nickname",
     'login_form_name': "Name",
     'login_button': "Use this name",
@@ -31,6 +34,7 @@ export class LabelsService {
     'inPlay_label': "In progress",
     'finished_label': "Finished",
     'open_game_button': "Open",
+    'open_game_finished_button': "Open summary",
     'game_created': "Start time",
     'game_type': "Type",
     'game_status': "Status",

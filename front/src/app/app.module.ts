@@ -16,8 +16,10 @@ import {GameComponent} from "./components/game/room/game.component";
 import { UsersListComponent } from './components/game/users-list/users-list.component';
 import { LostInTranslationComponent } from './components/game/lost-in-translation/lost-in-translation.component';
 import { LostInTranslationFinishedComponent } from './components/game/lost-in-translation/finished/lost-in-translation-finished.component';
+import { UserLogoutComponent } from './components/user/user-logout/user-logout.component';
 
 const routes: Routes = [
+    { path: 'logout', component: UserLogoutComponent },
     { path: 'home', component: HomeComponent },
     { path: 'join', component: GameComponent },
     { path: 'current', component: GameComponent },
@@ -34,7 +36,8 @@ const routes: Routes = [
         GameComponent,
         UsersListComponent,
         LostInTranslationComponent,
-        LostInTranslationFinishedComponent
+        LostInTranslationFinishedComponent,
+        UserLogoutComponent
     ],
     imports: [
         FormsModule,

@@ -16,20 +16,26 @@
       <table id="example" class="table table-striped table-bordered" style="width:100%">
         <thead>
           <tr>
-            <th class="p-1">{{ 'game_created' | translate }}</th>
+            <th class="p-1 d-none d-md-table-cell">{{ 'game_created' | translate }}</th>
             <th class="p-1">{{ 'game_type' | translate }}</th>
-            <th class="p-1">{{ 'game_status' | translate }}</th>
+            <th class="p-1 d-none d-md-table-cell">{{ 'game_status' | translate }}</th>
             <th class="p-1"></th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let game of games">
-            <td class="p-1">{{ game.startTime | date:'medium' }}</td>
+            <td class="p-1 d-none d-md-table-cell">{{ game.startTime | date:'medium' }}</td>
             <td class="p-1">{{ game.gameType + '_label' | translate }}</td>
-            <td class="p-1">{{ game.status + '_label' | translate }}</td>
-            <td class="p-1"><button type="button" style="width:100%" (click)="openGame(game.uuid!)" class="btn btn-primary" [title]="game.uuid!">
-              {{ 'open_game_button' | translate }}
-            </button>
+            <td class="p-1 d-none d-md-table-cell">{{ game.status + '_label' | translate }}</td>
+            <td class="p-1">
+              <button type="button" style="width:100%" (click)="openGame(game.uuid!)" class="btn btn-primary" [title]="game.uuid!">
+                <span *ngIf="game.status != 'finished'">
+                  {{ 'open_game_button' | translate }}
+                </span>
+                <span *ngIf="game.status == 'finished'">
+                  {{ 'open_game_finished_button' | translate }}
+                </span>
+              </button>
             </td>
           </tr>
         </tbody>
