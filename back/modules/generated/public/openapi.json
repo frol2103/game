@@ -226,7 +226,7 @@
                 }
               }
             },
-            "description" : "ok, lost in ctranslation game contains 1 round with no text nor drawing for the first round, 1 round with text or drawing when there is an action to do, all rounds when the match is finished and no round when there is not playable move (the previous player has not made its play)"
+            "description" : "ok"
           }
         },
         "summary" : "Get an LostInTranslation game",
@@ -456,7 +456,7 @@
               "uuid" : "uuid"
             } ]
           },
-          "rounds" : [ {
+          "stories" : [ {
             "storyId" : "storyId",
             "originalUser" : {
               "canAdministrageGame" : true,
@@ -542,7 +542,7 @@
           "game" : {
             "$ref" : "#/components/schemas/Game"
           },
-          "rounds" : {
+          "stories" : {
             "items" : {
               "$ref" : "#/components/schemas/LostInTranslationStory"
             },

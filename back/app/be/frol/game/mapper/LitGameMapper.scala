@@ -9,15 +9,15 @@ object LitGameMapper {
 
   def toLitDto(litg: LitRichGame, roundTransform: LitRichRound => LitRichRound = (v => v)) : LostInTranslationGame = {
     LostInTranslationGame(Option(GameMapper.toDto(litg.game)),
-      Option(litg.rounds.groupBy(_.storyId).map{case(k,v) => toDto(litg,k,v)}.toList)
+      Option(litg.rounds.groupBy(_.storyId).map{case(k,v) => toDto(litg,k,v, roundTransform)}.toList)
     )
   }
 
-  def toDto(litRichGame: LitRichGame, storyId:String, rounds: Iterable[LitRichRound]) : LostInTranslationStory = {
+  def toDto(litRichGame: LitRichGame, storyId:String, rounds: Iterable[LitRichRound], roundTransform: LitRichRound => LitRichRound) : LostInTranslationStory = {
     new LostInTranslationStory(
       rounds.headOption.map(_.round.fkOriginalUserId).flatMap(litRichGame.user).map(UserMapper.toDto),
       Option(storyId),
-      Option(rounds.map(toDto(litRichGame, _)).toList))
+      Option(rounds.map(roundTransform).map(toDto(litRichGame, _)).toList))
   }
 
   def toDto(litRichGame: LitRichGame, round: LitRichRound) : LostInTranslationRound = {

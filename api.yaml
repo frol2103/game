@@ -306,7 +306,7 @@ definitions:
     properties:
       game:
         $ref: "#/definitions/Game"
-      rounds: 
+      stories:
         type: array
         items:
           $ref: "#/definitions/LostInTranslationStory"

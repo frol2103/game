@@ -4,8 +4,9 @@ import be.frol.game.model.LostInTranslationRound.RoundType.RoundType
 import be.frol.game.tables.Tables.LitRoundRow
 import be.frol.game.utils.TraversableUtils._
 import be.frol.game.utils.OptionUtils._
+import play.api.Logging
 
-case class LitRichGame(game: RichGame, playedRounds : Seq[LitRoundRow]) {
+case class LitRichGame(game: RichGame, playedRounds : Seq[LitRoundRow]) extends Logging {
 
   def haveToMarkGameFinished = !game.gameFinished() && finished
   def hasMoreRoundForUser(userId:Long) = playedRounds.count(_.fkUserId == userId) < game.users.size
@@ -38,7 +39,7 @@ case class LitRichGame(game: RichGame, playedRounds : Seq[LitRoundRow]) {
   def nextRoundsFor(userUuid:String):List[LitRichRound] = nextRoundsFor(user(userUuid).get.id)
 
   def roundsToPlay() = {
-    playedRichRounds.groupBy(_.storyId).map(_._2.maxBy(_.round.timestamp.get.getTime)).map{ richRound =>
+    playedRichRounds.groupBy(_.storyId).map(_._2.maxBy(_.round.id)).map{ richRound =>
       LitRichRound(
         richRound.round.copy(
           id=0L,

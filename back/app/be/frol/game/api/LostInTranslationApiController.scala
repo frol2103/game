@@ -3,7 +3,7 @@ package be.frol.game.api
 import be.frol.game.error.FunctionalError
 import be.frol.game.mapper.LitGameMapper.toLitDto
 import be.frol.game.model.LostInTranslationRound.RoundType
-import be.frol.game.model.{LitRichGame, LostInTranslationGame, LostInTranslationRound, RichGame}
+import be.frol.game.model.{LitRichGame, LostInTranslationGame, RichGame}
 import be.frol.game.repository.{FileRepository, GameRepository, LitRepository}
 import be.frol.game.tables.Tables
 import be.frol.game.utils.DateUtils
@@ -34,7 +34,7 @@ class LostInTranslationApiController @Inject()(
 
   def addDrawingRound(gameUuid: String, storyId: String) = Action.async(parse.multipartFormData) { implicit request =>
     val file = request.body.file("file").getOrThrow("missing file")
-    val fileUuid = uuid
+    val fileUuid = randomUuid
     db.run(
       currentUser.flatMap(u =>
         fileRepository.add(new tables.Tables.FileRow(
@@ -53,15 +53,16 @@ class LostInTranslationApiController @Inject()(
   )
 
   private def playRound(gameUuid: String, storyId: String, text: Option[String], fileId: Option[String])(implicit request: Request[_]) = {
-    getLitGame(gameUuid).flatMap(litg =>
+    getLitGame(gameUuid).flatMap { litg =>
       litRepository.add(
         litg.nextRoundsFor(currentUserUUID)
           .find(_.round.storyId == storyId)
-          .filter(r => (r.roundType == RoundType.Text && text.isDefined) || (r.roundType == RoundType.Drawing && fileId.isDefined))
+          .filter(r => (r.roundType == Some(RoundType.Text) && text.isDefined) || (r.roundType == Some(RoundType.Drawing) && fileId.isDefined))
           .filter(_ => text.isDefined != fileId.isDefined)
           .map(_.round.copy(text = text, fkFileId = fileId, timestamp = Option(DateUtils.ts)))
-          .getOrThrow("not a legal play"))
-    ).flatMap(_ => getCurrentGameInfo(uuid))
+          .getOrThrow("not a legal play")
+      )
+    }.flatMap(_ => getCurrentGameInfo(gameUuid))
 
   }
 
@@ -88,8 +89,8 @@ class LostInTranslationApiController @Inject()(
     }
   }
 
-  private def getLitGame(uuid: String) = {
-    gameService.getGame(uuid).map(RichGame.build)
+  private def getLitGame(gameUuid: String) = {
+    gameService.getGame(gameUuid).map(RichGame.build)
       .flatMap(g => Tables.LitRound.filter(_.fkGameId === g.id).result.map(rounds => LitRichGame(g, rounds)))
   }
 

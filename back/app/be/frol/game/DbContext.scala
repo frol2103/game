@@ -10,5 +10,5 @@ trait DbContext extends HasDatabaseConfigProvider[JdbcProfile]{
   protected val dbConfigProvider: DatabaseConfigProvider
   protected lazy val api = dbConfig.profile.api
 
-  def uuid() = UUID.randomUUID().toString
+  def randomUuid() = UUID.randomUUID().toString
 }
