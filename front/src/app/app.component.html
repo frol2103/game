@@ -1,4 +1,3 @@
-
 <div *ngIf="!isReady()" class="text-center align-middle p-5">
   <i class="fa fa-spinner fa-5x rotate" title="{{ 'waiting' | translate }}"></i>
 </div>
@@ -10,7 +9,7 @@
     </a>
 
     <span>
-      <span class="navbar-brand d-none d-md-inline-block" *ngIf="loginService.user != null">
+      <span class="navbar-brand d-none d-md-inline-block" *ngIf="loginService.user">
         <i class="fas fa-user"></i> {{ loginService.user.name }}
       </span>
       <button type="button" (click)="toggleMenu()" class="btn m-1" [ngClass]="{' btn-outline-light' : !menuOpen, ' btn-light' : menuOpen}">
@@ -19,10 +18,10 @@
     </span>
   </nav>
   <div class="container" *ngIf="!menuOpen">
-    <div *ngIf="loginService.user == null">
+    <div *ngIf="!loginService.user">
       <user-login></user-login>
     </div>
-    <div *ngIf="loginService.user != null">
+    <div *ngIf="loginService.user">
       <div *ngIf="displayHomeButton()" class="d-none d-md-block">
         <button type="button" routerLink="/home" routerLinkActive="active" class="btn btn-secondary m-2 ">
           <i class="fa fa-arrow-left" aria-hidden="true"></i>
@@ -40,7 +39,7 @@
           {{ 'navigate_home_button' | translate }}
         </button>
       </div>
-      <div class="col-12 text-center">
+      <div class="col-12 text-center" *ngIf="loginService.user">
         <button type="button" routerLink="/logout" routerLinkActive="active" class="btn btn-secondary m-2 ">
           <i class="fa fa-sign-out-alt" aria-hidden="true"></i>
           {{ 'log_out_button' | translate }}
