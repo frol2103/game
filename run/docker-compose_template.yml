@@ -20,6 +20,7 @@ services:
     restart: always
     ports:
       - 80:80
+      - 443:443
     volumes:
       - letsencrypt_certificates:/etc/letsencrypt
       - letsencrypt_challenges:/usr/local/apache2/htdocs/.well-known
