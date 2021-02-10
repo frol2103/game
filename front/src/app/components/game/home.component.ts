@@ -34,10 +34,8 @@ export class HomeComponent implements OnInit {
         return this.router.navigate(['/current'], {queryParams: {game: uuid}});
     }
 
-    openGame(uuid: string | undefined) {
-        if(uuid){
-            this.navigateToGamePage(uuid)
-        }
+    openGame(uuid: string) {
+        this.navigateToGamePage(uuid)
     }
 }
 
