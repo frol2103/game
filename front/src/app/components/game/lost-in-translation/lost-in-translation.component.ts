@@ -2,6 +2,7 @@ import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {RoomService} from "../../../services/room.service";
 import {LitService} from "../../../services/lit.service";
 import {GameDescription, LostInTranslationGame} from "../../../../generated/api";
+import {DrawingComponent} from "./drawing/drawing.component";
 
 @Component({
   selector: 'lost-in-translation',
@@ -12,7 +13,7 @@ export class LostInTranslationComponent implements OnInit, OnDestroy {
   constructor(public lostInTranslationService: LitService) { }
   text: string = '';
 
-  @ViewChild('drawing') drawing: HTMLCanvasElement | null = null;
+  @ViewChild('litdrawing') drawing: DrawingComponent | null = null;
 
   ngOnInit(): void {
     this.lostInTranslationService.init()
@@ -27,7 +28,7 @@ export class LostInTranslationComponent implements OnInit, OnDestroy {
   }
 
   sendDrawing() {
-    this.drawing!.toBlob(blob => this.lostInTranslationService.sendDrawing(blob!))
+    this.drawing!.saveCanvasAsBlob().then(blob => this.lostInTranslationService.sendDrawing(blob!))
   }
 
   isGameFinished() {

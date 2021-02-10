@@ -50,11 +50,13 @@
                 </div>
             </div>
             <div>
-                TODO: input for drawing
-
-                <canvas #drawing>
-
-                </canvas>
+                <lit-drawing #litdrawing></lit-drawing>
+            </div>
+            <div>
+                <button type="button" class="btn btn-primary" (click)="sendDrawing()">
+                    <i class="fas fa-check"></i>
+                    {{ 'lit_text_round_send_button' | translate }}
+                </button>
             </div>
         </panel>
     </div>
