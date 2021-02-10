@@ -33,6 +33,10 @@ class AuthApiController @Inject()(
 
   import api._
 
+  def logout() = Action { request =>
+    Ok.withNewSession
+  }
+
   def login() = Action.async(parse.json) { request =>
     val username = request.body.validate[String].getOrElse(throw new FunctionalError("Username required"))
     db.run(

@@ -7,7 +7,7 @@ import play.api.mvc._
 import be.frol.game.model.User
 import be.frol.game.model.UserAssociation
 
-@javax.annotation.Generated(value = Array("org.openapitools.codegen.languages.ScalaPlayFrameworkServerCodegen"), date = "2021-02-10T22:47:12.422Z[Etc/UTC]")
+@javax.annotation.Generated(value = Array("org.openapitools.codegen.languages.ScalaPlayFrameworkServerCodegen"), date = "2021-02-10T23:20:48.736Z[Etc/UTC]")
 @Singleton
 class AuthApiController @Inject()(cc: ControllerComponents, api: AuthApi) extends AbstractController(cc) {
   /**
@@ -48,6 +48,18 @@ class AuthApiController @Inject()(cc: ControllerComponents, api: AuthApi) extend
         throw new OpenApiExceptions.MissingRequiredParameterException("body", "username")
       }
       api.login(username)
+    }
+
+    executeApi()
+    Ok
+  }
+
+  /**
+    * GET /api/logout
+    */
+  def logout(): Action[AnyContent] = Action { request =>
+    def executeApi(): Unit = {
+      api.logout()
     }
 
     executeApi()

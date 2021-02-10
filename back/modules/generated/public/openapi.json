@@ -28,6 +28,19 @@
     "name" : "lostInTranslation"
   } ],
   "paths" : {
+    "/logout" : {
+      "get" : {
+        "operationId" : "logout",
+        "responses" : {
+          "200" : {
+            "content" : { },
+            "description" : "ok"
+          }
+        },
+        "summary" : "logout",
+        "tags" : [ "auth" ]
+      }
+    },
     "/login" : {
       "post" : {
         "operationId" : "login",

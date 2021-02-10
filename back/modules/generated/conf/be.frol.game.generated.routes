@@ -8,6 +8,7 @@
 GET /api/user                                                    be.frol.game.api.AuthApiController.getConnectedUser()
 POST /api/user/link                                              be.frol.game.api.AuthApiController.linkToExternalAccount()
 POST /api/login                                                  be.frol.game.api.AuthApiController.login()
+GET /api/logout                                                  be.frol.game.api.AuthApiController.logout()
 POST /api/socialLogin                                            be.frol.game.api.AuthApiController.socialLogin()
 
 # Routes for File API

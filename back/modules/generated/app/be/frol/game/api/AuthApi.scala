@@ -3,7 +3,7 @@ package be.frol.game.api
 import be.frol.game.model.User
 import be.frol.game.model.UserAssociation
 
-@javax.annotation.Generated(value = Array("org.openapitools.codegen.languages.ScalaPlayFrameworkServerCodegen"), date = "2021-02-10T22:47:12.422Z[Etc/UTC]")
+@javax.annotation.Generated(value = Array("org.openapitools.codegen.languages.ScalaPlayFrameworkServerCodegen"), date = "2021-02-10T23:20:48.736Z[Etc/UTC]")
 trait AuthApi {
   /**
     * connected user
@@ -21,6 +21,11 @@ trait AuthApi {
     * @param username login information
     */
   def login(username: String): Unit
+
+  /**
+    * logout
+    */
+  def logout(): Unit
 
   /**
     * social login

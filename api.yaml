@@ -21,6 +21,16 @@ schemes:
 - "https"
 - "http"
 paths:
+  /logout:
+    get:
+      tags:
+        - "auth"
+      summary: "logout"
+      description: ""
+      operationId: "logout"
+      responses:
+        "200":
+          description: "ok"
   /login:
     post:
       tags:
