@@ -36,6 +36,12 @@ export class LabelsService {
     'game_status': "Status",
     'active_games_list_below': "You can also create a new game or join another friend's game by using the invite url they sent you.",
     'go_back_button': "Go back",
+    'profile_title': 'Profile',
+    'link_facebook_button': 'Link to facebook',
+    'social_login_title': 'Social login',
+    'social_login_button': 'Connect with Facebook',
+    'account_linked_to_facebook_label': 'Linked to facebook',
+
   }
 
   public translate(key: string) : string {

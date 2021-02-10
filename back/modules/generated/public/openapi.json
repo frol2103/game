@@ -53,6 +53,31 @@
         "x-codegen-request-body-name" : "username"
       }
     },
+    "/socialLogin" : {
+      "post" : {
+        "operationId" : "socialLogin",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/UserAssociation"
+              }
+            }
+          },
+          "description" : "the association infos",
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "content" : { },
+            "description" : "ok"
+          }
+        },
+        "summary" : "social login",
+        "tags" : [ "auth" ],
+        "x-codegen-request-body-name" : "userAssociation"
+      }
+    },
     "/user" : {
       "get" : {
         "operationId" : "getConnectedUser",
@@ -70,6 +95,37 @@
         },
         "summary" : "connected user",
         "tags" : [ "auth" ]
+      }
+    },
+    "/user/link" : {
+      "post" : {
+        "operationId" : "linkToExternalAccount",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/UserAssociation"
+              }
+            }
+          },
+          "description" : "the association infos",
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/User"
+                }
+              }
+            },
+            "description" : "OK"
+          }
+        },
+        "summary" : "link to external account",
+        "tags" : [ "auth" ],
+        "x-codegen-request-body-name" : "userAssociation"
       }
     },
     "/game" : {
@@ -358,6 +414,13 @@
         "example" : {
           "canAdministrageGame" : true,
           "name" : "name",
+          "linkedAccounts" : [ {
+            "linkType" : "Facebook",
+            "accessToken" : "accessToken"
+          }, {
+            "linkType" : "Facebook",
+            "accessToken" : "accessToken"
+          } ],
           "uuid" : "uuid"
         },
         "properties" : {
@@ -369,6 +432,28 @@
           },
           "canAdministrageGame" : {
             "type" : "boolean"
+          },
+          "linkedAccounts" : {
+            "items" : {
+              "$ref" : "#/components/schemas/UserAssociation"
+            },
+            "type" : "array"
+          }
+        },
+        "type" : "object"
+      },
+      "UserAssociation" : {
+        "example" : {
+          "linkType" : "Facebook",
+          "accessToken" : "accessToken"
+        },
+        "properties" : {
+          "linkType" : {
+            "enum" : [ "Facebook" ],
+            "type" : "string"
+          },
+          "accessToken" : {
+            "type" : "string"
           }
         },
         "type" : "object"
@@ -416,10 +501,24 @@
           "users" : [ {
             "canAdministrageGame" : true,
             "name" : "name",
+            "linkedAccounts" : [ {
+              "linkType" : "Facebook",
+              "accessToken" : "accessToken"
+            }, {
+              "linkType" : "Facebook",
+              "accessToken" : "accessToken"
+            } ],
             "uuid" : "uuid"
           }, {
             "canAdministrageGame" : true,
             "name" : "name",
+            "linkedAccounts" : [ {
+              "linkType" : "Facebook",
+              "accessToken" : "accessToken"
+            }, {
+              "linkType" : "Facebook",
+              "accessToken" : "accessToken"
+            } ],
             "uuid" : "uuid"
           } ]
         },
@@ -449,10 +548,24 @@
             "users" : [ {
               "canAdministrageGame" : true,
               "name" : "name",
+              "linkedAccounts" : [ {
+                "linkType" : "Facebook",
+                "accessToken" : "accessToken"
+              }, {
+                "linkType" : "Facebook",
+                "accessToken" : "accessToken"
+              } ],
               "uuid" : "uuid"
             }, {
               "canAdministrageGame" : true,
               "name" : "name",
+              "linkedAccounts" : [ {
+                "linkType" : "Facebook",
+                "accessToken" : "accessToken"
+              }, {
+                "linkType" : "Facebook",
+                "accessToken" : "accessToken"
+              } ],
               "uuid" : "uuid"
             } ]
           },
@@ -461,6 +574,13 @@
             "originalUser" : {
               "canAdministrageGame" : true,
               "name" : "name",
+              "linkedAccounts" : [ {
+                "linkType" : "Facebook",
+                "accessToken" : "accessToken"
+              }, {
+                "linkType" : "Facebook",
+                "accessToken" : "accessToken"
+              } ],
               "uuid" : "uuid"
             },
             "rounds" : [ {
@@ -468,12 +588,26 @@
               "originalUser" : {
                 "canAdministrageGame" : true,
                 "name" : "name",
+                "linkedAccounts" : [ {
+                  "linkType" : "Facebook",
+                  "accessToken" : "accessToken"
+                }, {
+                  "linkType" : "Facebook",
+                  "accessToken" : "accessToken"
+                } ],
                 "uuid" : "uuid"
               },
               "drawing" : "drawing",
               "roundUser" : {
                 "canAdministrageGame" : true,
                 "name" : "name",
+                "linkedAccounts" : [ {
+                  "linkType" : "Facebook",
+                  "accessToken" : "accessToken"
+                }, {
+                  "linkType" : "Facebook",
+                  "accessToken" : "accessToken"
+                } ],
                 "uuid" : "uuid"
               },
               "submissionDate" : "2000-01-23T04:56:07.000+00:00",
@@ -484,12 +618,26 @@
               "originalUser" : {
                 "canAdministrageGame" : true,
                 "name" : "name",
+                "linkedAccounts" : [ {
+                  "linkType" : "Facebook",
+                  "accessToken" : "accessToken"
+                }, {
+                  "linkType" : "Facebook",
+                  "accessToken" : "accessToken"
+                } ],
                 "uuid" : "uuid"
               },
               "drawing" : "drawing",
               "roundUser" : {
                 "canAdministrageGame" : true,
                 "name" : "name",
+                "linkedAccounts" : [ {
+                  "linkType" : "Facebook",
+                  "accessToken" : "accessToken"
+                }, {
+                  "linkType" : "Facebook",
+                  "accessToken" : "accessToken"
+                } ],
                 "uuid" : "uuid"
               },
               "submissionDate" : "2000-01-23T04:56:07.000+00:00",
@@ -501,6 +649,13 @@
             "originalUser" : {
               "canAdministrageGame" : true,
               "name" : "name",
+              "linkedAccounts" : [ {
+                "linkType" : "Facebook",
+                "accessToken" : "accessToken"
+              }, {
+                "linkType" : "Facebook",
+                "accessToken" : "accessToken"
+              } ],
               "uuid" : "uuid"
             },
             "rounds" : [ {
@@ -508,12 +663,26 @@
               "originalUser" : {
                 "canAdministrageGame" : true,
                 "name" : "name",
+                "linkedAccounts" : [ {
+                  "linkType" : "Facebook",
+                  "accessToken" : "accessToken"
+                }, {
+                  "linkType" : "Facebook",
+                  "accessToken" : "accessToken"
+                } ],
                 "uuid" : "uuid"
               },
               "drawing" : "drawing",
               "roundUser" : {
                 "canAdministrageGame" : true,
                 "name" : "name",
+                "linkedAccounts" : [ {
+                  "linkType" : "Facebook",
+                  "accessToken" : "accessToken"
+                }, {
+                  "linkType" : "Facebook",
+                  "accessToken" : "accessToken"
+                } ],
                 "uuid" : "uuid"
               },
               "submissionDate" : "2000-01-23T04:56:07.000+00:00",
@@ -524,12 +693,26 @@
               "originalUser" : {
                 "canAdministrageGame" : true,
                 "name" : "name",
+                "linkedAccounts" : [ {
+                  "linkType" : "Facebook",
+                  "accessToken" : "accessToken"
+                }, {
+                  "linkType" : "Facebook",
+                  "accessToken" : "accessToken"
+                } ],
                 "uuid" : "uuid"
               },
               "drawing" : "drawing",
               "roundUser" : {
                 "canAdministrageGame" : true,
                 "name" : "name",
+                "linkedAccounts" : [ {
+                  "linkType" : "Facebook",
+                  "accessToken" : "accessToken"
+                }, {
+                  "linkType" : "Facebook",
+                  "accessToken" : "accessToken"
+                } ],
                 "uuid" : "uuid"
               },
               "submissionDate" : "2000-01-23T04:56:07.000+00:00",
@@ -557,6 +740,13 @@
           "originalUser" : {
             "canAdministrageGame" : true,
             "name" : "name",
+            "linkedAccounts" : [ {
+              "linkType" : "Facebook",
+              "accessToken" : "accessToken"
+            }, {
+              "linkType" : "Facebook",
+              "accessToken" : "accessToken"
+            } ],
             "uuid" : "uuid"
           },
           "rounds" : [ {
@@ -564,12 +754,26 @@
             "originalUser" : {
               "canAdministrageGame" : true,
               "name" : "name",
+              "linkedAccounts" : [ {
+                "linkType" : "Facebook",
+                "accessToken" : "accessToken"
+              }, {
+                "linkType" : "Facebook",
+                "accessToken" : "accessToken"
+              } ],
               "uuid" : "uuid"
             },
             "drawing" : "drawing",
             "roundUser" : {
               "canAdministrageGame" : true,
               "name" : "name",
+              "linkedAccounts" : [ {
+                "linkType" : "Facebook",
+                "accessToken" : "accessToken"
+              }, {
+                "linkType" : "Facebook",
+                "accessToken" : "accessToken"
+              } ],
               "uuid" : "uuid"
             },
             "submissionDate" : "2000-01-23T04:56:07.000+00:00",
@@ -580,12 +784,26 @@
             "originalUser" : {
               "canAdministrageGame" : true,
               "name" : "name",
+              "linkedAccounts" : [ {
+                "linkType" : "Facebook",
+                "accessToken" : "accessToken"
+              }, {
+                "linkType" : "Facebook",
+                "accessToken" : "accessToken"
+              } ],
               "uuid" : "uuid"
             },
             "drawing" : "drawing",
             "roundUser" : {
               "canAdministrageGame" : true,
               "name" : "name",
+              "linkedAccounts" : [ {
+                "linkType" : "Facebook",
+                "accessToken" : "accessToken"
+              }, {
+                "linkType" : "Facebook",
+                "accessToken" : "accessToken"
+              } ],
               "uuid" : "uuid"
             },
             "submissionDate" : "2000-01-23T04:56:07.000+00:00",
@@ -615,12 +833,26 @@
           "originalUser" : {
             "canAdministrageGame" : true,
             "name" : "name",
+            "linkedAccounts" : [ {
+              "linkType" : "Facebook",
+              "accessToken" : "accessToken"
+            }, {
+              "linkType" : "Facebook",
+              "accessToken" : "accessToken"
+            } ],
             "uuid" : "uuid"
           },
           "drawing" : "drawing",
           "roundUser" : {
             "canAdministrageGame" : true,
             "name" : "name",
+            "linkedAccounts" : [ {
+              "linkType" : "Facebook",
+              "accessToken" : "accessToken"
+            }, {
+              "linkType" : "Facebook",
+              "accessToken" : "accessToken"
+            } ],
             "uuid" : "uuid"
           },
           "submissionDate" : "2000-01-23T04:56:07.000+00:00",

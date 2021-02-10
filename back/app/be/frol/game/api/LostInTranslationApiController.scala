@@ -4,7 +4,7 @@ import be.frol.game.error.FunctionalError
 import be.frol.game.mapper.LitGameMapper.toLitDto
 import be.frol.game.model.LostInTranslationRound.RoundType
 import be.frol.game.model.{LitRichGame, LostInTranslationGame, RichGame}
-import be.frol.game.repository.{FileRepository, GameRepository, LitRepository}
+import be.frol.game.repository.{FileRepository, GameRepository, LitRepository, UserRepository}
 import be.frol.game.tables.Tables
 import be.frol.game.utils.DateUtils
 import be.frol.game.utils.OptionUtils._
@@ -26,7 +26,8 @@ class LostInTranslationApiController @Inject()(
                                                 val litRepository: LitRepository,
                                                 val fileRepository: FileRepository,
                                               )(implicit
-                                                executionContext: ExecutionContext
+                                                executionContext: ExecutionContext,
+                                                userRepository: UserRepository,
                                               )
   extends ParentController(cc, dbProvider) with DbContext {
 

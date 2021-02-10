@@ -9,13 +9,11 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { UserAssociation } from './userAssociation';
+import { AccountLinkType } from './accountLinkType';
 
 
-export interface User { 
-    uuid?: string;
-    name?: string;
-    canAdministrageGame?: boolean;
-    linkedAccounts?: Array<UserAssociation>;
+export interface UserAssociationRequest { 
+    linkType?: AccountLinkType;
+    accessToken?: string;
 }
 

@@ -18,6 +18,10 @@ export class UserLoginComponent {
     public login() {
         this.loginService.createUser(this.form)
     }
+
+    public facebookLogin() {
+        this.loginService.facebookLogin()
+    }
 }
 
 function randomString(length: number, chars: string) {

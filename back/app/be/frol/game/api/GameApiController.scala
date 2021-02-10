@@ -2,7 +2,7 @@ package be.frol.game.api
 
 import be.frol.game.mapper.GameMapper
 import be.frol.game.model.{Game, GameDescription}
-import be.frol.game.repository.GameRepository
+import be.frol.game.repository.{GameRepository, UserRepository}
 import be.frol.game.utils.OptionUtils._
 import be.frol.game.{DbContext, ParentController}
 import com.google.inject.{Inject, Singleton}
@@ -17,7 +17,8 @@ class GameApiController @Inject()(
                                    val cc: ControllerComponents,
                                    val gameService: GameRepository,
                                  )(implicit
-                                   executionContext: ExecutionContext
+                                   executionContext: ExecutionContext,
+                                   userRepository: UserRepository,
                                  )
   extends ParentController(cc, dbProvider) with DbContext {
 

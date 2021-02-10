@@ -16,9 +16,11 @@ import {GameComponent} from "./components/game/room/game.component";
 import { UsersListComponent } from './components/game/users-list/users-list.component';
 import { LostInTranslationComponent } from './components/game/lost-in-translation/lost-in-translation.component';
 import { LostInTranslationFinishedComponent } from './components/game/lost-in-translation/finished/lost-in-translation-finished.component';
+import { ProfileComponent } from './components/user/profile/profile.component';
 
 const routes: Routes = [
     { path: 'home', component: HomeComponent },
+    { path: 'profile', component: ProfileComponent },
     { path: 'join', component: GameComponent },
     { path: 'current', component: GameComponent },
     { path: '**', component: HomeComponent }
@@ -34,7 +36,8 @@ const routes: Routes = [
         GameComponent,
         UsersListComponent,
         LostInTranslationComponent,
-        LostInTranslationFinishedComponent
+        LostInTranslationFinishedComponent,
+        ProfileComponent
     ],
     imports: [
         FormsModule,

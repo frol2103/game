@@ -1,0 +1,11 @@
+<div class="card m-2">
+    <div class="card-header">
+        {{ 'profile_title' | translate }}
+    </div>
+    <div id="fb-root"></div>
+
+    <div class="card-body">
+        <a *ngIf="loginService.linkedToFb()" class="fb fbConnect" (click)="linkFacebook()" >{{"link_facebook_button" | translate}}</a>
+        <span>{{'account_linked_to_facebook_label' | translate}}</span>
+    </div>
+</div>

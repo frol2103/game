@@ -6,7 +6,7 @@
     <a class="navbar-brand" routerLink="/home" routerLinkActive="active">
       {{ 'page_title' | translate }}
     </a>
-    <span class="navbar-brand" *ngIf="loginService.user != null"><i class="fas fa-user"></i> {{ loginService.user.name }}</span>
+    <span class="navbar-brand" routerLink="/profile" *ngIf="loginService.user != null"><i class="fas fa-user"></i> {{ loginService.user.name }}</span>
   </nav>
   <div>
     <div *ngIf="loginService.user == null">
