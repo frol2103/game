@@ -305,6 +305,9 @@ definitions:
 
   LostInTranslationGame:
     type: "object"
+    required:
+      - game
+      - stories
     properties:
       game:
         $ref: "#/definitions/Game"
@@ -315,6 +318,10 @@ definitions:
 
   LostInTranslationStory:
     type: "object"
+    required:
+      - originalUser
+      - storyId
+      - rounds
     properties:
       originalUser:
         $ref: "#/definitions/User"
@@ -328,6 +335,11 @@ definitions:
 
   LostInTranslationRound:
     type: "object"
+    required:
+      - originalUser
+      - roundUser
+      - storyId
+      - roundType
     properties:
       originalUser:
         $ref: "#/definitions/User"

@@ -7,13 +7,13 @@ import java.time.OffsetDateTime
   * Represents the Swagger definition for LostInTranslationRound.
   * @param drawing id of the drawing file, use file api to recover it
   */
-@javax.annotation.Generated(value = Array("org.openapitools.codegen.languages.ScalaPlayFrameworkServerCodegen"), date = "2021-02-09T21:45:15.552Z[Etc/UTC]")
+@javax.annotation.Generated(value = Array("org.openapitools.codegen.languages.ScalaPlayFrameworkServerCodegen"), date = "2021-02-10T16:24:51.935Z[Etc/UTC]")
 case class LostInTranslationRound(
-  originalUser: Option[User],
-  roundUser: Option[User],
-  storyId: Option[String],
+  originalUser: User,
+  roundUser: User,
+  storyId: String,
   submissionDate: Option[OffsetDateTime],
-  roundType: Option[LostInTranslationRound.RoundType.Value],
+  roundType: LostInTranslationRound.RoundType.Value,
   text: Option[String],
   drawing: Option[String]
 )

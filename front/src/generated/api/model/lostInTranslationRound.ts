@@ -13,11 +13,11 @@ import { User } from './user';
 
 
 export interface LostInTranslationRound { 
-    originalUser?: User;
-    roundUser?: User;
-    storyId?: string;
+    originalUser: User;
+    roundUser: User;
+    storyId: string;
     submissionDate?: Date;
-    roundType?: LostInTranslationRound.RoundTypeEnum;
+    roundType: LostInTranslationRound.RoundTypeEnum;
     text?: string;
     /**
      * id of the drawing file, use file api to recover it
