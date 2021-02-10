@@ -72,13 +72,15 @@ export class LitService {
 
 
   private priority(round: LostInTranslationRound) {
-    return - this.game!.stories!.find(s => s.storyId == round.storyId)!.rounds!.filter(r => r.submissionDate).length
+    return - this.findStory(round)!.rounds!.filter(r => r.submissionDate).length
+  }
+
+  private findStory(round: LostInTranslationRound) {
+    return this.game!.stories!.find(s => s.storyId == round.storyId);
   }
 
   private getRoundsToPlay() {
     let stories = this.game?.stories ? this.game?.stories : []
-
-
 
     return stories.flatMap(s => s.rounds!
         .filter(r => r.roundUser?.uuid == this.login.user?.uuid && !r.submissionDate)
@@ -90,14 +92,23 @@ export class LitService {
     return roundsToPlay && roundsToPlay.length ? roundsToPlay[0] : null
   }
 
+  getPreviousRound() : LostInTranslationRound {
+    let current = this.getCurrentRound()!
+
+    //todo: this is the only way currrently but it won't wokr if the same user can play multiple times ina  story!!
+    return this.findStory(current)!.rounds!.find(r => r.roundUser?.uuid == current.originalUser?.uuid)!
+  }
+
   sendText(text: string) : Promise<LostInTranslationGame> {
     return this.backendService.addTextRound(this.game!.game!.description!.uuid!, this.getCurrentRound()?.storyId!,'"'+text+'"')
         .toPromise()
+        .then(g => this.updateGame(g))
   }
 
   sendDrawing(drawing: Blob) : Promise<LostInTranslationGame> {
     return this.backendService.addDrawingRound(this.game!.game!.description!.uuid!, this.getCurrentRound()?.storyId!, drawing)
         .toPromise()
+        .then(g => this.updateGame(g))
   }
 }
 

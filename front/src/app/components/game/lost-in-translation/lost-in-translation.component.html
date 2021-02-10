@@ -38,10 +38,16 @@
 
         <panel title="lit_draw_round_title" *ngIf="!lostInTranslationService.isTextRound">
             <div>
-                {{ 'game_draw_description' | translate }}
+                {{ 'lit_draw_description' | translate }}
             </div>
             <div>
-                {{ lostInTranslationService.getCurrentRound().text }}
+                <div class="form-group">
+                    <div class="input-group">
+                        <input type="text" class="form-control"
+                               disabled
+                               [ngModel]="lostInTranslationService.getPreviousRound().text" />
+                    </div>
+                </div>
             </div>
             <div>
                 TODO: input for drawing

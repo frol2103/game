@@ -45,6 +45,8 @@ export class LabelsService {
     'lit_text_round_send_button': "Send",
     'lit_waiting_title': "Waiting for other players...",
     'lit_waiting_for_other_player_description': "You have completed your tasks before the other players. Wait for them to finish the round to go to the next round.",
+    'lit_draw_round_title': "Your turn to draw",
+    'lit_draw_description': "Please draw something to make the next player guess this sentence : ",
   }
 
   public translate(key: string) : string {
