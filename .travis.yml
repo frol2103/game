@@ -10,8 +10,7 @@ script:
 - export GAME_SBT_CACHE_VOLUME=$HOME
 - "bash -x ./build/buildBack.bash"
 - "bash -x ./build/buildFront.bash"
-- docker push frol2103/gameback:$(git rev-parse HEAD)
-- docker push frol2103/gamefront:$(git rev-parse HEAD)
+- ./build/publish.bash
 notifications:
   email:
     on_success: always
