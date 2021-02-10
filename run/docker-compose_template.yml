@@ -1,6 +1,12 @@
 version: "2"
+  
+volumes:
+  letsencrypt_certificates:
+  letsencrypt_challenges:
 
 services:
+
+
 
   back:
     image: frol2103/gameback:#TAG#
@@ -14,6 +20,15 @@ services:
     restart: always
     ports:
       - 80:80
+    volumes:
+      - letsencrypt_certificates:/etc/letsencrypt
+      - letsencrypt_challenges:/usr/local/apache2/htdocs/.well-known
+  
+  letsencrypt:
+    image: certbot/certbot:latest
+    volumes:
+      - letsencrypt_certificates:/etc/letsencrypt
+      - letsencrypt_challenges:/var/www/letsencrypt/.well-known
 
   db:
     image: mysql:8.0
