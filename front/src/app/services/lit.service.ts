@@ -53,7 +53,7 @@ export class LitService {
     if(currentRound) {
       this.isWaitingForOtherPlayers = false
       this.isTextRound = currentRound.roundType == LostInTranslationRound.RoundTypeEnum.Text
-      this.isFirstRound = this.isTextRound && !currentRound.drawing
+      this.isFirstRound = this.checkIfFirstRound(currentRound)
     } else {
       this.isWaitingForOtherPlayers = true
       this.isFirstRound = false
@@ -66,9 +66,23 @@ export class LitService {
     return game
   }
 
+  private checkIfFirstRound(currentRound: LostInTranslationRound) {
+    return currentRound.roundUser?.uuid == currentRound.originalUser?.uuid;
+  }
+
+
+  private priority(round: LostInTranslationRound) {
+    return - this.game!.stories!.find(s => s.storyId == round.storyId)!.rounds!.filter(r => r.submissionDate).length
+  }
+
   private getRoundsToPlay() {
     let stories = this.game?.stories ? this.game?.stories : []
-    return stories.flatMap(s => s.rounds!.filter(r => r.roundUser?.uuid == this.login.user?.uuid && !r.submissionDate));
+
+
+
+    return stories.flatMap(s => s.rounds!
+        .filter(r => r.roundUser?.uuid == this.login.user?.uuid && !r.submissionDate)
+    ).sort((r1, r2) => this.priority(r2) - this.priority(r1));
   }
 
   getCurrentRound() : LostInTranslationRound | null {
