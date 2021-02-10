@@ -226,19 +226,26 @@
                 }
               }
             },
-            "description" : "ok, lost in ctranslation game contains 1 round with no text nor drawing for the first round, 1 round with text or drawing when there is an action to do, all rounds when the match is finished and no round when there is not playable move (the previous player has not made its play)"
+            "description" : "ok"
           }
         },
         "summary" : "Get an LostInTranslation game",
         "tags" : [ "lostInTranslation" ]
       }
     },
-    "/game/LostInTranslation/{uuid}/text" : {
+    "/game/LostInTranslation/{uuid}/story/{storyId}/text" : {
       "post" : {
         "operationId" : "addTextRound",
         "parameters" : [ {
           "in" : "path",
           "name" : "uuid",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "storyId",
           "required" : true,
           "schema" : {
             "type" : "string"
@@ -272,12 +279,19 @@
         "x-codegen-request-body-name" : "text"
       }
     },
-    "/game/LostInTranslation/{uuid}/drawing" : {
+    "/game/LostInTranslation/{uuid}/story/{storyId}/drawing" : {
       "post" : {
         "operationId" : "addDrawingRound",
         "parameters" : [ {
           "in" : "path",
           "name" : "uuid",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "storyId",
           "required" : true,
           "schema" : {
             "type" : "string"
@@ -344,12 +358,11 @@
         "example" : {
           "canAdministrageGame" : true,
           "name" : "name",
-          "id" : 0
+          "uuid" : "uuid"
         },
         "properties" : {
-          "id" : {
-            "format" : "int64",
-            "type" : "integer"
+          "uuid" : {
+            "type" : "string"
           },
           "name" : {
             "type" : "string"
@@ -403,11 +416,11 @@
           "users" : [ {
             "canAdministrageGame" : true,
             "name" : "name",
-            "id" : 0
+            "uuid" : "uuid"
           }, {
             "canAdministrageGame" : true,
             "name" : "name",
-            "id" : 0
+            "uuid" : "uuid"
           } ]
         },
         "properties" : {
@@ -436,44 +449,156 @@
             "users" : [ {
               "canAdministrageGame" : true,
               "name" : "name",
-              "id" : 0
+              "uuid" : "uuid"
             }, {
               "canAdministrageGame" : true,
               "name" : "name",
-              "id" : 0
+              "uuid" : "uuid"
             } ]
           },
-          "rounds" : [ {
+          "stories" : [ {
+            "storyId" : "storyId",
             "originalUser" : {
               "canAdministrageGame" : true,
               "name" : "name",
-              "id" : 0
+              "uuid" : "uuid"
             },
-            "drawing" : "drawing",
-            "roundUser" : {
-              "canAdministrageGame" : true,
-              "name" : "name",
-              "id" : 0
-            },
-            "text" : "text"
+            "rounds" : [ {
+              "storyId" : "storyId",
+              "originalUser" : {
+                "canAdministrageGame" : true,
+                "name" : "name",
+                "uuid" : "uuid"
+              },
+              "drawing" : "drawing",
+              "roundUser" : {
+                "canAdministrageGame" : true,
+                "name" : "name",
+                "uuid" : "uuid"
+              },
+              "submissionDate" : "2000-01-23T04:56:07.000+00:00",
+              "roundType" : "text",
+              "text" : "text"
+            }, {
+              "storyId" : "storyId",
+              "originalUser" : {
+                "canAdministrageGame" : true,
+                "name" : "name",
+                "uuid" : "uuid"
+              },
+              "drawing" : "drawing",
+              "roundUser" : {
+                "canAdministrageGame" : true,
+                "name" : "name",
+                "uuid" : "uuid"
+              },
+              "submissionDate" : "2000-01-23T04:56:07.000+00:00",
+              "roundType" : "text",
+              "text" : "text"
+            } ]
           }, {
+            "storyId" : "storyId",
             "originalUser" : {
               "canAdministrageGame" : true,
               "name" : "name",
-              "id" : 0
+              "uuid" : "uuid"
             },
-            "drawing" : "drawing",
-            "roundUser" : {
-              "canAdministrageGame" : true,
-              "name" : "name",
-              "id" : 0
-            },
-            "text" : "text"
+            "rounds" : [ {
+              "storyId" : "storyId",
+              "originalUser" : {
+                "canAdministrageGame" : true,
+                "name" : "name",
+                "uuid" : "uuid"
+              },
+              "drawing" : "drawing",
+              "roundUser" : {
+                "canAdministrageGame" : true,
+                "name" : "name",
+                "uuid" : "uuid"
+              },
+              "submissionDate" : "2000-01-23T04:56:07.000+00:00",
+              "roundType" : "text",
+              "text" : "text"
+            }, {
+              "storyId" : "storyId",
+              "originalUser" : {
+                "canAdministrageGame" : true,
+                "name" : "name",
+                "uuid" : "uuid"
+              },
+              "drawing" : "drawing",
+              "roundUser" : {
+                "canAdministrageGame" : true,
+                "name" : "name",
+                "uuid" : "uuid"
+              },
+              "submissionDate" : "2000-01-23T04:56:07.000+00:00",
+              "roundType" : "text",
+              "text" : "text"
+            } ]
           } ]
         },
         "properties" : {
           "game" : {
             "$ref" : "#/components/schemas/Game"
+          },
+          "stories" : {
+            "items" : {
+              "$ref" : "#/components/schemas/LostInTranslationStory"
+            },
+            "type" : "array"
+          }
+        },
+        "type" : "object"
+      },
+      "LostInTranslationStory" : {
+        "example" : {
+          "storyId" : "storyId",
+          "originalUser" : {
+            "canAdministrageGame" : true,
+            "name" : "name",
+            "uuid" : "uuid"
+          },
+          "rounds" : [ {
+            "storyId" : "storyId",
+            "originalUser" : {
+              "canAdministrageGame" : true,
+              "name" : "name",
+              "uuid" : "uuid"
+            },
+            "drawing" : "drawing",
+            "roundUser" : {
+              "canAdministrageGame" : true,
+              "name" : "name",
+              "uuid" : "uuid"
+            },
+            "submissionDate" : "2000-01-23T04:56:07.000+00:00",
+            "roundType" : "text",
+            "text" : "text"
+          }, {
+            "storyId" : "storyId",
+            "originalUser" : {
+              "canAdministrageGame" : true,
+              "name" : "name",
+              "uuid" : "uuid"
+            },
+            "drawing" : "drawing",
+            "roundUser" : {
+              "canAdministrageGame" : true,
+              "name" : "name",
+              "uuid" : "uuid"
+            },
+            "submissionDate" : "2000-01-23T04:56:07.000+00:00",
+            "roundType" : "text",
+            "text" : "text"
+          } ]
+        },
+        "properties" : {
+          "originalUser" : {
+            "$ref" : "#/components/schemas/User"
+          },
+          "storyId" : {
+            "type" : "string"
           },
           "rounds" : {
             "items" : {
@@ -486,17 +611,20 @@
       },
       "LostInTranslationRound" : {
         "example" : {
+          "storyId" : "storyId",
           "originalUser" : {
             "canAdministrageGame" : true,
             "name" : "name",
-            "id" : 0
+            "uuid" : "uuid"
           },
           "drawing" : "drawing",
           "roundUser" : {
             "canAdministrageGame" : true,
             "name" : "name",
-            "id" : 0
+            "uuid" : "uuid"
           },
+          "submissionDate" : "2000-01-23T04:56:07.000+00:00",
+          "roundType" : "text",
           "text" : "text"
         },
         "properties" : {
@@ -505,6 +633,17 @@
           },
           "roundUser" : {
             "$ref" : "#/components/schemas/User"
+          },
+          "storyId" : {
+            "type" : "string"
+          },
+          "submissionDate" : {
+            "format" : "date-time",
+            "type" : "string"
+          },
+          "roundType" : {
+            "enum" : [ "text", "drawing" ],
+            "type" : "string"
           },
           "text" : {
             "type" : "string"

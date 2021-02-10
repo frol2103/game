@@ -5,26 +5,26 @@
 
 # Routes for Auth API
 
-GET /api/user                                     be.frol.game.api.AuthApiController.getConnectedUser()
-POST /api/login                                   be.frol.game.api.AuthApiController.login()
+GET /api/user                                                    be.frol.game.api.AuthApiController.getConnectedUser()
+POST /api/login                                                  be.frol.game.api.AuthApiController.login()
 
 # Routes for File API
 
-GET /api/file/:id                                 be.frol.game.api.FileApiController.getFile(id: String)
+GET /api/file/:id                                                be.frol.game.api.FileApiController.getFile(id: String)
 
 # Routes for Game API
 
-POST /api/game/create                             be.frol.game.api.GameApiController.createAGame()
-GET /api/game                                     be.frol.game.api.GameApiController.getAllGames()
-GET /api/game/:uuid                               be.frol.game.api.GameApiController.getGame(uuid: String)
-GET /api/game/:uuid/join                          be.frol.game.api.GameApiController.joinGame(uuid: String)
-GET /api/game/:uuid/start                         be.frol.game.api.GameApiController.startGame(uuid: String)
+POST /api/game/create                                            be.frol.game.api.GameApiController.createAGame()
+GET /api/game                                                    be.frol.game.api.GameApiController.getAllGames()
+GET /api/game/:uuid                                              be.frol.game.api.GameApiController.getGame(uuid: String)
+GET /api/game/:uuid/join                                         be.frol.game.api.GameApiController.joinGame(uuid: String)
+GET /api/game/:uuid/start                                        be.frol.game.api.GameApiController.startGame(uuid: String)
 
 # Routes for LostInTranslation API
 
-POST /api/game/LostInTranslation/:uuid/drawing    be.frol.game.api.LostInTranslationApiController.addDrawingRound(uuid: String)
-POST /api/game/LostInTranslation/:uuid/text       be.frol.game.api.LostInTranslationApiController.addTextRound(uuid: String)
-GET /api/game/LostInTranslation/:uuid             be.frol.game.api.LostInTranslationApiController.getGame(uuid: String)
+POST /api/game/LostInTranslation/:uuid/story/:storyId/drawing    be.frol.game.api.LostInTranslationApiController.addDrawingRound(uuid: String, storyId: String)
+POST /api/game/LostInTranslation/:uuid/story/:storyId/text       be.frol.game.api.LostInTranslationApiController.addTextRound(uuid: String, storyId: String)
+GET /api/game/LostInTranslation/:uuid                            be.frol.game.api.LostInTranslationApiController.getGame(uuid: String)
 
 # Map static resources from the /public folder to the /assets URL path
 GET /assets/*file           controllers.Assets.at(file)

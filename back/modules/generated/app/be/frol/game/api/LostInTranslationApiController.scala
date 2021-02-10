@@ -7,19 +7,19 @@ import play.api.mvc._
 import be.frol.game.model.LostInTranslationGame
 import play.api.libs.Files.TemporaryFile
 
-@javax.annotation.Generated(value = Array("org.openapitools.codegen.languages.ScalaPlayFrameworkServerCodegen"), date = "2021-02-08T22:13:04.614Z[Etc/UTC]")
+@javax.annotation.Generated(value = Array("org.openapitools.codegen.languages.ScalaPlayFrameworkServerCodegen"), date = "2021-02-09T21:45:15.552Z[Etc/UTC]")
 @Singleton
 class LostInTranslationApiController @Inject()(cc: ControllerComponents, api: LostInTranslationApi) extends AbstractController(cc) {
   /**
-    * POST /api/game/LostInTranslation/:uuid/drawing
+    * POST /api/game/LostInTranslation/:uuid/story/:storyId/drawing
     */
-  def addDrawingRound(uuid: String): Action[AnyContent] = Action { request =>
+  def addDrawingRound(uuid: String, storyId: String): Action[AnyContent] = Action { request =>
     def executeApi(): LostInTranslationGame = {
       val file = request.body.asMultipartFormData.flatMap(_.file("file").map(_.ref: TemporaryFile))
         .getOrElse {
           throw new OpenApiExceptions.MissingRequiredParameterException("file", "form")
         }
-      api.addDrawingRound(uuid, file)
+      api.addDrawingRound(uuid, storyId, file)
     }
 
     val result = executeApi()
@@ -28,14 +28,14 @@ class LostInTranslationApiController @Inject()(cc: ControllerComponents, api: Lo
   }
 
   /**
-    * POST /api/game/LostInTranslation/:uuid/text
+    * POST /api/game/LostInTranslation/:uuid/story/:storyId/text
     */
-  def addTextRound(uuid: String): Action[AnyContent] = Action { request =>
+  def addTextRound(uuid: String, storyId: String): Action[AnyContent] = Action { request =>
     def executeApi(): LostInTranslationGame = {
       val text = request.body.asJson.map(_.as[String]).getOrElse {
         throw new OpenApiExceptions.MissingRequiredParameterException("body", "text")
       }
-      api.addTextRound(uuid, text)
+      api.addTextRound(uuid, storyId, text)
     }
 
     val result = executeApi()

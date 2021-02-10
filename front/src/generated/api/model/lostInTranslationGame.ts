@@ -9,12 +9,12 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { LostInTranslationRound } from './lostInTranslationRound';
 import { Game } from './game';
+import { LostInTranslationStory } from './lostInTranslationStory';
 
 
 export interface LostInTranslationGame { 
     game?: Game;
-    rounds?: Array<LostInTranslationRound>;
+    stories?: Array<LostInTranslationStory>;
 }
 

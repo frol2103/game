@@ -32,7 +32,7 @@ class GameRepository @Inject()(
 
   def initGame(gameType: String, user: Tables.UserRow) = {
     for {
-      g <- add(Tables.GameRow(0L, uuid, gameType, DateUtils.ts, GameDescription.Status.ToStart.toString))
+      g <- add(Tables.GameRow(0L, randomUuid, gameType, DateUtils.ts, GameDescription.Status.ToStart.toString))
       u <- add(Tables.UserInGameRow(0L, g.id, user.id, Option("ADMIN")))
     } yield g -> List(u -> user)
   }

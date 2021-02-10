@@ -9,11 +9,13 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
+import { LostInTranslationRound } from './lostInTranslationRound';
+import { User } from './user';
 
 
-export interface User { 
-    uuid?: string;
-    name?: string;
-    canAdministrageGame?: boolean;
+export interface LostInTranslationStory { 
+    originalUser?: User;
+    storyId?: string;
+    rounds?: Array<LostInTranslationRound>;
 }
 
