@@ -32,7 +32,7 @@ services:
       - letsencrypt_challenges:/var/www/letsencrypt/.well-known
 
   db:
-    image: mysql:8.0
+    build: resources/db/
     command: --default-authentication-plugin=mysql_native_password
     restart: always
     volumes:
