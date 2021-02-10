@@ -34,7 +34,7 @@ export class GameComponent implements OnInit {
     }
 
     private updateRole(game: Game) {
-        this.isAdmin = game.users!.filter(u => u.id == this.loginService.user?.id && u.canAdministrageGame).length > 0
+        this.isAdmin = game.users!.filter(u => u.uuid == this.loginService.user?.uuid && u.canAdministrageGame).length > 0
     }
 
     isInLobbyBeforeGame() {
