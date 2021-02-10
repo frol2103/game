@@ -41,6 +41,7 @@ export class LabelsService {
     'active_games_list_below': "You can also create a new game or join another friend's game by using the invite url they sent you.",
     'go_back_button': "Go back",
     'profile_title': 'Profile',
+    'profile_button': 'Profile',
     'link_facebook_button': 'Link to facebook',
     'social_login_title': 'Social login',
     'social_login_button': 'Connect with Facebook',

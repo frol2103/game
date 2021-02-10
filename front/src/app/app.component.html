@@ -37,6 +37,12 @@
         </button>
       </div>
       <div class="col-12 text-center" *ngIf="loginService.user">
+        <button type="button" routerLink="/profile" routerLinkActive="active" class="btn btn-secondary m-2 ">
+          <i class="fa fa-user-alt" aria-hidden="true"></i>
+          {{ 'profile_button' | translate }}
+        </button>
+      </div>
+      <div class="col-12 text-center" *ngIf="loginService.user">
         <button type="button" routerLink="/logout" routerLinkActive="active" class="btn btn-secondary m-2 ">
           <i class="fa fa-sign-out-alt" aria-hidden="true"></i>
           {{ 'log_out_button' | translate }}
