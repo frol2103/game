@@ -58,7 +58,7 @@ export class LoginService {
     }
 
     public linkedToFb(){
-      this.user?.linkedAccounts?.find(v => v.linkType === UserAssociation.LinkTypeEnum.Facebook)
+        return this.user?.linkedAccounts?.find(v => v.linkType === UserAssociation.LinkTypeEnum.Facebook);
     }
 }
 

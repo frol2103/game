@@ -5,7 +5,7 @@
     <div id="fb-root"></div>
 
     <div class="card-body">
-        <a *ngIf="loginService.linkedToFb()" class="fb fbConnect" (click)="linkFacebook()" >{{"link_facebook_button" | translate}}</a>
-        <span>{{'account_linked_to_facebook_label' | translate}}</span>
+        <a *ngIf="!loginService.linkedToFb()" class="fb fbConnect" (click)="linkFacebook()" >{{"link_facebook_button" | translate}}</a>
+        <span *ngIf="loginService.linkedToFb()">{{'account_linked_to_facebook_label' | translate}}</span>
     </div>
 </div>

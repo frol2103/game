@@ -23,8 +23,9 @@ class UserRepository @Inject()(
 
   def userWihtRef(userUuid: String) = {
     Tables.User.filter(_.uuid === userUuid)
-      .join(Tables.UserReference).on(_.id === _.fkUserId)
-      .result.map(_.groupBy(_._1).map { case (k, v) => UserWithReferences(k, v.map(_._2)) }.head)
+      .joinLeft(Tables.UserReference).on(_.id === _.fkUserId)
+      .result
+      .map(_.groupBy(_._1).map { case (k, v) => UserWithReferences(k, v.map(_._2).flatten) }.head)
   }
 
   def useByRef(reference: String, service:String) = {
