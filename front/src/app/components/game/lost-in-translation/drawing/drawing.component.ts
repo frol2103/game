@@ -1,14 +1,11 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 
 @Component({
   selector: 'lit-drawing',
   templateUrl: './drawing.component.html',
   styleUrls: ['./drawing.component.css']
 })
-export class DrawingComponent implements OnInit {
-
-  @ViewChild('drawingcanvas') drawing: HTMLCanvasElement | null = null;
-
+export class DrawingComponent implements OnInit, AfterViewInit {
 
   constructor() { }
 
@@ -16,6 +13,11 @@ export class DrawingComponent implements OnInit {
   }
 
   saveCanvasAsBlob() : Promise<Blob> {
-    return drawing.blob()
+    let canvas = <HTMLCanvasElement> document.getElementById('drawing-canvas')!
+    return new Promise<Blob>((resolve, reject) => canvas.toBlob(b => b ? resolve(b!) : reject()))
+  }
+
+  ngAfterViewInit(): void {
+
   }
 }
