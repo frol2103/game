@@ -1,0 +1,16 @@
+
+<div class="m-3">
+    <p> {{ 'log_out_confirm' | translate }} </p>
+
+
+    <button type="button" (click)="cancel()" class="btn btn-secondary m-2 ">
+        <i class="fa fa-arrow-left" aria-hidden="true"></i>
+        {{ 'go_back_button' | translate }}
+    </button>
+
+    <button type="button" (click)="logout()"  class="btn btn-danger m-2 ">
+        <i class="fa fa-sign-out-alt" aria-hidden="true"></i>
+        {{ 'log_out_button' | translate }}
+    </button>
+</div>
+

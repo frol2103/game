@@ -1,10 +1,82 @@
-<div *ngIf="!lostInTranslationService.game">
-    <i class="fa fa-spinner fa-2x rotate m-4" title="{{ 'waiting' | translate }}"></i>
-</div>
-<div *ngIf="lostInTranslationService.game">
-    <p>TODO : display playing instructions for current game round </p>
+<wait-for [condition]="lostInTranslationService.game" spinner-class="fa-2x">
+
+    <div *ngIf="!isGameFinished() && !lostInTranslationService.isWaitingForOtherPlayers">
+        <panel title="lit_text_round_title" *ngIf="lostInTranslationService.isTextRound">
+                            <div *ngIf="lostInTranslationService.isFirstRound">
+                    <div class="m-2">
+                        {{ 'lit_first_text_round_instructions' | translate }}
+                    </div>
+                </div>
+                <div *ngIf="!lostInTranslationService.isFirstRound">
+                    <div class="m-2">
+                        {{ 'lit_text_round_instructions' | translate }}
+                    </div>
+
+                    <div class="m-2">
+                        TODO : display drawing to describe here
+                    </div>
+                </div>
+
+                <form (ngSubmit)="sendText()">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="text"
+                                   required
+                                   [(ngModel)]="text" name="text">
+                            <div class="input-group-append">
+                                <button type="submit" class="btn btn-primary ">
+                                    <i class="fas fa-check"></i>
+                                    {{ 'lit_text_round_send_button' | translate }}
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+        </panel>
+
+
+        <panel title="lit_draw_round_title" *ngIf="!lostInTranslationService.isTextRound">
+            <div>
+                {{ 'lit_draw_description' | translate }}
+            </div>
+            <div>
+                <div class="form-group">
+                    <div class="input-group">
+                        <input type="text" class="form-control"
+                               disabled
+                               [ngModel]="lostInTranslationService.getPreviousRound().text" />
+                    </div>
+                </div>
+            </div>
+            <div>
+                <lit-drawing #litdrawing></lit-drawing>
+            </div>
+            <div>
+                <button type="button" class="btn btn-primary" (click)="sendDrawing()">
+                    <i class="fas fa-check"></i>
+                    {{ 'lit_text_round_send_button' | translate }}
+                </button>
+            </div>
+        </panel>
+    </div>
+
+    <panel title="lit_waiting_title" *ngIf="!isGameFinished() && lostInTranslationService.isWaitingForOtherPlayers">
+        <div>
+            {{ 'lit_waiting_for_other_player_description' | translate }}
+        </div>
+        <div>
+<!--                    todo: add param to indicate that users should be displayed with their current round count : 4/7 or ...-->
+            <users-list></users-list>
+        </div>
+    </panel>
+
+
+    <lost-in-translation-finished *ngIf="isGameFinished()"></lost-in-translation-finished>
+
+    <p>DEBUG: </p>
     <p>
         {{ lostInTranslationService.game | json }}
     </p>
-</div>
+</wait-for>
 

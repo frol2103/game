@@ -7,7 +7,10 @@ import {Subject} from "rxjs";
 export class LabelsService {
 
   private labels : any = {
-    'page_title': "Paperless games",
+    'page_title': "Paper(less) games",
+    'navigate_home_button': "Go to welcome page",
+    'log_out_button': "Log out",
+    'log_out_confirm': "Are you sure ? If you logout you won't be able to come back to your games.",
     'login_form_title': "Choose a user nickname",
     'login_form_name': "Name",
     'login_button': "Use this name",
@@ -31,6 +34,7 @@ export class LabelsService {
     'inPlay_label': "In progress",
     'finished_label': "Finished",
     'open_game_button': "Open",
+    'open_game_finished_button': "Open summary",
     'game_created': "Start time",
     'game_type': "Type",
     'game_status': "Status",
@@ -41,7 +45,13 @@ export class LabelsService {
     'social_login_title': 'Social login',
     'social_login_button': 'Connect with Facebook',
     'account_linked_to_facebook_label': 'Linked to facebook',
-
+    'lit_text_round_title': "Start the game",
+    'lit_first_text_round_instructions': "Write a few words or a short sentence that the next player will have to draw.",
+    'lit_text_round_send_button': "Send",
+    'lit_waiting_title': "Waiting for other players...",
+    'lit_waiting_for_other_player_description': "You have completed your tasks before the other players. Wait for them to finish the round to go to the next round.",
+    'lit_draw_round_title': "Your turn to draw",
+    'lit_draw_description': "Please draw something to make the next player guess this sentence : ",
   }
 
   public translate(key: string) : string {

@@ -17,8 +17,13 @@ import { UsersListComponent } from './components/game/users-list/users-list.comp
 import { LostInTranslationComponent } from './components/game/lost-in-translation/lost-in-translation.component';
 import { LostInTranslationFinishedComponent } from './components/game/lost-in-translation/finished/lost-in-translation-finished.component';
 import { ProfileComponent } from './components/user/profile/profile.component';
+import { UserLogoutComponent } from './components/user/user-logout/user-logout.component';
+import { PanelComponent } from './components/utils/panel/panel.component';
+import { WaitForComponent } from './components/utils/wait-for/wait-for.component';
+import { DrawingComponent } from './components/game/lost-in-translation/drawing/drawing.component';
 
 const routes: Routes = [
+    { path: 'logout', component: UserLogoutComponent },
     { path: 'home', component: HomeComponent },
     { path: 'profile', component: ProfileComponent },
     { path: 'join', component: GameComponent },
@@ -37,7 +42,11 @@ const routes: Routes = [
         UsersListComponent,
         LostInTranslationComponent,
         LostInTranslationFinishedComponent,
-        ProfileComponent
+        ProfileComponent,
+        UserLogoutComponent,
+        PanelComponent,
+        WaitForComponent,
+        DrawingComponent,
     ],
     imports: [
         FormsModule,

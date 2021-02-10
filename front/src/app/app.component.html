@@ -1,28 +1,53 @@
-<div *ngIf="!isReady()" class="text-center align-middle p-5">
-  <i class="fa fa-spinner fa-5x rotate" title="{{ 'waiting' | translate }}"></i>
-</div>
-<div *ngIf="isReady()">
+<wait-for [condition]="isReady()" spinner-class="fa-5x">
   <nav class="navbar navbar-dark bg-dark">
     <a class="navbar-brand" routerLink="/home" routerLinkActive="active">
+      <i class="fa fa-pencil-alt" aria-hidden="true"></i>
       {{ 'page_title' | translate }}
     </a>
-    <span class="navbar-brand" routerLink="/profile" *ngIf="loginService.user != null"><i class="fas fa-user"></i> {{ loginService.user.name }}</span>
+
+    <span>
+      <span class="navbar-brand d-none d-md-inline-block" *ngIf="loginService.user">
+        <i class="fas fa-user"></i> {{ loginService.user.name }}
+      </span>
+      <button type="button" (click)="toggleMenu()" class="btn m-1" [ngClass]="{' btn-outline-light' : !menuOpen, ' btn-light' : menuOpen}">
+          <i class="fa fa-bars" aria-hidden="true"></i>
+        </button>
+    </span>
   </nav>
-  <div>
-    <div *ngIf="loginService.user == null">
+  <div class="container" *ngIf="!menuOpen">
+    <div *ngIf="!loginService.user">
       <user-login></user-login>
     </div>
-    <div *ngIf="loginService.user != null">
-      <div *ngIf="!isHome()">
+    <div *ngIf="loginService.user">
+      <div *ngIf="displayHomeButton()" class="d-none d-md-block">
         <button type="button" routerLink="/home" routerLinkActive="active" class="btn btn-secondary m-2 ">
           <i class="fa fa-arrow-left" aria-hidden="true"></i>
-           {{ 'go_back_button' | translate }}
+          {{ 'go_back_button' | translate }}
         </button>
       </div>
       <router-outlet></router-outlet>
     </div>
   </div>
-</div>
+  <div class="container" *ngIf="menuOpen">
+    <div class="row">
+      <div class="col-12 text-center" *ngIf="displayHomeButton()">
+        <button type="button" routerLink="/home" routerLinkActive="active" class="btn btn-secondary m-2 ">
+          <i class="fa fa-home" aria-hidden="true"></i>
+          {{ 'navigate_home_button' | translate }}
+        </button>
+      </div>
+      <div class="col-12 text-center" *ngIf="loginService.user">
+        <button type="button" routerLink="/logout" routerLinkActive="active" class="btn btn-secondary m-2 ">
+          <i class="fa fa-sign-out-alt" aria-hidden="true"></i>
+          {{ 'log_out_button' | translate }}
+        </button>
+      </div>
+    </div>
+
+  </div>
+</wait-for>
+
+
 
 
 

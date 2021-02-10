@@ -1,0 +1,9 @@
+<div class="card m-2">
+    <div class="card-header" *ngIf="title">
+        {{ title | translate }}
+    </div>
+    <div class="card-body">
+        <ng-content></ng-content>
+    </div>
+</div>
+

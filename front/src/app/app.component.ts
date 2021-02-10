@@ -11,15 +11,22 @@ import {ActivatedRoute, Router} from "@angular/router";
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  menuOpen: boolean = false;
+
   constructor(private titleService: Title, private labelsService: LabelsService, public loginService:LoginService, private router: Router) {
     titleService.setTitle(labelsService.translate("page_title"))
+    router.events.subscribe(routerEvent => this.menuOpen = false)
   }
 
   isReady() {
     return this.loginService.ready
   }
 
-  isHome() {
-    return this.router.isActive('/home', false)
+  displayHomeButton() {
+    return !this.router.isActive('/home', false) && !this.router.isActive('/logout', false)
+  }
+
+  toggleMenu() {
+    this.menuOpen = !this.menuOpen
   }
 }

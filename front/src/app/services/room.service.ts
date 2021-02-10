@@ -13,7 +13,7 @@ export class RoomService {
   private refreshActive : boolean = false
 
   public constructor(private backendGameService : GameService) {
-    timer(0, 1000).subscribe(time => this.fetchGameInfo())
+    timer(0, 1500).subscribe(time => this.fetchGameInfo())
   }
 
   public createLostInTranslationGame() : Promise<Game> {
@@ -27,7 +27,7 @@ export class RoomService {
 
   private gameUpdated(game: Game | null) : Game | null {
     if(game) {
-      this.refreshActive = true;
+      this.refreshActive = game.description?.status != GameDescription.StatusEnum.InPlay;
       this.ready = true;
       console.log("The game state will now be refreshed every second, current game is game : "+JSON.stringify(game))
     }
@@ -37,8 +37,14 @@ export class RoomService {
 
   public startGame() {
     if(this.refreshActive && this.game?.description?.uuid) {
-      this.backendGameService.startGame(this.game?.description?.uuid).toPromise()
+      this.backendGameService.startGame(this.game?.description?.uuid)
+          .toPromise()
+          .then(game => this.gameUpdated(game))
     }
+  }
+
+  destroy() {
+    this.refreshActive = false
   }
 
   public fetchGameInfo() {
