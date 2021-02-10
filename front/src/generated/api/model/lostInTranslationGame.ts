@@ -14,7 +14,7 @@ import { LostInTranslationStory } from './lostInTranslationStory';
 
 
 export interface LostInTranslationGame { 
-    game: Game;
-    stories: Array<LostInTranslationStory>;
+    game?: Game;
+    stories?: Array<LostInTranslationStory>;
 }
 

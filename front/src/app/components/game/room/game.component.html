@@ -11,10 +11,6 @@
   </panel>
 </div>
 
-<div *ngIf="isInLobbyAfterGame()">
-  <lost-in-translation-finished *ngIf="roomService.game?.description?.gameType == 'lostInTranslation'"></lost-in-translation-finished>
-</div>
-
 <div *ngIf="isInLobbyDuringGame()">
   <lost-in-translation *ngIf="roomService.game?.description?.gameType == 'lostInTranslation'"></lost-in-translation>
 </div>

@@ -14,8 +14,8 @@ import { User } from './user';
 
 
 export interface LostInTranslationStory { 
-    originalUser: User;
-    storyId: string;
-    rounds: Array<LostInTranslationRound>;
+    originalUser?: User;
+    storyId?: string;
+    rounds?: Array<LostInTranslationRound>;
 }
 

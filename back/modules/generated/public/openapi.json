@@ -549,7 +549,6 @@
             "type" : "array"
           }
         },
-        "required" : [ "game", "stories" ],
         "type" : "object"
       },
       "LostInTranslationStory" : {
@@ -608,7 +607,6 @@
             "type" : "array"
           }
         },
-        "required" : [ "originalUser", "rounds", "storyId" ],
         "type" : "object"
       },
       "LostInTranslationRound" : {
@@ -655,7 +653,6 @@
             "type" : "string"
           }
         },
-        "required" : [ "originalUser", "roundType", "roundUser", "storyId" ],
         "type" : "object"
       }
     }

@@ -1,6 +1,6 @@
 <wait-for [condition]="lostInTranslationService.game" spinner-class="fa-2x">
 
-    <div *ngIf="!lostInTranslationService.isWaitingForOtherPlayers">
+    <div *ngIf="!isGameFinished() && !lostInTranslationService.isWaitingForOtherPlayers">
         <panel title="lit_text_round_title" *ngIf="lostInTranslationService.isTextRound">
                             <div *ngIf="lostInTranslationService.isFirstRound">
                     <div class="m-2">
@@ -53,7 +53,7 @@
         </panel>
     </div>
 
-    <panel title="lit_waiting_title" *ngIf="lostInTranslationService.isWaitingForOtherPlayers">
+    <panel title="lit_waiting_title" *ngIf="!isGameFinished() && lostInTranslationService.isWaitingForOtherPlayers">
         <div>
             {{ 'lit_waiting_for_other_player_description' | translate }}
         </div>
@@ -63,6 +63,8 @@
         </div>
     </panel>
 
+
+    <lost-in-translation-finished *ngIf="isGameFinished()"></lost-in-translation-finished>
 
     <p>DEBUG: </p>
     <p>

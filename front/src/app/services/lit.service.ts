@@ -39,8 +39,8 @@ export class LitService {
   }
 
   public fetchGameInfo() {
-    let uuid = this.roomService.game?.description?.uuid!;
-    if(this.refreshActive && uuid) {
+    let uuid = this.roomService.game?.description?.uuid;
+    if(uuid && this.refreshActive) {
       this.backendService.getGame(uuid)
           .toPromise()
           .then(game => this.updateGame(game))
@@ -49,29 +49,40 @@ export class LitService {
 
   private updateGame(game: LostInTranslationGame) {
     this.game = game
-    if(! game.rounds || !game.rounds.length) {
+    let currentRound = this.getCurrentRound()
+    if(currentRound) {
+      this.isWaitingForOtherPlayers = false
+      this.isTextRound = currentRound.roundType == LostInTranslationRound.RoundTypeEnum.Text
+      this.isFirstRound = this.isTextRound && !currentRound.drawing
+    } else {
       this.isWaitingForOtherPlayers = true
       this.isFirstRound = false
-    } else {
-      this.isWaitingForOtherPlayers = false
-      let currentRound = this.getCurrentRound();
-      this.isFirstRound = !currentRound.drawing && !currentRound.text
-      this.isTextRound = this.isFirstRound || currentRound.drawing != null
     }
+
+    if(this.roomService.game?.description?.status == GameDescription.StatusEnum.Finished) {
+      this.refreshActive = false
+    }
+
     return game
   }
 
-  getCurrentRound() : LostInTranslationRound {
-    return this.game!.rounds![0]!
+  private getRoundsToPlay() {
+    let stories = this.game?.stories ? this.game?.stories : []
+    return stories.flatMap(s => s.rounds!.filter(r => r.roundUser?.uuid == this.login.user?.uuid && !r.submissionDate));
+  }
+
+  getCurrentRound() : LostInTranslationRound | null {
+    let roundsToPlay = this.getRoundsToPlay();
+    return roundsToPlay && roundsToPlay.length ? roundsToPlay[0] : null
   }
 
   sendText(text: string) : Promise<LostInTranslationGame> {
-    return this.backendService.addTextRound(this.game!.game!.description!.uuid!, '"'+text+'"')
+    return this.backendService.addTextRound(this.game!.game!.description!.uuid!, this.getCurrentRound()?.storyId!,'"'+text+'"')
         .toPromise()
   }
 
   sendDrawing(drawing: Blob) : Promise<LostInTranslationGame> {
-    return this.backendService.addDrawingRound(this.game!.game!.description!.uuid!, drawing)
+    return this.backendService.addDrawingRound(this.game!.game!.description!.uuid!, this.getCurrentRound()?.storyId!, drawing)
         .toPromise()
   }
 }

@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {RoomService} from "../../../services/room.service";
 import {LitService} from "../../../services/lit.service";
-import {LostInTranslationGame} from "../../../../generated/api";
+import {GameDescription, LostInTranslationGame} from "../../../../generated/api";
 
 @Component({
   selector: 'lost-in-translation',
@@ -30,4 +30,7 @@ export class LostInTranslationComponent implements OnInit, OnDestroy {
     this.drawing!.toBlob(blob => this.lostInTranslationService.sendDrawing(blob!))
   }
 
+  isGameFinished() {
+      return this.lostInTranslationService.game?.game?.description?.status == GameDescription.StatusEnum.Finished
+  }
 }

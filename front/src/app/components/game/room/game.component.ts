@@ -46,12 +46,8 @@ export class GameComponent implements OnInit, OnDestroy {
         return this.roomService.ready && this.roomService.game?.description?.status == StatusEnum.ToStart
     }
 
-    isInLobbyAfterGame() {
-        return this.roomService.ready && this.roomService.game?.description?.status == StatusEnum.Finished
-    }
-
     isInLobbyDuringGame() {
-        return this.roomService.ready && this.roomService.game?.description?.status == StatusEnum.InPlay
+        return this.roomService.ready && this.roomService.game?.description?.status != StatusEnum.ToStart
     }
 
 }

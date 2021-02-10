@@ -6,7 +6,7 @@ import {Component, Input, OnInit} from '@angular/core';
   styleUrls: ['./panel.component.css']
 })
 export class PanelComponent implements OnInit {
-  @Input() title : string
+  @Input() title : string | null = null
 
   constructor() { }
 
