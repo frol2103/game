@@ -1,4 +1,16 @@
 <div>
+    <button type="button" class="btn btn-secondary m-1" (click)="currentStyle.strokeStyle='#000000'" [disabled]="currentStyle.strokeStyle=='#000000'" title="{{ 'drawing_tool_size_big' | translate }}">
+        <i class="fas fa-pencil-alt" style="color: #000000"></i>
+    </button>
+    <button type="button" class="btn btn-secondary m-1" (click)="currentStyle.strokeStyle='#FF0000'" [disabled]="currentStyle.strokeStyle=='#FF0000'" title="{{ 'drawing_tool_size_big' | translate }}">
+        <i class="fas fa-pencil-alt" style="color: red"></i>
+    </button>
+    <button type="button" class="btn btn-secondary m-1" (click)="currentStyle.strokeStyle='#00FF00'" [disabled]="currentStyle.strokeStyle=='#00FF00'" title="{{ 'drawing_tool_size_big' | translate }}">
+        <i class="fas fa-pencil-alt" style="color: #00FF00"></i>
+    </button>
+    <button type="button" class="btn btn-secondary m-1" (click)="currentStyle.strokeStyle='#0000FF'" [disabled]="currentStyle.strokeStyle=='#0000FF'" title="{{ 'drawing_tool_size_big' | translate }}">
+        <i class="fas fa-pencil-alt" style="color: #0000FF"></i>
+    </button>
     <button type="button" class="btn btn-secondary m-1" (click)="undo()" [disabled]="!strokes.length" title="{{ 'drawing_tool_undo' | translate }}">
         <i class="fas fa-backward"></i>
     </button>

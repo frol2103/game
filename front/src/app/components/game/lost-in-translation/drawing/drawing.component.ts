@@ -87,7 +87,7 @@ export class DrawingComponent implements OnInit, AfterViewInit {
   private registerStrokeSegmentInHistory(segment: StrokeSegment) {
     if (this.strokes.length) {
       let currentStroke = this.strokes[this.strokes.length - 1]
-      currentStroke.style = this.currentStyle
+      currentStroke.style = Object.assign(new DrawStyle(), this.currentStyle)
       let path = currentStroke.segments
       path.push(segment)
     }
