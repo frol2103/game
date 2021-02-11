@@ -1,4 +1,5 @@
 .drawing-canvas {
     border: #1b1b1b 1px solid;
     cursor: pointer !important;
+    touch-action: none;
 }

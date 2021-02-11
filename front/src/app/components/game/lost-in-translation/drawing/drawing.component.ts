@@ -26,7 +26,7 @@ export class DrawingComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     this.initContext(this.canvas!.nativeElement)
     this.captureStrokes('mousedown', 'mousemove', 'mouseup', 'mouseleave')
-    // this.captureStrokes('touchstart', 'touchmove', 'touchend', 'touchcancel')
+    this.captureStrokes('touchstart', 'touchmove', 'touchend', 'touchcancel')
   }
 
   private fromEvent(eventType : string) : Observable<Event> {
