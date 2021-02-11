@@ -52,8 +52,8 @@
             <div>
                 <lit-drawing #litdrawing></lit-drawing>
             </div>
-            <div>
-                <button type="button" class="btn btn-primary" (click)="sendDrawing()">
+            <div class="text-center">
+                <button type="button" class="btn btn-primary btn-lg" (click)="sendDrawing()">
                     <i class="fas fa-check"></i>
                     {{ 'lit_text_round_send_button' | translate }}
                 </button>
@@ -74,9 +74,5 @@
 
     <lost-in-translation-finished *ngIf="isGameFinished()"></lost-in-translation-finished>
 
-    <p>DEBUG: </p>
-    <p>
-        {{ lostInTranslationService.game | json }}
-    </p>
 </wait-for>
 
