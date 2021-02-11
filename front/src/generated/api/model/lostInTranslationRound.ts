@@ -13,7 +13,6 @@ import { User } from './user';
 
 
 export interface LostInTranslationRound { 
-    originalUser?: User;
     roundUser?: User;
     storyId?: string;
     submissionDate?: Date;

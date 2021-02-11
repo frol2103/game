@@ -397,8 +397,6 @@ definitions:
   LostInTranslationRound:
     type: "object"
     properties:
-      originalUser:
-        $ref: "#/definitions/User"
       roundUser:
         $ref: "#/definitions/User"
       storyId:

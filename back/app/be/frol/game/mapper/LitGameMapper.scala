@@ -23,7 +23,6 @@ object LitGameMapper {
 
   def toDto(litRichGame: LitRichGame, round: LitRichRound) : LostInTranslationRound = {
     new LostInTranslationRound(
-      litRichGame.user(round.round.fkOriginalUserId).map(UserMapper.toDto),
       litRichGame.user(round.round.fkUserId).map(UserMapper.toDto),
       Option(round.storyId),
       round.round.timestamp.map(_.toOffsetDateTime),
