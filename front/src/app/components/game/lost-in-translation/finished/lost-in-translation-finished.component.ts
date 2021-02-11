@@ -13,7 +13,5 @@ export class LostInTranslationFinishedComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  imageUrl(drawing: string) {
-    return '/api/file/'+drawing
-  }
+
 }

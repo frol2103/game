@@ -10,7 +10,7 @@
                         {{ round.text }}
                     </div>
                     <div *ngIf="round.roundType == 'drawing'">
-                        <img [src]="imageUrl(round.drawing)" />
+                        <img [src]="lostInTranslationService.imageUrl(round.drawing)" />
                     </div>
                 </panel>
             </div>
