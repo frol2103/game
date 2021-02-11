@@ -295,6 +295,120 @@ paths:
           schema:
             $ref: "#/definitions/LostInTranslationGame"
 
+
+
+  /game/DefineItLy/{uuid}:
+    get:
+      tags:
+        - "defineitly"
+      summary: "Get a DefineItLy game"
+      description: ""
+      operationId: "getGame"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "uuid"
+          in: "path"
+          required: true
+          type: "string"
+      responses:
+        "200":
+          description: "ok"
+          schema:
+            $ref: "#/definitions/DefineItLyGame"
+
+  /game/DefineItLy/{uuid}/question:
+    post:
+      tags:
+        - "defineitly"
+      summary: "Add a definitely question"
+      description: ""
+      operationId: "addQuestion"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "uuid"
+          in: "path"
+          required: true
+          type: "string"
+        - in: "body"
+          name: "text"
+          description: "the question"
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: "ok"
+          schema:
+            $ref: "#/definitions/DefineItLyGame"
+
+  /game/DefineItLy/{uuid}/question/{questionUuid}:
+    post:
+      tags:
+        - "defineitly"
+      summary: "Add a definitely response to a question"
+      description: ""
+      operationId: "addResponse"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "uuid"
+          in: "path"
+          required: true
+          type: "string"
+        - name: "questionUuid"
+          in: "path"
+          required: true
+          type: "string"
+        - in: "body"
+          name: "text"
+          description: "the response"
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: "ok"
+          schema:
+            $ref: "#/definitions/DefineItLyGame"
+
+  /game/DefineItLy/{uuid}/question/{questionUuid}/choice:
+    post:
+      tags:
+        - "defineitly"
+      summary: "Chose a response to a question"
+      description: ""
+      operationId: "choseResponse"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - name: "uuid"
+          in: "path"
+          required: true
+          type: "string"
+        - name: "questionUuid"
+          in: "path"
+          required: true
+          type: "string"
+        - in: "body"
+          name: "responseUuid"
+          description: "the response uuid"
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: "ok"
+          schema:
+            $ref: "#/definitions/DefineItLyGame"
+
   /file/{id}:
     get:
       tags:
@@ -359,7 +473,8 @@ definitions:
         type: "string"
         enum:
         - "lostInTranslation"
-      
+        - "define-it-ly"
+
   Game:
     type: "object"
     properties:
@@ -415,4 +530,74 @@ definitions:
         type: string
         description: id of the drawing file, use file api to recover it
     
-    
+  DefineItLyGame:
+    type: "object"
+    properties:
+      game:
+        $ref: "#/definitions/Game"
+      rounds:
+        type: array
+        items:
+          $ref: "#/definitions/DefineItLyRound"
+      points:
+        type: array
+        items:
+          $ref: "#/definitions/UserWithPoints"
+
+  DefineItLyRound:
+    type: "object"
+    properties:
+      uuid:
+        type: string
+      quedtionByUser:
+        $ref: "#/definitions/User"
+      roundId:
+        type: string
+      submissionDate:
+        type: "string"
+        format: "date-time"
+      question:
+        type: string
+      responses:
+        $ref: "#/definitions/DefineItLyResponse"
+      status:
+        type: "string"
+        enum:
+          - "waitQuestion"
+          - "waitResponses"
+          - "choseResponses"
+          - "finished"
+
+  DefineItLyResponse:
+    type: "object"
+    properties:
+      uuid:
+        type: string
+      response:
+        type: string
+      responseByUser:
+        $ref: "#/definitions/User"
+      chosenBy:
+        type: array
+        items:
+          $ref: "#/definitions/UserWithPoints"
+
+  UserWithPoints:
+    type: "object"
+    properties:
+      user:
+        $ref: "#/definitions/User"
+      points:
+        type: array
+        items:
+          $ref: "#/definitions/Points"
+
+  Points:
+    type: "object"
+    properties:
+      amount:
+        type: number
+      category:
+        type: string
+
+

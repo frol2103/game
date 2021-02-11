@@ -25,9 +25,10 @@ export namespace GameDescription {
         InPlay: 'inPlay' as StatusEnum,
         Finished: 'finished' as StatusEnum
     };
-    export type GameTypeEnum = 'lostInTranslation';
+    export type GameTypeEnum = 'lostInTranslation' | 'define-it-ly';
     export const GameTypeEnum = {
-        LostInTranslation: 'lostInTranslation' as GameTypeEnum
+        LostInTranslation: 'lostInTranslation' as GameTypeEnum,
+        DefineItLy: 'define-it-ly' as GameTypeEnum
     };
 }
 

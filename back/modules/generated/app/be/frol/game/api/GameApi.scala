@@ -3,7 +3,7 @@ package be.frol.game.api
 import be.frol.game.model.Game
 import be.frol.game.model.GameDescription
 
-@javax.annotation.Generated(value = Array("org.openapitools.codegen.languages.ScalaPlayFrameworkServerCodegen"), date = "2021-02-11T19:33:06.677Z[Etc/UTC]")
+@javax.annotation.Generated(value = Array("org.openapitools.codegen.languages.ScalaPlayFrameworkServerCodegen"), date = "2021-02-11T20:52:08.970Z[Etc/UTC]")
 trait GameApi {
   /**
     * create a new game

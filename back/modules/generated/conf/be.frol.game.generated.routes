@@ -11,6 +11,13 @@ POST /api/login                                                  be.frol.game.ap
 GET /api/logout                                                  be.frol.game.api.AuthApiController.logout()
 POST /api/socialLogin                                            be.frol.game.api.AuthApiController.socialLogin()
 
+# Routes for Defineitly API
+
+POST /api/game/DefineItLy/:uuid/question                         be.frol.game.api.DefineitlyApiController.addQuestion(uuid: String)
+POST /api/game/DefineItLy/:uuid/question/:questionUuid           be.frol.game.api.DefineitlyApiController.addResponse(uuid: String, questionUuid: String)
+POST /api/game/DefineItLy/:uuid/question/:questionUuid/choice    be.frol.game.api.DefineitlyApiController.choseResponse(uuid: String, questionUuid: String)
+GET /api/game/DefineItLy/:uuid                                   be.frol.game.api.DefineitlyApiController.getGame(uuid: String)
+
 # Routes for File API
 
 GET /api/file/:id                                                be.frol.game.api.FileApiController.getFile(id: String)

@@ -6,7 +6,7 @@ import java.time.OffsetDateTime
 /**
   * Represents the Swagger definition for GameDescription.
   */
-@javax.annotation.Generated(value = Array("org.openapitools.codegen.languages.ScalaPlayFrameworkServerCodegen"), date = "2021-02-11T19:33:06.677Z[Etc/UTC]")
+@javax.annotation.Generated(value = Array("org.openapitools.codegen.languages.ScalaPlayFrameworkServerCodegen"), date = "2021-02-11T20:52:08.970Z[Etc/UTC]")
 case class GameDescription(
   id: Option[Long],
   uuid: Option[String],
@@ -31,6 +31,7 @@ object GameDescription {
   // noinspection TypeAnnotation
   object GameType extends Enumeration {
     val LostInTranslation = Value("lostInTranslation")
+    val DefineItLy = Value("define-it-ly")
 
     type GameType = Value
     implicit lazy val GameTypeJsonFormat: Format[Value] = Format(Reads.enumNameReads(this), Writes.enumNameWrites[this.type])
