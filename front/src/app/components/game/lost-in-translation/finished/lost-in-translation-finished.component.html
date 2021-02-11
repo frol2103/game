@@ -2,7 +2,18 @@
     <div>
         {{ 'lit_finished_title_description' | translate }}
     </div>
-    <div>
-        TODO : display the game stories
+    <div *ngFor="let story of lostInTranslationService.game.stories">
+        <panel [title-raw]="story.originalUser.name">
+            <div *ngFor="let round of story.rounds">
+                <panel [title-raw]="round.roundUser.name" *ngIf="round.text || round.drawing">
+                    <div *ngIf="round.roundType == 'text'">
+                        {{ round.text }}
+                    </div>
+                    <div *ngIf="round.roundType == 'drawing'">
+                        TODO: display image {{ round.drawing }}
+                    </div>
+                </panel>
+            </div>
+        </panel>
     </div>
 </panel>
