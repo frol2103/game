@@ -17,8 +17,15 @@ error(){
   >&2 echo -e ${ERROR_COLOR}$@${NC}
 }
 
-CURRENT_TAG=$(curl https://registry.hub.docker.com/v1/repositories/frol2103/gameback/tags | jq -r '.[].name' | grep -f <(curl https://registry.hub.docker.com/v1/repositories/frol2103/gamefront/tags | jq -r '.[].name') | head -n 1)
+git pull origin master
 
+
+CURRENT_TAG=$( git log --pretty=tformat:"%H" |
+	grep -f <(curl https://registry.hub.docker.com/v1/repositories/frol2103/gameback/tags | jq -r '.[].name') | 
+	grep -f <(curl https://registry.hub.docker.com/v1/repositories/frol2103/gamefront/tags | jq -r '.[].name') | 
+	head -n 1)
+
+info current version $CURRENT_TAG
 
 cat $DIR/docker-compose_template.yml | sed "s/#TAG#/$CURRENT_TAG/g" > $DIR/docker-compose.yml
 
