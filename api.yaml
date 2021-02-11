@@ -21,6 +21,16 @@ schemes:
 - "https"
 - "http"
 paths:
+  /logout:
+    get:
+      tags:
+        - "auth"
+      summary: "logout"
+      description: ""
+      operationId: "logout"
+      responses:
+        "200":
+          description: "ok"
   /login:
     post:
       tags:
@@ -41,6 +51,26 @@ paths:
         "200":
           description: "ok"
 
+  /socialLogin:
+    post:
+      tags:
+        - "auth"
+      summary: "social login"
+      description: ""
+      operationId: "socialLogin"
+      consumes:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "userAssociation"
+          description: "the association infos"
+          required: true
+          schema:
+            $ref : "#/definitions/UserAssociation"
+      responses:
+        "200":
+          description: "ok"
+
   /user:
     get:
       tags:
@@ -50,6 +80,30 @@ paths:
       operationId: "getConnectedUser"
       produces:
         - "application/json"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/User"
+
+  /user/link:
+    post:
+      tags:
+        - "auth"
+      summary: "link to external account"
+      description: ""
+      operationId: "linkToExternalAccount"
+      consumes:
+        - "application/json"
+      produces:
+        - "application/json"
+      parameters:
+        - in: "body"
+          name: "userAssociation"
+          description: "the association infos"
+          required: true
+          schema:
+            $ref : "#/definitions/UserAssociation"
       responses:
         "200":
           description: "OK"
@@ -269,6 +323,20 @@ definitions:
         type: "string"
       canAdministrageGame:
         type: "boolean"
+      linkedAccounts:
+        type: array
+        items:
+          $ref: "#/definitions/UserAssociation"
+
+  UserAssociation:
+    type: "object"
+    properties:
+      linkType:
+        type: string
+        enum:
+          - Facebook
+      accessToken:
+        type: string
 
   GameDescription:
     type: "object"

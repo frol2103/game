@@ -247,18 +247,19 @@ trait Tables {
    *  @param id Database column id SqlType(BIGINT), AutoInc, PrimaryKey
    *  @param fkUserId Database column fk_user_id SqlType(BIGINT)
    *  @param reference Database column reference SqlType(VARCHAR), Length(36,true)
-   *  @param timestamp Database column timestamp SqlType(TIMESTAMP) */
-  case class UserReferenceRow(id: Long, fkUserId: Long, reference: String, timestamp: java.sql.Timestamp)
+   *  @param timestamp Database column timestamp SqlType(TIMESTAMP)
+   *  @param service Database column service SqlType(VARCHAR), Length(255,true) */
+  case class UserReferenceRow(id: Long, fkUserId: Long, reference: String, timestamp: java.sql.Timestamp, service: String)
   /** GetResult implicit for fetching UserReferenceRow objects using plain SQL queries */
   implicit def GetResultUserReferenceRow(implicit e0: GR[Long], e1: GR[String], e2: GR[java.sql.Timestamp]): GR[UserReferenceRow] = GR{
     prs => import prs._
-    UserReferenceRow.tupled((<<[Long], <<[Long], <<[String], <<[java.sql.Timestamp]))
+    UserReferenceRow.tupled((<<[Long], <<[Long], <<[String], <<[java.sql.Timestamp], <<[String]))
   }
   /** Table description of table user_reference. Objects of this class serve as prototypes for rows in queries. */
   class UserReference(_tableTag: Tag) extends profile.api.Table[UserReferenceRow](_tableTag, Some("db"), "user_reference") {
-    def * = (id, fkUserId, reference, timestamp) <> (UserReferenceRow.tupled, UserReferenceRow.unapply)
+    def * = (id, fkUserId, reference, timestamp, service) <> (UserReferenceRow.tupled, UserReferenceRow.unapply)
     /** Maps whole row to an option. Useful for outer joins. */
-    def ? = ((Rep.Some(id), Rep.Some(fkUserId), Rep.Some(reference), Rep.Some(timestamp))).shaped.<>({r=>import r._; _1.map(_=> UserReferenceRow.tupled((_1.get, _2.get, _3.get, _4.get)))}, (_:Any) =>  throw new Exception("Inserting into ? projection not supported."))
+    def ? = ((Rep.Some(id), Rep.Some(fkUserId), Rep.Some(reference), Rep.Some(timestamp), Rep.Some(service))).shaped.<>({r=>import r._; _1.map(_=> UserReferenceRow.tupled((_1.get, _2.get, _3.get, _4.get, _5.get)))}, (_:Any) =>  throw new Exception("Inserting into ? projection not supported."))
 
     /** Database column id SqlType(BIGINT), AutoInc, PrimaryKey */
     val id: Rep[Long] = column[Long]("id", O.AutoInc, O.PrimaryKey)
@@ -268,6 +269,8 @@ trait Tables {
     val reference: Rep[String] = column[String]("reference", O.Length(36,varying=true))
     /** Database column timestamp SqlType(TIMESTAMP) */
     val timestamp: Rep[java.sql.Timestamp] = column[java.sql.Timestamp]("timestamp")
+    /** Database column service SqlType(VARCHAR), Length(255,true) */
+    val service: Rep[String] = column[String]("service", O.Length(255,varying=true))
 
     /** Foreign key referencing User (database name user_reference_ibfk_1) */
     lazy val userFk = foreignKey("user_reference_ibfk_1", fkUserId, User)(r => r.id, onUpdate=ForeignKeyAction.NoAction, onDelete=ForeignKeyAction.NoAction)

@@ -7,6 +7,8 @@ case class RichUser(u:UserRow, uig: UserInGameRow){
   def id = u.id
 }
 
+case class UserWithReferences(user:UserRow, references:Seq[UserReferenceRow] = Nil)
+
 case class RichGame(game: GameRow, users: List[RichUser]){
   def id = game.id
   def userInGame(userUuid:String) = users.exists(_.uuid == userUuid)

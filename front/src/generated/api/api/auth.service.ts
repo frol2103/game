@@ -18,6 +18,7 @@ import { CustomHttpParameterCodec }                          from '../encoder';
 import { Observable }                                        from 'rxjs';
 
 import { User } from '../model/user';
+import { UserAssociation } from '../model/userAssociation';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
@@ -82,6 +83,52 @@ export class AuthService {
     }
 
     /**
+     * link to external account
+     * @param userAssociation the association infos
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public linkToExternalAccount(userAssociation: UserAssociation, observe?: 'body', reportProgress?: boolean): Observable<User>;
+    public linkToExternalAccount(userAssociation: UserAssociation, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<User>>;
+    public linkToExternalAccount(userAssociation: UserAssociation, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<User>>;
+    public linkToExternalAccount(userAssociation: UserAssociation, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+        if (userAssociation === null || userAssociation === undefined) {
+            throw new Error('Required parameter userAssociation was null or undefined when calling linkToExternalAccount.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        const httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected !== undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.post<User>(`${this.configuration.basePath}/user/link`,
+            userAssociation,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
      * login
      * @param username login information
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
@@ -117,6 +164,82 @@ export class AuthService {
 
         return this.httpClient.post<any>(`${this.configuration.basePath}/login`,
             username,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * logout
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public logout(observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public logout(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public logout(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public logout(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        const httpHeaderAccepts: string[] = [
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+
+        return this.httpClient.get<any>(`${this.configuration.basePath}/logout`,
+            {
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * social login
+     * @param userAssociation the association infos
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public socialLogin(userAssociation: UserAssociation, observe?: 'body', reportProgress?: boolean): Observable<any>;
+    public socialLogin(userAssociation: UserAssociation, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
+    public socialLogin(userAssociation: UserAssociation, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public socialLogin(userAssociation: UserAssociation, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+        if (userAssociation === null || userAssociation === undefined) {
+            throw new Error('Required parameter userAssociation was null or undefined when calling socialLogin.');
+        }
+
+        let headers = this.defaultHeaders;
+
+        // to determine the Accept header
+        const httpHeaderAccepts: string[] = [
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected !== undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+            'application/json'
+        ];
+        const httpContentTypeSelected: string | undefined = this.configuration.selectHeaderContentType(consumes);
+        if (httpContentTypeSelected !== undefined) {
+            headers = headers.set('Content-Type', httpContentTypeSelected);
+        }
+
+        return this.httpClient.post<any>(`${this.configuration.basePath}/socialLogin`,
+            userAssociation,
             {
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,

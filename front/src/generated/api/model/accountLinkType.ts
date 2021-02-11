@@ -9,13 +9,11 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { UserAssociation } from './userAssociation';
 
 
-export interface User { 
-    uuid?: string;
-    name?: string;
-    canAdministrageGame?: boolean;
-    linkedAccounts?: Array<UserAssociation>;
-}
+export type AccountLinkType = 'Facebook';
+
+export const AccountLinkType = {
+    Facebook: 'Facebook' as AccountLinkType
+};
 

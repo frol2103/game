@@ -5,8 +5,9 @@ import javax.inject.{Inject, Singleton}
 import play.api.libs.json._
 import play.api.mvc._
 import be.frol.game.model.User
+import be.frol.game.model.UserAssociation
 
-@javax.annotation.Generated(value = Array("org.openapitools.codegen.languages.ScalaPlayFrameworkServerCodegen"), date = "2021-02-10T16:42:03.351Z[Etc/UTC]")
+@javax.annotation.Generated(value = Array("org.openapitools.codegen.languages.ScalaPlayFrameworkServerCodegen"), date = "2021-02-10T23:20:48.736Z[Etc/UTC]")
 @Singleton
 class AuthApiController @Inject()(cc: ControllerComponents, api: AuthApi) extends AbstractController(cc) {
   /**
@@ -23,6 +24,22 @@ class AuthApiController @Inject()(cc: ControllerComponents, api: AuthApi) extend
   }
 
   /**
+    * POST /api/user/link
+    */
+  def linkToExternalAccount(): Action[AnyContent] = Action { request =>
+    def executeApi(): User = {
+      val userAssociation = request.body.asJson.map(_.as[UserAssociation]).getOrElse {
+        throw new OpenApiExceptions.MissingRequiredParameterException("body", "userAssociation")
+      }
+      api.linkToExternalAccount(userAssociation)
+    }
+
+    val result = executeApi()
+    val json = Json.toJson(result)
+    Ok(json)
+  }
+
+  /**
     * POST /api/login
     */
   def login(): Action[AnyContent] = Action { request =>
@@ -31,6 +48,33 @@ class AuthApiController @Inject()(cc: ControllerComponents, api: AuthApi) extend
         throw new OpenApiExceptions.MissingRequiredParameterException("body", "username")
       }
       api.login(username)
+    }
+
+    executeApi()
+    Ok
+  }
+
+  /**
+    * GET /api/logout
+    */
+  def logout(): Action[AnyContent] = Action { request =>
+    def executeApi(): Unit = {
+      api.logout()
+    }
+
+    executeApi()
+    Ok
+  }
+
+  /**
+    * POST /api/socialLogin
+    */
+  def socialLogin(): Action[AnyContent] = Action { request =>
+    def executeApi(): Unit = {
+      val userAssociation = request.body.asJson.map(_.as[UserAssociation]).getOrElse {
+        throw new OpenApiExceptions.MissingRequiredParameterException("body", "userAssociation")
+      }
+      api.socialLogin(userAssociation)
     }
 
     executeApi()

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Location} from '@angular/common';
+import {AuthService} from "../../../../generated/api";
 
 @Component({
   selector: 'user-logout',
@@ -8,7 +9,10 @@ import {Location} from '@angular/common';
 })
 export class UserLogoutComponent implements OnInit {
 
-  constructor(private location: Location) { }
+  constructor(
+      private location: Location,
+      private authService: AuthService,
+  ) { }
 
   ngOnInit(): void {
   }
@@ -18,6 +22,6 @@ export class UserLogoutComponent implements OnInit {
   }
 
   logout() {
-    // todo when backend allows logouts
+    this.authService.logout().toPromise().then(v => document.location.href=document.location.origin);
   }
 }

@@ -16,6 +16,7 @@ import {GameComponent} from "./components/game/room/game.component";
 import { UsersListComponent } from './components/game/users-list/users-list.component';
 import { LostInTranslationComponent } from './components/game/lost-in-translation/lost-in-translation.component';
 import { LostInTranslationFinishedComponent } from './components/game/lost-in-translation/finished/lost-in-translation-finished.component';
+import { ProfileComponent } from './components/user/profile/profile.component';
 import { UserLogoutComponent } from './components/user/user-logout/user-logout.component';
 import { PanelComponent } from './components/utils/panel/panel.component';
 import { WaitForComponent } from './components/utils/wait-for/wait-for.component';
@@ -24,6 +25,7 @@ import { DrawingComponent } from './components/game/lost-in-translation/drawing/
 const routes: Routes = [
     { path: 'logout', component: UserLogoutComponent },
     { path: 'home', component: HomeComponent },
+    { path: 'profile', component: ProfileComponent },
     { path: 'join', component: GameComponent },
     { path: 'current', component: GameComponent },
     { path: '**', component: HomeComponent }
@@ -40,10 +42,11 @@ const routes: Routes = [
         UsersListComponent,
         LostInTranslationComponent,
         LostInTranslationFinishedComponent,
+        ProfileComponent,
         UserLogoutComponent,
         PanelComponent,
         WaitForComponent,
-        DrawingComponent
+        DrawingComponent,
     ],
     imports: [
         FormsModule,

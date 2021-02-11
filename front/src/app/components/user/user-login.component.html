@@ -12,3 +12,13 @@
   </form>
 </panel>
 
+<div class="card m-2">
+  <div class="card-header">
+    {{ 'social_login_title' | translate }}
+  </div>
+  <div class="card-body">
+    <a class="fb fbConnect" (click)="facebookLogin()" >{{"social_login_button" | translate}}</a>
+  </div>
+
+</div>
+

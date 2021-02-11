@@ -13,6 +13,7 @@ lazy val root = (project in file(".")).enablePlugins(PlayScala)
     resolvers += ("com.e-iceblue" at "http://repo.e-iceblue.com/nexus/content/groups/public/").withAllowInsecureProtocol(true),
     libraryDependencies ++= Seq(
       guice,
+      ws,
       "com.typesafe.play" %% "play-slick" % "5.0.0",
       "com.typesafe.play" %% "play-slick-evolutions" % "5.0.0",
       "com.typesafe.slick" %% "slick-codegen" % "3.3.2",
