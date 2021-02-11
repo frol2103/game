@@ -33,6 +33,10 @@ export class LitService {
     timer(0, 2000).subscribe(time => this.fetchGameInfo())
   }
 
+  imageUrl(drawing: string) {
+    return '/api/file/'+drawing
+  }
+
   public stop() {
     this.refreshActive = false
     this.game = null
@@ -67,7 +71,7 @@ export class LitService {
   }
 
   private checkIfFirstRound(currentRound: LostInTranslationRound) {
-    return currentRound.roundUser?.uuid == currentRound.originalUser?.uuid;
+    return currentRound.roundUser?.uuid == this.findStory(currentRound).originalUser?.uuid;
   }
 
 
@@ -96,7 +100,9 @@ export class LitService {
     let current = this.getCurrentRound()!
 
     //todo: this is the only way currrently but it won't wokr if the same user can play multiple times ina  story!!
-    return this.findStory(current)!.rounds!.find(r => r.roundUser?.uuid == current.originalUser?.uuid)!
+    let rounds = this.findStory(current)!.rounds!;
+    let currentRoundIndex = rounds.findIndex(r => r.roundUser?.uuid == current.roundUser?.uuid)!
+    return rounds[Math.min(currentRoundIndex - 1, 0)]
   }
 
   sendText(text: string) : Promise<LostInTranslationGame> {
