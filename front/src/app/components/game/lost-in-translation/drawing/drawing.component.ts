@@ -14,6 +14,10 @@ export class DrawingComponent implements OnInit, AfterViewInit {
   @Input() public size = 600;
   ctx : CanvasRenderingContext2D | undefined
 
+  strokes : Array<DrawStroke> = []
+  undoneStrokes : Array<DrawStroke> = []
+  currentStyle : DrawStyle = new DrawStyle()
+
   constructor() { }
 
   ngOnInit(): void {
@@ -35,37 +39,120 @@ export class DrawingComponent implements OnInit, AfterViewInit {
 
   private captureStrokes(startEvent: string, moveEvent: string, stopEvent: string, cancelEvent: string) {
     this.fromEvent(startEvent)
+        .subscribe(startStrokeEvent => this.strokes.push(new DrawStroke()))
+    this.fromEvent(startEvent)
         .pipe(
             switchMap(event => this.fromEvent(moveEvent).pipe(takeUntil(this.fromEvent(stopEvent)), takeUntil(this.fromEvent(cancelEvent)), pairwise()))
         )
-        .subscribe(stroke=> this.drawLine(stroke[0], stroke[1]))
+        .subscribe(stroke=> this.newLine(new StrokeSegment(this.toCoordinates(stroke[0]), this.toCoordinates(stroke[1]))))
   }
 
   private initContext(canvas: HTMLCanvasElement) {
     canvas.width = this.size
     canvas.height = this.size
-    this.ctx = canvas.getContext('2d')!
-    this.ctx.lineCap = 'round'
-    this.ctx.lineWidth = 3
-    this.ctx.strokeStyle = '#000000'
+    this.ctx = canvas.getContext('2d')
+  }
+
+  clear() {
+    this.ctx!.clearRect(0, 0, this.size, this.size)
+  }
+
+  redo() {
+    let redone = this.undoneStrokes.pop()
+    this.drawStroke(redone)
+  }
+
+  undo() {
+    let undone = this.strokes.pop()
+    this.undoneStrokes.push(undone)
+    this.clear()
+    this.redraw()
+  }
+
+  private redraw() {
+    console.log("redraw strokes : "+JSON.stringify(this.strokes))
+    this.strokes.forEach(s => this.drawStroke(s))
+  }
+
+  private drawStroke(stroke: DrawStroke) {
+    console.log("redraw stroke : "+JSON.stringify(stroke))
+    stroke.segments.forEach(segment => this.drawSegment(segment, stroke.style))
+  }
+
+  private newLine(segment : StrokeSegment) {
+    this.registerStrokeSegmentInHistory(segment);
+    this.drawSegment(segment, this.currentStyle)
+  }
+
+  private registerStrokeSegmentInHistory(segment: StrokeSegment) {
+    if (this.strokes.length) {
+      let currentStroke = this.strokes[this.strokes.length - 1]
+      currentStroke.style = this.currentStyle
+      let path = currentStroke.segments
+      path.push(segment)
+    }
+  }
+
+  private drawSegment(segment : StrokeSegment, style: DrawStyle) {
+    style.apply(this.ctx!)
+
+    this.ctx!.beginPath()
+    this.ctx!.moveTo(segment.start.x , segment.start.y)
+    this.ctx!.lineTo(segment.end.x, segment.end.y)
+
+    this.ctx!.stroke()
+  }
+
+  private toCoordinates(event: Event): DrawPoint {
+    let rect = this.canvas!.nativeElement.getBoundingClientRect()
+    var x, y : number
+    if(event instanceof MouseEvent) {
+      x = (<MouseEvent> event).clientX
+      y = (<MouseEvent> event).clientY
+    } else if(event instanceof TouchEvent) {
+      x = (<TouchEvent> event).touches!.item(0)!.clientX
+      y = (<TouchEvent> event).touches!.item(0)!.clientY
+    } else {
+      throwError('Unexpected event type : '+event.type)
+    }
+    return new DrawPoint(
+        x - rect.left,
+        y - rect.top
+    );
+  }
+
+
+}
+
+class DrawStyle {
+  constructor(public lineCap: CanvasLineCap = 'round' ,
+              public lineWidth: number = 3,
+              public lineJoin: CanvasLineJoin = 'round',
+              public strokeStyle : string = '#000000') {
+  }
+
+  apply(context : CanvasRenderingContext2D) {
+    context.lineCap = this.lineCap
+    context.lineWidth = this.lineWidth
+    context.lineJoin = this.lineJoin
+    context.strokeStyle = this.strokeStyle
+  }
+}
+
+class DrawStroke {
+  public segments : Array<StrokeSegment> = []
+
+  constructor(public style : DrawStyle = new DrawStyle()) {
+  }
+}
+
+class StrokeSegment {
+  constructor(public start : DrawPoint, public end : DrawPoint) {
 
   }
 
-  private drawLine(start: Event, end: Event) {
-    let rect = this.canvas!.nativeElement.getBoundingClientRect()
-
-    console.log('Draw for event '+(<MouseEvent> start).clientX+"/"+(<MouseEvent> start).clientY)
-    let startX : number = (start instanceof MouseEvent ? (<MouseEvent> start).clientX : (<TouchEvent> start).touches!.item(0)!.clientX) - rect.left
-    let startY : number = (start instanceof MouseEvent ? (<MouseEvent> start).clientY : (<TouchEvent> start).touches!.item(0)!.clientY) - rect.top
-    let endX : number = (start instanceof MouseEvent ? (<MouseEvent> end).clientX : (<TouchEvent> end).touches!.item(0)!.clientX) - rect.left
-    let endY : number = (start instanceof MouseEvent ? (<MouseEvent> end).clientY : (<TouchEvent> end).touches!.item(0)!.clientY) - rect.top
-
-    console.log('draw line from '+startX +' - '+ startY+" bounded by "+rect.left+" - "+rect.top)
-
-
-    this.ctx!.beginPath()
-    this.ctx!.moveTo(startX , startY)
-    this.ctx!.lineTo(endX, endY)
-    this.ctx!.stroke()
+}
+class DrawPoint {
+  constructor(public x: number, public y: number) {
   }
 }

@@ -1,4 +1,18 @@
-<canvas #drawingcanvas id="drawing-canvas" class="drawing-canvas"
-        [width]="size" [height]="size">
+<div>
+    <button type="button" class="btn btn-secondary m-1" (click)="undo()" [disabled]="!strokes.length" title="{{ 'drawing_tool_undo' | translate }}">
+        <i class="fas fa-backward"></i>
+    </button>
+    <button type="button" class="btn btn-secondary m-1" (click)="redo()" [disabled]="!undoneStrokes.length" title="{{ 'drawing_tool_redo' | translate }}">
+        <i class="fas fa-forward"></i>
+    </button>
+    <button type="button" class="btn btn-danger m-1" (click)="clear()" title="{{ 'drawing_tool_clear' | translate }}">
+        <i class="fas fa-trash"></i>
+    </button>
+</div>
+<div>
+    <canvas #drawingcanvas id="drawing-canvas" class="drawing-canvas"
+            [width]="size" [height]="size">
 
-</canvas>
+    </canvas>
+</div>
+
