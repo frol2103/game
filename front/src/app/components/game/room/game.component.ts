@@ -27,6 +27,10 @@ export class GameComponent implements OnInit, OnDestroy {
             console.log('Will join game with id from url : ' + gameUuid)
             this.roomService.join(gameUuid)
                 .then(game => this.updateRole(game!))
+                .catch(error => {
+                    console.log('Error: this game doe snot exists : '+gameUuid)
+                    this.router.navigate(['/home'])
+                })
         } else {
             if (this.roomService.game) {
                 console.log('No game uuid in url, will stay in current game : ' + this.roomService.game)

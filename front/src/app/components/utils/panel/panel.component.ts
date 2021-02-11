@@ -7,6 +7,7 @@ import {Component, Input, OnInit} from '@angular/core';
 })
 export class PanelComponent implements OnInit {
   @Input() title : string | null = null
+  @Input('title-raw') titleRaw : string | null = null
 
   constructor() { }
 

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {LitService} from "../../../../services/lit.service";
 
 @Component({
   selector: 'lost-in-translation-finished',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LostInTranslationFinishedComponent implements OnInit {
 
-  constructor() { }
+  constructor(public lostInTranslationService: LitService) { }
 
   ngOnInit(): void {
   }

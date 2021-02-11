@@ -53,6 +53,8 @@ export class LabelsService {
     'lit_waiting_for_other_player_description': "You have completed your tasks before the other players. Wait for them to finish the round to go to the next round.",
     'lit_draw_round_title': "Your turn to draw",
     'lit_draw_description': "Please draw something to make the next player guess this sentence : ",
+    'lit_finished_title': "Game finished",
+    'lit_finished_title_description': "Here is your game summary : ",
   }
 
   public translate(key: string) : string {

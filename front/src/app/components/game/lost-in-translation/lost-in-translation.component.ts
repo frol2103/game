@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
 import {RoomService} from "../../../services/room.service";
 import {LitService} from "../../../services/lit.service";
 import {GameDescription, LostInTranslationGame} from "../../../../generated/api";
@@ -9,11 +9,21 @@ import {DrawingComponent} from "./drawing/drawing.component";
   templateUrl: './lost-in-translation.component.html',
   styleUrls: ['./lost-in-translation.component.css']
 })
-export class LostInTranslationComponent implements OnInit, OnDestroy {
+export class LostInTranslationComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(public lostInTranslationService: LitService) { }
   text: string = '';
 
-  @ViewChild('litdrawing') drawing: DrawingComponent | null = null;
+  @ViewChildren(DrawingComponent) childrenDrawings: QueryList<DrawingComponent> = new QueryList<DrawingComponent>()
+  drawing: DrawingComponent | null = null
+
+  ngAfterViewInit(): void {
+    this.childrenDrawings.changes.subscribe((comps: QueryList<DrawingComponent>) =>
+    {
+      console.log("found child component")
+      this.drawing = comps.last
+      console.log("found child component --> "+this.drawing)
+    });
+  }
 
   ngOnInit(): void {
     this.lostInTranslationService.init()
