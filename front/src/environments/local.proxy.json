@@ -4,6 +4,7 @@
     "protected": false,
     "pathRewrite": {
       "^": ""
-    }
+    },
+    "changeOrigin": true
   }
 }

@@ -6,7 +6,7 @@ import {Component, Input, OnInit} from '@angular/core';
   styleUrls: ['./wait-for.component.css']
 })
 export class WaitForComponent implements OnInit {
-  @Input("condition") condition : boolean = false
+  @Input("condition") condition : boolean | null | undefined = false
   @Input("spinner-class") spinnerClass : string = ''
 
   constructor() { }

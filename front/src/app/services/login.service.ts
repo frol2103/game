@@ -22,16 +22,32 @@ export class LoginService {
   public fetchUser() {
     this.backendAuthService.getConnectedUser()
         .pipe(finalize(() => this.ready=true))
-        .subscribe(user => this.user = user, error => this.user = null)
+        .subscribe(user => this.receivedUser(user),
+                error => this.receivedError(error))
   }
 
   public createUser(form: UserCreationForm) : Promise<any> {
+    this.markNotReady()
     return this.backendAuthService.login('"'+form.name+'"')
         .toPromise()
         .finally(() => {
-          this.markNotReady()
           this.fetchUser()
         })
+  }
+
+  private receivedUser(user: User) {
+    this.ready=true
+    this.user = user
+  }
+
+  private receivedError(error: any) {
+    if(error.status && error.status == 401) {
+      this.ready=true
+    }
+    if(error.status && error.status == 500) {
+      this.ready=true
+    //  todo this should not be ok and should result in an error message
+    }
   }
 }
 

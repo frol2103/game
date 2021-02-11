@@ -5,6 +5,7 @@
     "logLevel": "debug",
     "pathRewrite": {
       "^": ""
-    }
+    },
+    "changeOrigin": true
   }
 }
