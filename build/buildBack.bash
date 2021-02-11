@@ -34,6 +34,6 @@ mv tmp_build/back* tmp_build/back
 cp build/Dockerfile.back tmp_build
 
 cd $DIR/../tmp_build
-docker build -t frol2103/gamefront:$(git rev-parse HEAD) -f Dockerfile.back .
+docker build -t frol2103/gameback:$(git rev-parse HEAD) -f Dockerfile.back .
 
 

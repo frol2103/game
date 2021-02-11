@@ -28,3 +28,5 @@ $DIR/dc.bash run --rm letsencrypt \
 	-d game.frol.be \
 	--agree-tos \
 	--email gameplatform@frol.be
+
+$DIR/dc.bash restart front 

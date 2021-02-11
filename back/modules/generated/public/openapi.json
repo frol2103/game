@@ -598,18 +598,6 @@
             },
             "rounds" : [ {
               "storyId" : "storyId",
-              "originalUser" : {
-                "canAdministrageGame" : true,
-                "name" : "name",
-                "linkedAccounts" : [ {
-                  "linkType" : "Facebook",
-                  "accessToken" : "accessToken"
-                }, {
-                  "linkType" : "Facebook",
-                  "accessToken" : "accessToken"
-                } ],
-                "uuid" : "uuid"
-              },
               "drawing" : "drawing",
               "roundUser" : {
                 "canAdministrageGame" : true,
@@ -628,18 +616,6 @@
               "text" : "text"
             }, {
               "storyId" : "storyId",
-              "originalUser" : {
-                "canAdministrageGame" : true,
-                "name" : "name",
-                "linkedAccounts" : [ {
-                  "linkType" : "Facebook",
-                  "accessToken" : "accessToken"
-                }, {
-                  "linkType" : "Facebook",
-                  "accessToken" : "accessToken"
-                } ],
-                "uuid" : "uuid"
-              },
               "drawing" : "drawing",
               "roundUser" : {
                 "canAdministrageGame" : true,
@@ -673,18 +649,6 @@
             },
             "rounds" : [ {
               "storyId" : "storyId",
-              "originalUser" : {
-                "canAdministrageGame" : true,
-                "name" : "name",
-                "linkedAccounts" : [ {
-                  "linkType" : "Facebook",
-                  "accessToken" : "accessToken"
-                }, {
-                  "linkType" : "Facebook",
-                  "accessToken" : "accessToken"
-                } ],
-                "uuid" : "uuid"
-              },
               "drawing" : "drawing",
               "roundUser" : {
                 "canAdministrageGame" : true,
@@ -703,18 +667,6 @@
               "text" : "text"
             }, {
               "storyId" : "storyId",
-              "originalUser" : {
-                "canAdministrageGame" : true,
-                "name" : "name",
-                "linkedAccounts" : [ {
-                  "linkType" : "Facebook",
-                  "accessToken" : "accessToken"
-                }, {
-                  "linkType" : "Facebook",
-                  "accessToken" : "accessToken"
-                } ],
-                "uuid" : "uuid"
-              },
               "drawing" : "drawing",
               "roundUser" : {
                 "canAdministrageGame" : true,
@@ -764,18 +716,6 @@
           },
           "rounds" : [ {
             "storyId" : "storyId",
-            "originalUser" : {
-              "canAdministrageGame" : true,
-              "name" : "name",
-              "linkedAccounts" : [ {
-                "linkType" : "Facebook",
-                "accessToken" : "accessToken"
-              }, {
-                "linkType" : "Facebook",
-                "accessToken" : "accessToken"
-              } ],
-              "uuid" : "uuid"
-            },
             "drawing" : "drawing",
             "roundUser" : {
               "canAdministrageGame" : true,
@@ -794,18 +734,6 @@
             "text" : "text"
           }, {
             "storyId" : "storyId",
-            "originalUser" : {
-              "canAdministrageGame" : true,
-              "name" : "name",
-              "linkedAccounts" : [ {
-                "linkType" : "Facebook",
-                "accessToken" : "accessToken"
-              }, {
-                "linkType" : "Facebook",
-                "accessToken" : "accessToken"
-              } ],
-              "uuid" : "uuid"
-            },
             "drawing" : "drawing",
             "roundUser" : {
               "canAdministrageGame" : true,
@@ -843,18 +771,6 @@
       "LostInTranslationRound" : {
         "example" : {
           "storyId" : "storyId",
-          "originalUser" : {
-            "canAdministrageGame" : true,
-            "name" : "name",
-            "linkedAccounts" : [ {
-              "linkType" : "Facebook",
-              "accessToken" : "accessToken"
-            }, {
-              "linkType" : "Facebook",
-              "accessToken" : "accessToken"
-            } ],
-            "uuid" : "uuid"
-          },
           "drawing" : "drawing",
           "roundUser" : {
             "canAdministrageGame" : true,
@@ -873,9 +789,6 @@
           "text" : "text"
         },
         "properties" : {
-          "originalUser" : {
-            "$ref" : "#/components/schemas/User"
-          },
           "roundUser" : {
             "$ref" : "#/components/schemas/User"
           },
