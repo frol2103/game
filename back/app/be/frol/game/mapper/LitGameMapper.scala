@@ -17,7 +17,8 @@ object LitGameMapper {
     new LostInTranslationStory(
       rounds.headOption.map(_.round.fkOriginalUserId).flatMap(litRichGame.user).map(UserMapper.toDto),
       Option(storyId),
-      Option(rounds.map(roundTransform).map(toDto(litRichGame, _)).toList))
+      Option(rounds.toList.sortBy(_.round.timestamp.map(_.getTime).getOrElse(Long.MaxValue))
+        .map(roundTransform).map(toDto(litRichGame, _))))
   }
 
   def toDto(litRichGame: LitRichGame, round: LitRichRound) : LostInTranslationRound = {
