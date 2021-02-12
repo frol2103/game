@@ -55,6 +55,7 @@ export class LabelsService {
     'lit_draw_description': "Please draw something to make the next player guess the sentence below. ",
     'lit_finished_title': "Game finished",
     'lit_finished_title_description': "Here is your game summary : ",
+    'lit_finished_of': "The story of : ",
   }
 
   public translate(key: string) : string {
