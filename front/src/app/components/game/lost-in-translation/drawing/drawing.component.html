@@ -11,10 +11,10 @@
     <button type="button" class="btn btn-secondary m-1" (click)="currentStyle.strokeStyle='#0000FF'" [disabled]="currentStyle.strokeStyle=='#0000FF'" title="{{ 'drawing_tool_size_big' | translate }}">
         <i class="fas fa-pencil-alt" style="color: #0000FF"></i>
     </button>
-    <button type="button" class="btn btn-secondary m-1" (click)="undo()" [disabled]="!strokes.length" title="{{ 'drawing_tool_undo' | translate }}">
+    <button type="button" class="btn btn-secondary m-1" (click)="undo()" [disabled]="!activeStrokes.length" title="{{ 'drawing_tool_undo' | translate }}">
         <i class="fas fa-backward"></i>
     </button>
-    <button type="button" class="btn btn-secondary m-1" (click)="redo()" [disabled]="!undoneStrokes.length" title="{{ 'drawing_tool_redo' | translate }}">
+    <button type="button" class="btn btn-secondary m-1" (click)="redo()" [disabled]="!removedStrokes.length" title="{{ 'drawing_tool_redo' | translate }}">
         <i class="fas fa-forward"></i>
     </button>
     <button type="button" class="btn btn-danger m-1" (click)="clear()" title="{{ 'drawing_tool_clear' | translate }}">

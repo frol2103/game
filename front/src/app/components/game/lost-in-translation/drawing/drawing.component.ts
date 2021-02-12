@@ -14,8 +14,8 @@ export class DrawingComponent implements OnInit, AfterViewInit {
   @Input() public size = 600;
   ctx : CanvasRenderingContext2D | undefined
 
-  strokes : Array<DrawStroke> = []
-  undoneStrokes : Array<DrawStroke> = []
+  activeStrokes : Array<DrawStroke> = []
+  removedStrokes : Array<DrawStroke> = []
   currentStyle : DrawStyle = new DrawStyle()
 
   constructor() { }
@@ -39,7 +39,7 @@ export class DrawingComponent implements OnInit, AfterViewInit {
 
   private captureStrokes(startEvent: string, moveEvent: string, stopEvent: string, cancelEvent: string) {
     this.fromEvent(startEvent)
-        .subscribe(startStrokeEvent => this.strokes.push(new DrawStroke()))
+        .subscribe(startStrokeEvent => this.activeStrokes.push(new DrawStroke()))
     this.fromEvent(startEvent)
         .pipe(
             switchMap(event => this.fromEvent(moveEvent).pipe(takeUntil(this.fromEvent(stopEvent)), takeUntil(this.fromEvent(cancelEvent)), pairwise()))
@@ -55,27 +55,27 @@ export class DrawingComponent implements OnInit, AfterViewInit {
 
   clear() {
     this.ctx!.clearRect(0, 0, this.size, this.size)
+    this.removedStrokes = this.activeStrokes.reverse()
+    this.activeStrokes = []
   }
 
   redo() {
-    let redone = this.undoneStrokes.pop()
+    let redone = this.removedStrokes.pop()
     this.drawStroke(redone)
   }
 
   undo() {
-    let undone = this.strokes.pop()
-    this.undoneStrokes.push(undone)
-    this.clear()
+    let undone = this.activeStrokes.pop()
+    this.removedStrokes.push(undone)
     this.redraw()
   }
 
   private redraw() {
-    console.log("redraw strokes : "+JSON.stringify(this.strokes))
-    this.strokes.forEach(s => this.drawStroke(s))
+    this.ctx!.clearRect(0, 0, this.size, this.size)
+    this.activeStrokes.forEach(s => this.drawStroke(s))
   }
 
   private drawStroke(stroke: DrawStroke) {
-    console.log("redraw stroke : "+JSON.stringify(stroke))
     stroke.segments.forEach(segment => this.drawSegment(segment, stroke.style))
   }
 
@@ -85,8 +85,8 @@ export class DrawingComponent implements OnInit, AfterViewInit {
   }
 
   private registerStrokeSegmentInHistory(segment: StrokeSegment) {
-    if (this.strokes.length) {
-      let currentStroke = this.strokes[this.strokes.length - 1]
+    if (this.activeStrokes.length) {
+      let currentStroke = this.activeStrokes[this.activeStrokes.length - 1]
       currentStroke.style = Object.assign(new DrawStyle(), this.currentStyle)
       let path = currentStroke.segments
       path.push(segment)
