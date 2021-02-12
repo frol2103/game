@@ -1,4 +1,13 @@
-import {AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
+import {
+  AfterViewChecked,
+  AfterViewInit,
+  Component,
+  ElementRef,
+  HostListener,
+  Input,
+  OnInit,
+  ViewChild
+} from '@angular/core';
 import {fromEvent, Observable, throwError} from "rxjs";
 import {pairwise, switchMap, takeUntil} from "rxjs/operators";
 
@@ -8,10 +17,10 @@ import {pairwise, switchMap, takeUntil} from "rxjs/operators";
   templateUrl: './drawing.component.html',
   styleUrls: ['./drawing.component.css']
 })
-export class DrawingComponent implements OnInit, AfterViewInit {
+export class DrawingComponent implements  AfterViewInit, AfterViewChecked {
   sketchpad: any
   @ViewChild('drawingcanvas') canvas: ElementRef | undefined
-  @Input() public size = 600;
+  size = 600
   ctx : CanvasRenderingContext2D | undefined
 
   activeStrokes : Array<DrawStroke> = []
@@ -20,7 +29,25 @@ export class DrawingComponent implements OnInit, AfterViewInit {
 
   constructor() { }
 
-  ngOnInit(): void {
+  ngAfterViewChecked(): void {
+    this.setCanvasSizeForWindowSize()
+    }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    this.setCanvasSizeForWindowSize()
+  }
+
+  private setCanvasSizeForWindowSize() {
+    let windowHeight = window.innerHeight
+    let canvasTop = this.canvas!.nativeElement.getBoundingClientRect().y
+    var canvasParentWidth = this.canvas!.nativeElement.parentElement!.getBoundingClientRect().width
+    if(!canvasParentWidth) {
+      canvasParentWidth = 600
+    }
+    this.size = Math.min(windowHeight - canvasTop - 50, canvasParentWidth - 30)
+    console.log("set canvas size to " + this.size)
+    this.redraw()
   }
 
   saveCanvasAsBlob() : Promise<Blob> {
@@ -48,8 +75,6 @@ export class DrawingComponent implements OnInit, AfterViewInit {
   }
 
   private initContext(canvas: HTMLCanvasElement) {
-    canvas.width = this.size
-    canvas.height = this.size
     this.ctx = canvas.getContext('2d')
   }
 
@@ -72,6 +97,7 @@ export class DrawingComponent implements OnInit, AfterViewInit {
 
   private redraw() {
     this.ctx!.clearRect(0, 0, this.size, this.size)
+    console.log("Will redraw "+this.activeStrokes.length+" strokes")
     this.activeStrokes.forEach(s => this.drawStroke(s))
   }
 
@@ -96,9 +122,11 @@ export class DrawingComponent implements OnInit, AfterViewInit {
   private drawSegment(segment : StrokeSegment, style: DrawStyle) {
     style.apply(this.ctx!)
 
+    let canvasWidth = this.canvas!.nativeElement.width
+    let canvasHeight = this.canvas!.nativeElement.height
     this.ctx!.beginPath()
-    this.ctx!.moveTo(segment.start.x , segment.start.y)
-    this.ctx!.lineTo(segment.end.x, segment.end.y)
+    this.ctx!.moveTo(segment.start.xRelativeToCanvasWidth*canvasWidth , segment.start.yRelativeToCanvasHeight*canvasHeight)
+    this.ctx!.lineTo(segment.end.xRelativeToCanvasWidth*canvasWidth, segment.end.yRelativeToCanvasHeight*canvasHeight)
 
     this.ctx!.stroke()
   }
@@ -107,17 +135,19 @@ export class DrawingComponent implements OnInit, AfterViewInit {
     let rect = this.canvas!.nativeElement.getBoundingClientRect()
     var x, y : number
     if(event instanceof MouseEvent) {
+      event.preventDefault()
       x = (<MouseEvent> event).clientX
       y = (<MouseEvent> event).clientY
     } else if(event instanceof TouchEvent) {
+      event.preventDefault()
       x = (<TouchEvent> event).touches!.item(0)!.clientX
       y = (<TouchEvent> event).touches!.item(0)!.clientY
     } else {
       throwError('Unexpected event type : '+event.type)
     }
     return new DrawPoint(
-        x - rect.left,
-        y - rect.top
+        (x - rect.left) / this.canvas!.nativeElement.width,
+        (y - rect.top) / this.canvas!.nativeElement.height
     );
   }
 
@@ -153,6 +183,7 @@ class StrokeSegment {
 
 }
 class DrawPoint {
-  constructor(public x: number, public y: number) {
+  constructor(public xRelativeToCanvasWidth: number,
+              public yRelativeToCanvasHeight: number) {
   }
 }
