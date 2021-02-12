@@ -27,6 +27,25 @@ export class DrawingComponent implements  AfterViewInit, AfterViewChecked {
   removedStrokes : Array<DrawStroke> = []
   currentStyle : DrawStyle = new DrawStyle()
 
+  availablePenSizes = [
+        3,
+        5,
+        10,
+        20,
+        50
+      ]
+  availableColors = [
+      '#000000',
+      '#ffffff',
+      '#ff0000',
+      '#ffff00',
+      '#029102',
+      '#0000ff',
+      '#ee02eb',
+      '#6d6d6d',
+      '#604026',
+  ]
+
   constructor() { }
 
   ngAfterViewChecked(): void {
