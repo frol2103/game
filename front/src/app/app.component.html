@@ -19,7 +19,7 @@
       <user-login></user-login>
     </div>
     <div *ngIf="loginService.user">
-      <div *ngIf="displayHomeButton()" class="d-none d-md-block">
+      <div *ngIf="displayHomeButton()" class="d-none d-md-block back-home-button">
         <button type="button" routerLink="/home" routerLinkActive="active" class="btn btn-secondary m-2 ">
           <i class="fa fa-arrow-left" aria-hidden="true"></i>
           {{ 'go_back_button' | translate }}

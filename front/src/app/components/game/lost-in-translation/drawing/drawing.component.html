@@ -1,30 +1,41 @@
-<div>
-    <button type="button" class="btn btn-secondary m-1" (click)="currentStyle.strokeStyle='#000000'" [disabled]="currentStyle.strokeStyle=='#000000'" title="{{ 'drawing_tool_size_big' | translate }}">
-        <i class="fas fa-pencil-alt" style="color: #000000"></i>
-    </button>
-    <button type="button" class="btn btn-secondary m-1" (click)="currentStyle.strokeStyle='#FF0000'" [disabled]="currentStyle.strokeStyle=='#FF0000'" title="{{ 'drawing_tool_size_big' | translate }}">
-        <i class="fas fa-pencil-alt" style="color: red"></i>
-    </button>
-    <button type="button" class="btn btn-secondary m-1" (click)="currentStyle.strokeStyle='#00FF00'" [disabled]="currentStyle.strokeStyle=='#00FF00'" title="{{ 'drawing_tool_size_big' | translate }}">
-        <i class="fas fa-pencil-alt" style="color: #00FF00"></i>
-    </button>
-    <button type="button" class="btn btn-secondary m-1" (click)="currentStyle.strokeStyle='#0000FF'" [disabled]="currentStyle.strokeStyle=='#0000FF'" title="{{ 'drawing_tool_size_big' | translate }}">
-        <i class="fas fa-pencil-alt" style="color: #0000FF"></i>
-    </button>
-    <button type="button" class="btn btn-secondary m-1" (click)="undo()" [disabled]="!strokes.length" title="{{ 'drawing_tool_undo' | translate }}">
-        <i class="fas fa-backward"></i>
-    </button>
-    <button type="button" class="btn btn-secondary m-1" (click)="redo()" [disabled]="!undoneStrokes.length" title="{{ 'drawing_tool_redo' | translate }}">
-        <i class="fas fa-forward"></i>
-    </button>
-    <button type="button" class="btn btn-danger m-1" (click)="clear()" title="{{ 'drawing_tool_clear' | translate }}">
-        <i class="fas fa-trash"></i>
-    </button>
-</div>
-<div>
-    <canvas #drawingcanvas id="drawing-canvas" class="drawing-canvas"
-            [width]="size" [height]="size">
+<div class="row">
+    <div class="col-md-2">
+        <div class="mb-md-3">
+            <button type="button" *ngFor="let color of availableColors" class="btn btn-secondary m-1" (click)="currentStyle.strokeStyle=color" [disabled]="currentStyle.strokeStyle==color" title="{{ 'drawing_tool_size_big' | translate }}">
+                <i class="fas fa-pencil-alt" [ngStyle]="{color: color}"></i>
+            </button>
+        </div>
 
-    </canvas>
+        <div class="mb-md-3">
+            <button type="button" *ngFor="let size of availablePenSizes" class="btn btn-secondary m-1" (click)="currentStyle.lineWidth=size" [disabled]="currentStyle.lineWidth==size" title="{{ size }}">
+                {{ size }}
+            </button>
+        </div>
+
+        <div class="mb-md-3">
+            <button type="button" class="btn btn-secondary m-1" (click)="undo()" [disabled]="!activeStrokes.length" title="{{ 'drawing_tool_undo' | translate }}">
+                <i class="fas fa-backward"></i>
+            </button>
+            <button type="button" class="btn btn-secondary m-1" (click)="redo()" [disabled]="!removedStrokes.length" title="{{ 'drawing_tool_redo' | translate }}">
+                <i class="fas fa-forward"></i>
+            </button>
+        </div>
+
+        <div class="mb-md-3">
+            <button type="button" class="btn btn-danger m-1" (click)="clear()" title="{{ 'drawing_tool_clear' | translate }}">
+                <i class="fas fa-trash"></i>
+            </button>
+        </div>
+
+    </div>
+    <div class="col-md-10 text-center">
+        <canvas #drawingcanvas
+                id="drawing-canvas"
+                class="drawing-canvas"
+                [width]="size" [height]="size">
+
+        </canvas>
+    </div>
 </div>
+
 

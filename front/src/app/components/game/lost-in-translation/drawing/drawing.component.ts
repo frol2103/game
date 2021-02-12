@@ -1,4 +1,13 @@
-import {AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
+import {
+  AfterViewChecked,
+  AfterViewInit,
+  Component,
+  ElementRef,
+  HostListener,
+  Input,
+  OnInit,
+  ViewChild
+} from '@angular/core';
 import {fromEvent, Observable, throwError} from "rxjs";
 import {pairwise, switchMap, takeUntil} from "rxjs/operators";
 
@@ -8,19 +17,55 @@ import {pairwise, switchMap, takeUntil} from "rxjs/operators";
   templateUrl: './drawing.component.html',
   styleUrls: ['./drawing.component.css']
 })
-export class DrawingComponent implements OnInit, AfterViewInit {
+export class DrawingComponent implements  AfterViewInit, AfterViewChecked {
   sketchpad: any
   @ViewChild('drawingcanvas') canvas: ElementRef | undefined
-  @Input() public size = 600;
+  size = 600
   ctx : CanvasRenderingContext2D | undefined
 
-  strokes : Array<DrawStroke> = []
-  undoneStrokes : Array<DrawStroke> = []
+  activeStrokes : Array<DrawStroke> = []
+  removedStrokes : Array<DrawStroke> = []
   currentStyle : DrawStyle = new DrawStyle()
+
+  availablePenSizes = [
+        3,
+        5,
+        10,
+        20,
+        50
+      ]
+  availableColors = [
+      '#000000',
+      '#ffffff',
+      '#ff0000',
+      '#ffff00',
+      '#029102',
+      '#0000ff',
+      '#ee02eb',
+      '#6d6d6d',
+      '#604026',
+  ]
 
   constructor() { }
 
-  ngOnInit(): void {
+  ngAfterViewChecked(): void {
+    this.setCanvasSizeForWindowSize()
+    }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event) {
+    this.setCanvasSizeForWindowSize()
+  }
+
+  private setCanvasSizeForWindowSize() {
+    let windowHeight = window.innerHeight
+    var canvasParentWidth = this.canvas!.nativeElement.parentElement!.getBoundingClientRect().width
+    if(!canvasParentWidth) {
+      canvasParentWidth = 600
+    }
+    this.size = Math.min(windowHeight - 100, canvasParentWidth-20)
+    console.log("set canvas size to " + this.size)
+    this.redraw()
   }
 
   saveCanvasAsBlob() : Promise<Blob> {
@@ -39,7 +84,7 @@ export class DrawingComponent implements OnInit, AfterViewInit {
 
   private captureStrokes(startEvent: string, moveEvent: string, stopEvent: string, cancelEvent: string) {
     this.fromEvent(startEvent)
-        .subscribe(startStrokeEvent => this.strokes.push(new DrawStroke()))
+        .subscribe(startStrokeEvent => this.activeStrokes.push(new DrawStroke()))
     this.fromEvent(startEvent)
         .pipe(
             switchMap(event => this.fromEvent(moveEvent).pipe(takeUntil(this.fromEvent(stopEvent)), takeUntil(this.fromEvent(cancelEvent)), pairwise()))
@@ -48,34 +93,33 @@ export class DrawingComponent implements OnInit, AfterViewInit {
   }
 
   private initContext(canvas: HTMLCanvasElement) {
-    canvas.width = this.size
-    canvas.height = this.size
     this.ctx = canvas.getContext('2d')
   }
 
   clear() {
     this.ctx!.clearRect(0, 0, this.size, this.size)
+    this.removedStrokes = this.activeStrokes.reverse()
+    this.activeStrokes = []
   }
 
   redo() {
-    let redone = this.undoneStrokes.pop()
+    let redone = this.removedStrokes.pop()
     this.drawStroke(redone)
   }
 
   undo() {
-    let undone = this.strokes.pop()
-    this.undoneStrokes.push(undone)
-    this.clear()
+    let undone = this.activeStrokes.pop()
+    this.removedStrokes.push(undone)
     this.redraw()
   }
 
   private redraw() {
-    console.log("redraw strokes : "+JSON.stringify(this.strokes))
-    this.strokes.forEach(s => this.drawStroke(s))
+    this.ctx!.clearRect(0, 0, this.size, this.size)
+    console.log("Will redraw "+this.activeStrokes.length+" strokes")
+    this.activeStrokes.forEach(s => this.drawStroke(s))
   }
 
   private drawStroke(stroke: DrawStroke) {
-    console.log("redraw stroke : "+JSON.stringify(stroke))
     stroke.segments.forEach(segment => this.drawSegment(segment, stroke.style))
   }
 
@@ -85,8 +129,8 @@ export class DrawingComponent implements OnInit, AfterViewInit {
   }
 
   private registerStrokeSegmentInHistory(segment: StrokeSegment) {
-    if (this.strokes.length) {
-      let currentStroke = this.strokes[this.strokes.length - 1]
+    if (this.activeStrokes.length) {
+      let currentStroke = this.activeStrokes[this.activeStrokes.length - 1]
       currentStroke.style = Object.assign(new DrawStyle(), this.currentStyle)
       let path = currentStroke.segments
       path.push(segment)
@@ -96,9 +140,11 @@ export class DrawingComponent implements OnInit, AfterViewInit {
   private drawSegment(segment : StrokeSegment, style: DrawStyle) {
     style.apply(this.ctx!)
 
+    let canvasWidth = this.canvas!.nativeElement.width
+    let canvasHeight = this.canvas!.nativeElement.height
     this.ctx!.beginPath()
-    this.ctx!.moveTo(segment.start.x , segment.start.y)
-    this.ctx!.lineTo(segment.end.x, segment.end.y)
+    this.ctx!.moveTo(segment.start.xRelativeToCanvasWidth*canvasWidth , segment.start.yRelativeToCanvasHeight*canvasHeight)
+    this.ctx!.lineTo(segment.end.xRelativeToCanvasWidth*canvasWidth, segment.end.yRelativeToCanvasHeight*canvasHeight)
 
     this.ctx!.stroke()
   }
@@ -107,17 +153,19 @@ export class DrawingComponent implements OnInit, AfterViewInit {
     let rect = this.canvas!.nativeElement.getBoundingClientRect()
     var x, y : number
     if(event instanceof MouseEvent) {
+      event.preventDefault()
       x = (<MouseEvent> event).clientX
       y = (<MouseEvent> event).clientY
     } else if(event instanceof TouchEvent) {
+      event.preventDefault()
       x = (<TouchEvent> event).touches!.item(0)!.clientX
       y = (<TouchEvent> event).touches!.item(0)!.clientY
     } else {
       throwError('Unexpected event type : '+event.type)
     }
     return new DrawPoint(
-        x - rect.left,
-        y - rect.top
+        (x - rect.left) / this.canvas!.nativeElement.width,
+        (y - rect.top) / this.canvas!.nativeElement.height
     );
   }
 
@@ -153,6 +201,7 @@ class StrokeSegment {
 
 }
 class DrawPoint {
-  constructor(public x: number, public y: number) {
+  constructor(public xRelativeToCanvasWidth: number,
+              public yRelativeToCanvasHeight: number) {
   }
 }

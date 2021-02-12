@@ -3,16 +3,16 @@
     <div *ngIf="!isGameFinished() && !lostInTranslationService.isWaitingForOtherPlayers">
         <panel title="lit_text_round_title" *ngIf="lostInTranslationService.isTextRound">
                             <div *ngIf="lostInTranslationService.isFirstRound">
-                    <div class="m-2">
+                    <div class="m-1">
                         {{ 'lit_first_text_round_instructions' | translate }}
                     </div>
                 </div>
                 <div *ngIf="!lostInTranslationService.isFirstRound">
-                    <div class="m-2">
+                    <div class="m-1">
                         {{ 'lit_text_round_instructions' | translate }}
                     </div>
 
-                    <div class="m-2">
+                    <div class="m-1">
                         <img [src]="lostInTranslationService.imageUrl(lostInTranslationService.getPreviousRound().drawing)" />
                     </div>
                 </div>
@@ -36,17 +36,12 @@
         </panel>
 
 
-        <panel title="lit_draw_round_title" *ngIf="!lostInTranslationService.isTextRound">
-            <div>
-                {{ 'lit_draw_description' | translate }}
-            </div>
-            <div>
-                <div class="form-group">
-                    <div class="input-group">
-                        <input type="text" class="form-control"
-                               disabled
-                               [ngModel]="lostInTranslationService.getPreviousRound().text" />
-                    </div>
+        <panel title="lit_draw_description" *ngIf="!lostInTranslationService.isTextRound">
+            <div class="form-group">
+                <div class="input-group">
+                    <input type="text" class="form-control"
+                           disabled
+                           [ngModel]="lostInTranslationService.getPreviousRound().text" />
                 </div>
             </div>
             <div>
