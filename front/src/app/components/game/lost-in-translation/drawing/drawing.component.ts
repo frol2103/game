@@ -40,12 +40,11 @@ export class DrawingComponent implements  AfterViewInit, AfterViewChecked {
 
   private setCanvasSizeForWindowSize() {
     let windowHeight = window.innerHeight
-    let canvasTop = this.canvas!.nativeElement.getBoundingClientRect().y
     var canvasParentWidth = this.canvas!.nativeElement.parentElement!.getBoundingClientRect().width
     if(!canvasParentWidth) {
       canvasParentWidth = 600
     }
-    this.size = Math.min(windowHeight - canvasTop - 50, canvasParentWidth - 30)
+    this.size = Math.min(windowHeight - 100, canvasParentWidth-20)
     console.log("set canvas size to " + this.size)
     this.redraw()
   }
