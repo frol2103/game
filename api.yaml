@@ -542,13 +542,11 @@ definitions:
       points:
         type: array
         items:
-          $ref: "#/definitions/UserWithPoints"
+          $ref: "#/definitions/UserWithScore"
 
   DefineItLyRound:
     type: "object"
     properties:
-      uuid:
-        type: string
       quedtionByUser:
         $ref: "#/definitions/User"
       roundId:
@@ -559,13 +557,15 @@ definitions:
       question:
         type: string
       responses:
-        $ref: "#/definitions/DefineItLyResponse"
+        type: array
+        items:
+          $ref: "#/definitions/DefineItLyResponse"
       status:
         type: "string"
         enum:
           - "waitQuestion"
           - "waitResponses"
-          - "choseResponses"
+          - "waitChoices"
           - "finished"
 
   DefineItLyResponse:
@@ -577,12 +577,15 @@ definitions:
         type: string
       responseByUser:
         $ref: "#/definitions/User"
+      submissionDate:
+        type: "string"
+        format: "date-time"
       chosenBy:
         type: array
         items:
-          $ref: "#/definitions/UserWithPoints"
+          $ref: "#/definitions/UserWithScore"
 
-  UserWithPoints:
+  UserWithScore:
     type: "object"
     properties:
       user:
@@ -590,9 +593,9 @@ definitions:
       points:
         type: array
         items:
-          $ref: "#/definitions/Points"
+          $ref: "#/definitions/Score"
 
-  Points:
+  Score:
     type: "object"
     properties:
       amount:

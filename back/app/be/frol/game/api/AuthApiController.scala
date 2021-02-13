@@ -1,8 +1,8 @@
 package be.frol.game.api
 
+import be.frol.game.api.model.{User, UserAssociation}
 import be.frol.game.error.FunctionalError
 import be.frol.game.mapper.UserMapper
-import be.frol.game.model.{User, UserAssociation}
 import be.frol.game.repository.UserRepository
 import be.frol.game.tables.Tables
 import be.frol.game.tables.Tables.{UserReference, UserReferenceRow}

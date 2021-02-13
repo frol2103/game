@@ -1,10 +1,7 @@
 package be.frol.game.api
 
-import be.frol.game.mapper.GameMapper
-import be.frol.game.model.{Game, GameDescription}
-import be.frol.game.repository.{GameRepository, UserRepository}
+import be.frol.game.repository.UserRepository
 import be.frol.game.tables.Tables
-import be.frol.game.utils.OptionUtils._
 import be.frol.game.{DbContext, ParentController}
 import com.google.inject.{Inject, Singleton}
 import play.api.db.slick.DatabaseConfigProvider
@@ -18,7 +15,7 @@ class FileApiController @Inject()(
                                    val cc: ControllerComponents,
                                  )(implicit
                                    executionContext: ExecutionContext,
-                                     userRepository: UserRepository,
+                                   userRepository: UserRepository,
                                  )
   extends ParentController(cc, dbProvider) with DbContext {
 
@@ -26,10 +23,10 @@ class FileApiController @Inject()(
 
 
   def getFile(id: String) = Action.async { request =>
-    db.run(Tables.File.filter(_.id===id).result.head)
+    db.run(Tables.File.filter(_.id === id).result.head)
       .map(fd => Ok(
-          org.apache.commons.io.IOUtils.toByteArray(fd.value.getBinaryStream)).as(fd.mime)
-          .withHeaders("Content-Disposition" -> ("attachment; filename=\"" + fd.name + "\"")))
+        org.apache.commons.io.IOUtils.toByteArray(fd.value.getBinaryStream)).as(fd.mime)
+        .withHeaders("Content-Disposition" -> ("attachment; filename=\"" + fd.name + "\"")))
   }
 
 }

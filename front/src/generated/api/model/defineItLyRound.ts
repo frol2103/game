@@ -14,20 +14,19 @@ import { DefineItLyResponse } from './defineItLyResponse';
 
 
 export interface DefineItLyRound { 
-    uuid?: string;
     quedtionByUser?: User;
     roundId?: string;
     submissionDate?: Date;
     question?: string;
-    responses?: DefineItLyResponse;
+    responses?: Array<DefineItLyResponse>;
     status?: DefineItLyRound.StatusEnum;
 }
 export namespace DefineItLyRound {
-    export type StatusEnum = 'waitQuestion' | 'waitResponses' | 'choseResponses' | 'finished';
+    export type StatusEnum = 'waitQuestion' | 'waitResponses' | 'waitChoices' | 'finished';
     export const StatusEnum = {
         WaitQuestion: 'waitQuestion' as StatusEnum,
         WaitResponses: 'waitResponses' as StatusEnum,
-        ChoseResponses: 'choseResponses' as StatusEnum,
+        WaitChoices: 'waitChoices' as StatusEnum,
         Finished: 'finished' as StatusEnum
     };
 }

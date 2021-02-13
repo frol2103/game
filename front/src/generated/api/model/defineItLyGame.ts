@@ -9,14 +9,14 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { UserWithPoints } from './userWithPoints';
 import { Game } from './game';
+import { UserWithScore } from './userWithScore';
 import { DefineItLyRound } from './defineItLyRound';
 
 
 export interface DefineItLyGame { 
     game?: Game;
     rounds?: Array<DefineItLyRound>;
-    points?: Array<UserWithPoints>;
+    points?: Array<UserWithScore>;
 }
 

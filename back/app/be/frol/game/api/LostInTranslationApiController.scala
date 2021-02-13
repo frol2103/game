@@ -1,9 +1,9 @@
 package be.frol.game.api
 
+import be.frol.game.api.model.LostInTranslationGame
 import be.frol.game.error.FunctionalError
 import be.frol.game.mapper.LitGameMapper.toLitDto
-import be.frol.game.model.LostInTranslationRound.RoundType
-import be.frol.game.model.{LitRichGame, LostInTranslationGame, RichGame}
+import be.frol.game.model.{LitRichGame, RichGame}
 import be.frol.game.repository.{FileRepository, GameRepository, LitRepository, UserRepository}
 import be.frol.game.tables.Tables
 import be.frol.game.utils.DateUtils

@@ -1019,7 +1019,7 @@
               } ],
               "uuid" : "uuid"
             },
-            "responses" : {
+            "responses" : [ {
               "chosenBy" : [ {
                 "user" : {
                   "canAdministrageGame" : true,
@@ -1062,6 +1062,7 @@
                 } ]
               } ],
               "response" : "response",
+              "submissionDate" : "2000-01-23T04:56:07.000+00:00",
               "uuid" : "uuid",
               "responseByUser" : {
                 "canAdministrageGame" : true,
@@ -1075,9 +1076,65 @@
                 } ],
                 "uuid" : "uuid"
               }
-            },
+            }, {
+              "chosenBy" : [ {
+                "user" : {
+                  "canAdministrageGame" : true,
+                  "name" : "name",
+                  "linkedAccounts" : [ {
+                    "linkType" : "Facebook",
+                    "accessToken" : "accessToken"
+                  }, {
+                    "linkType" : "Facebook",
+                    "accessToken" : "accessToken"
+                  } ],
+                  "uuid" : "uuid"
+                },
+                "points" : [ {
+                  "amount" : 0.8008281904610115,
+                  "category" : "category"
+                }, {
+                  "amount" : 0.8008281904610115,
+                  "category" : "category"
+                } ]
+              }, {
+                "user" : {
+                  "canAdministrageGame" : true,
+                  "name" : "name",
+                  "linkedAccounts" : [ {
+                    "linkType" : "Facebook",
+                    "accessToken" : "accessToken"
+                  }, {
+                    "linkType" : "Facebook",
+                    "accessToken" : "accessToken"
+                  } ],
+                  "uuid" : "uuid"
+                },
+                "points" : [ {
+                  "amount" : 0.8008281904610115,
+                  "category" : "category"
+                }, {
+                  "amount" : 0.8008281904610115,
+                  "category" : "category"
+                } ]
+              } ],
+              "response" : "response",
+              "submissionDate" : "2000-01-23T04:56:07.000+00:00",
+              "uuid" : "uuid",
+              "responseByUser" : {
+                "canAdministrageGame" : true,
+                "name" : "name",
+                "linkedAccounts" : [ {
+                  "linkType" : "Facebook",
+                  "accessToken" : "accessToken"
+                }, {
+                  "linkType" : "Facebook",
+                  "accessToken" : "accessToken"
+                } ],
+                "uuid" : "uuid"
+              }
+            } ],
             "submissionDate" : "2000-01-23T04:56:07.000+00:00",
-            "uuid" : "uuid",
             "roundId" : "roundId",
             "status" : "waitQuestion"
           }, {
@@ -1094,7 +1151,7 @@
               } ],
               "uuid" : "uuid"
             },
-            "responses" : {
+            "responses" : [ {
               "chosenBy" : [ {
                 "user" : {
                   "canAdministrageGame" : true,
@@ -1137,6 +1194,7 @@
                 } ]
               } ],
               "response" : "response",
+              "submissionDate" : "2000-01-23T04:56:07.000+00:00",
               "uuid" : "uuid",
               "responseByUser" : {
                 "canAdministrageGame" : true,
@@ -1150,9 +1208,65 @@
                 } ],
                 "uuid" : "uuid"
               }
-            },
+            }, {
+              "chosenBy" : [ {
+                "user" : {
+                  "canAdministrageGame" : true,
+                  "name" : "name",
+                  "linkedAccounts" : [ {
+                    "linkType" : "Facebook",
+                    "accessToken" : "accessToken"
+                  }, {
+                    "linkType" : "Facebook",
+                    "accessToken" : "accessToken"
+                  } ],
+                  "uuid" : "uuid"
+                },
+                "points" : [ {
+                  "amount" : 0.8008281904610115,
+                  "category" : "category"
+                }, {
+                  "amount" : 0.8008281904610115,
+                  "category" : "category"
+                } ]
+              }, {
+                "user" : {
+                  "canAdministrageGame" : true,
+                  "name" : "name",
+                  "linkedAccounts" : [ {
+                    "linkType" : "Facebook",
+                    "accessToken" : "accessToken"
+                  }, {
+                    "linkType" : "Facebook",
+                    "accessToken" : "accessToken"
+                  } ],
+                  "uuid" : "uuid"
+                },
+                "points" : [ {
+                  "amount" : 0.8008281904610115,
+                  "category" : "category"
+                }, {
+                  "amount" : 0.8008281904610115,
+                  "category" : "category"
+                } ]
+              } ],
+              "response" : "response",
+              "submissionDate" : "2000-01-23T04:56:07.000+00:00",
+              "uuid" : "uuid",
+              "responseByUser" : {
+                "canAdministrageGame" : true,
+                "name" : "name",
+                "linkedAccounts" : [ {
+                  "linkType" : "Facebook",
+                  "accessToken" : "accessToken"
+                }, {
+                  "linkType" : "Facebook",
+                  "accessToken" : "accessToken"
+                } ],
+                "uuid" : "uuid"
+              }
+            } ],
             "submissionDate" : "2000-01-23T04:56:07.000+00:00",
-            "uuid" : "uuid",
             "roundId" : "roundId",
             "status" : "waitQuestion"
           } ],
@@ -1210,7 +1324,7 @@
           },
           "points" : {
             "items" : {
-              "$ref" : "#/components/schemas/UserWithPoints"
+              "$ref" : "#/components/schemas/UserWithScore"
             },
             "type" : "array"
           }
@@ -1232,7 +1346,7 @@
             } ],
             "uuid" : "uuid"
           },
-          "responses" : {
+          "responses" : [ {
             "chosenBy" : [ {
               "user" : {
                 "canAdministrageGame" : true,
@@ -1275,6 +1389,7 @@
               } ]
             } ],
             "response" : "response",
+            "submissionDate" : "2000-01-23T04:56:07.000+00:00",
             "uuid" : "uuid",
             "responseByUser" : {
               "canAdministrageGame" : true,
@@ -1288,16 +1403,69 @@
               } ],
               "uuid" : "uuid"
             }
-          },
+          }, {
+            "chosenBy" : [ {
+              "user" : {
+                "canAdministrageGame" : true,
+                "name" : "name",
+                "linkedAccounts" : [ {
+                  "linkType" : "Facebook",
+                  "accessToken" : "accessToken"
+                }, {
+                  "linkType" : "Facebook",
+                  "accessToken" : "accessToken"
+                } ],
+                "uuid" : "uuid"
+              },
+              "points" : [ {
+                "amount" : 0.8008281904610115,
+                "category" : "category"
+              }, {
+                "amount" : 0.8008281904610115,
+                "category" : "category"
+              } ]
+            }, {
+              "user" : {
+                "canAdministrageGame" : true,
+                "name" : "name",
+                "linkedAccounts" : [ {
+                  "linkType" : "Facebook",
+                  "accessToken" : "accessToken"
+                }, {
+                  "linkType" : "Facebook",
+                  "accessToken" : "accessToken"
+                } ],
+                "uuid" : "uuid"
+              },
+              "points" : [ {
+                "amount" : 0.8008281904610115,
+                "category" : "category"
+              }, {
+                "amount" : 0.8008281904610115,
+                "category" : "category"
+              } ]
+            } ],
+            "response" : "response",
+            "submissionDate" : "2000-01-23T04:56:07.000+00:00",
+            "uuid" : "uuid",
+            "responseByUser" : {
+              "canAdministrageGame" : true,
+              "name" : "name",
+              "linkedAccounts" : [ {
+                "linkType" : "Facebook",
+                "accessToken" : "accessToken"
+              }, {
+                "linkType" : "Facebook",
+                "accessToken" : "accessToken"
+              } ],
+              "uuid" : "uuid"
+            }
+          } ],
           "submissionDate" : "2000-01-23T04:56:07.000+00:00",
-          "uuid" : "uuid",
           "roundId" : "roundId",
           "status" : "waitQuestion"
         },
         "properties" : {
-          "uuid" : {
-            "type" : "string"
-          },
           "quedtionByUser" : {
             "$ref" : "#/components/schemas/User"
           },
@@ -1312,10 +1480,13 @@
             "type" : "string"
           },
           "responses" : {
-            "$ref" : "#/components/schemas/DefineItLyResponse"
+            "items" : {
+              "$ref" : "#/components/schemas/DefineItLyResponse"
+            },
+            "type" : "array"
           },
           "status" : {
-            "enum" : [ "waitQuestion", "waitResponses", "choseResponses", "finished" ],
+            "enum" : [ "waitQuestion", "waitResponses", "waitChoices", "finished" ],
             "type" : "string"
           }
         },
@@ -1365,6 +1536,7 @@
             } ]
           } ],
           "response" : "response",
+          "submissionDate" : "2000-01-23T04:56:07.000+00:00",
           "uuid" : "uuid",
           "responseByUser" : {
             "canAdministrageGame" : true,
@@ -1389,16 +1561,20 @@
           "responseByUser" : {
             "$ref" : "#/components/schemas/User"
           },
+          "submissionDate" : {
+            "format" : "date-time",
+            "type" : "string"
+          },
           "chosenBy" : {
             "items" : {
-              "$ref" : "#/components/schemas/UserWithPoints"
+              "$ref" : "#/components/schemas/UserWithScore"
             },
             "type" : "array"
           }
         },
         "type" : "object"
       },
-      "UserWithPoints" : {
+      "UserWithScore" : {
         "example" : {
           "user" : {
             "canAdministrageGame" : true,
@@ -1426,14 +1602,14 @@
           },
           "points" : {
             "items" : {
-              "$ref" : "#/components/schemas/Points"
+              "$ref" : "#/components/schemas/Score"
             },
             "type" : "array"
           }
         },
         "type" : "object"
       },
-      "Points" : {
+      "Score" : {
         "example" : {
           "amount" : 0.8008281904610115,
           "category" : "category"

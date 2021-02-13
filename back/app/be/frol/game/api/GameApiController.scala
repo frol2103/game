@@ -1,7 +1,6 @@
 package be.frol.game.api
 
 import be.frol.game.mapper.GameMapper
-import be.frol.game.model.{Game, GameDescription}
 import be.frol.game.repository.{GameRepository, UserRepository}
 import be.frol.game.utils.OptionUtils._
 import be.frol.game.{DbContext, ParentController}

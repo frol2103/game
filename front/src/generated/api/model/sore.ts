@@ -9,15 +9,10 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-import { User } from './user';
-import { UserWithScore } from './userWithScore';
 
 
-export interface DefineItLyResponse { 
-    uuid?: string;
-    response?: string;
-    responseByUser?: User;
-    submissionDate?: Date;
-    chosenBy?: Array<UserWithScore>;
+export interface Sore { 
+    amount?: number;
+    category?: string;
 }
 

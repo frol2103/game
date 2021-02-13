@@ -5,40 +5,40 @@
 
 # Routes for Auth API
 
-GET /api/user                                                    be.frol.game.api.AuthApiController.getConnectedUser()
-POST /api/user/link                                              be.frol.game.api.AuthApiController.linkToExternalAccount()
-POST /api/login                                                  be.frol.game.api.AuthApiController.login()
-GET /api/logout                                                  be.frol.game.api.AuthApiController.logout()
-POST /api/socialLogin                                            be.frol.game.api.AuthApiController.socialLogin()
+GET /api/user                                                    be.frol.game.api.controller.AuthApiController.getConnectedUser()
+POST /api/user/link                                              be.frol.game.api.controller.AuthApiController.linkToExternalAccount()
+POST /api/login                                                  be.frol.game.api.controller.AuthApiController.login()
+GET /api/logout                                                  be.frol.game.api.controller.AuthApiController.logout()
+POST /api/socialLogin                                            be.frol.game.api.controller.AuthApiController.socialLogin()
 
 # Routes for Defineitly API
 
-POST /api/game/DefineItLy/:uuid/question                         be.frol.game.api.DefineitlyApiController.addQuestion(uuid: String)
-POST /api/game/DefineItLy/:uuid/question/:questionUuid           be.frol.game.api.DefineitlyApiController.addResponse(uuid: String, questionUuid: String)
-POST /api/game/DefineItLy/:uuid/question/:questionUuid/choice    be.frol.game.api.DefineitlyApiController.choseResponse(uuid: String, questionUuid: String)
-GET /api/game/DefineItLy/:uuid                                   be.frol.game.api.DefineitlyApiController.getGame(uuid: String)
+POST /api/game/DefineItLy/:uuid/question                         be.frol.game.api.controller.DefineitlyApiController.addQuestion(uuid: String)
+POST /api/game/DefineItLy/:uuid/question/:questionUuid           be.frol.game.api.controller.DefineitlyApiController.addResponse(uuid: String, questionUuid: String)
+POST /api/game/DefineItLy/:uuid/question/:questionUuid/choice    be.frol.game.api.controller.DefineitlyApiController.choseResponse(uuid: String, questionUuid: String)
+GET /api/game/DefineItLy/:uuid                                   be.frol.game.api.controller.DefineitlyApiController.getGame(uuid: String)
 
 # Routes for File API
 
-GET /api/file/:id                                                be.frol.game.api.FileApiController.getFile(id: String)
+GET /api/file/:id                                                be.frol.game.api.controller.FileApiController.getFile(id: String)
 
 # Routes for Game API
 
-POST /api/game/create                                            be.frol.game.api.GameApiController.createAGame()
-GET /api/game                                                    be.frol.game.api.GameApiController.getAllGames()
-GET /api/game/:uuid                                              be.frol.game.api.GameApiController.getGame(uuid: String)
-GET /api/game/:uuid/join                                         be.frol.game.api.GameApiController.joinGame(uuid: String)
-GET /api/game/:uuid/start                                        be.frol.game.api.GameApiController.startGame(uuid: String)
+POST /api/game/create                                            be.frol.game.api.controller.GameApiController.createAGame()
+GET /api/game                                                    be.frol.game.api.controller.GameApiController.getAllGames()
+GET /api/game/:uuid                                              be.frol.game.api.controller.GameApiController.getGame(uuid: String)
+GET /api/game/:uuid/join                                         be.frol.game.api.controller.GameApiController.joinGame(uuid: String)
+GET /api/game/:uuid/start                                        be.frol.game.api.controller.GameApiController.startGame(uuid: String)
 
 # Routes for LostInTranslation API
 
-POST /api/game/LostInTranslation/:uuid/story/:storyId/drawing    be.frol.game.api.LostInTranslationApiController.addDrawingRound(uuid: String, storyId: String)
-POST /api/game/LostInTranslation/:uuid/story/:storyId/text       be.frol.game.api.LostInTranslationApiController.addTextRound(uuid: String, storyId: String)
-GET /api/game/LostInTranslation/:uuid                            be.frol.game.api.LostInTranslationApiController.getGame(uuid: String)
+POST /api/game/LostInTranslation/:uuid/story/:storyId/drawing    be.frol.game.api.controller.LostInTranslationApiController.addDrawingRound(uuid: String, storyId: String)
+POST /api/game/LostInTranslation/:uuid/story/:storyId/text       be.frol.game.api.controller.LostInTranslationApiController.addTextRound(uuid: String, storyId: String)
+GET /api/game/LostInTranslation/:uuid                            be.frol.game.api.controller.LostInTranslationApiController.getGame(uuid: String)
 
 # Map static resources from the /public folder to the /assets URL path
 GET /assets/*file           controllers.Assets.at(file)
 GET /versionedAssets/*file  controllers.Assets.versioned(file)
 
 # Swagger UI
-GET /api                    be.frol.game.api.ApiDocController.api
+GET /api                    be.frol.game.api.controller.ApiDocController.api
