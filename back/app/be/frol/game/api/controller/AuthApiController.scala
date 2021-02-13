@@ -1,4 +1,4 @@
-package be.frol.game.api
+package be.frol.game.api.controller
 
 import be.frol.game.api.model.{User, UserAssociation}
 import be.frol.game.error.FunctionalError

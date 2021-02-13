@@ -11,22 +11,24 @@ case class DilRichGame(game: RichGame, playedRounds: Seq[DilRichRound]) extends 
   def rounds: List[DilRichRound] = nextRound.toList ::: playedRounds.toList
 
   def nextRound : Option[DilRichRound] = if(lastPlayedRound.map(_.status == DefineItLyRound.Status.Finished).getOrElse(true)){
-    DilRichRound(game, None, Nil,Nil,nextUserForQuestion.toOpt, game.nextPlayer(lastPlayedRound.flatMap(_.userId)))
-  } else None
+    DilRichRound(game, None, Nil,Nil, game.nextPlayer(lastPlayedRound.flatMap(_.userId)).u.id.toOpt())
+  }.toOpt() else None
 
+  def round(uuid:String) = playedRounds.find(_.round.get.uuid == uuid)
 
-  def nextUserForQuestion : Long = if(playedRounds.isEmpty) game.sortedUsers
-
-  lazy var lastPlayedRound = playedRounds.maxByOption(_.id)
+  lazy val lastPlayedRound = playedRounds.maxByOption(_.id)
 
   def points: Seq[Score] = Nil
 }
 
 case class DilRichRound(game: RichGame, round: Option[DilRoundRow], responsesRows: Seq[DilResponseRow], choices: Seq[DilChoiceRow], newRoundUser: Option[Long] = None) {
+
   def id = round.map(_.uuid)
   def userId = round.map(_.fkUserId).orElse(newRoundUser)
   def timestamp = round.flatMap(_.timestamp)
   def question = round.map(_.question)
+
+  def response(uuid: String): Option[DilResponseRow] = responsesRows.find(_.uuid == uuid)
 
   lazy val status = {
     if (responsesRows.size != game.users.size) DefineItLyRound.Status.WaitResponses
@@ -42,7 +44,7 @@ case class DilRichRound(game: RichGame, round: Option[DilRoundRow], responsesRow
 
 }
 
-case class DilRichResponse(response: DilResponseRow, choices: Seq[DilChoiceRow], game: DilRichGame) {
+case class DilRichResponse(response: DilResponseRow, choices: Seq[DilChoiceRow], game:RichGame) {
   def points: Seq[Score] = Nil
 }
 
@@ -50,7 +52,7 @@ object DilRichGame {
   def build(g:GameRow,users:Seq[(UserRow,UserInGameRow)], rounds : Seq[DilRoundRow], resp:Seq[DilResponseRow], choices:Seq[DilChoiceRow]): DilRichGame ={
     val respByRound = resp.groupBy(_.fkRoundId)
     val choicesByRound = choices.groupBy(_.fkRoundId)
-    val game = RichGame(g, users.toList)
+    val game = RichGame.build(g, users.toList)
     new DilRichGame(game,rounds.map(r =>
       DilRichRound(game, r.toOpt, respByRound.get(r.id).getOrElse(Nil), choicesByRound.get(r.id).getOrElse(Nil))).toList)
   }

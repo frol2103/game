@@ -1,4 +1,4 @@
-package be.frol.game.api
+package be.frol.game.api.controller
 
 import be.frol.game.repository.UserRepository
 import be.frol.game.tables.Tables

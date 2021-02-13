@@ -31,7 +31,7 @@ object GameMapper {
   def toDto(scores: Seq[Score], game: RichGame) =
     scores
       .groupBy(_.userUuid)
-      .mapValues(_.map(s => Score(BigDecimal(s.amount).toOpt, s.category.toOpt())))
+      .mapValues(_.map(s => be.frol.game.api.model.Score(BigDecimal(s.amount).toOpt,s.category.toOpt())))
       .map { case (k, v) => UserWithScore(game.user(k).map(UserMapper.toDto), v.toList.toOpt()) }
 
 }

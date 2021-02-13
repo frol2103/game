@@ -1,6 +1,7 @@
-package be.frol.game.api
+package be.frol.game.api.controller
 
 import be.frol.game.api.model.LostInTranslationGame
+import be.frol.game.api.model.LostInTranslationRound.RoundType
 import be.frol.game.error.FunctionalError
 import be.frol.game.mapper.LitGameMapper.toLitDto
 import be.frol.game.model.{LitRichGame, RichGame}

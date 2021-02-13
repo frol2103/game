@@ -37,11 +37,11 @@ case class RichGame(game: GameRow, users: List[RichUser]) {
 }
 
 object RichGame {
-  def build(v: (GameRow, List[(UserInGameRow, UserRow)])) = {
+  def build(v: (GameRow, List[(UserInGameRow, UserRow)])) :RichGame= {
     RichGame(v._1, v._2.map(u => RichUser(u._2, u._1)))
   }
 
-  def apply(g: GameRow, users:  List[(UserRow,UserInGameRow)]) = {
+  def build(g: GameRow, users:  List[(UserRow,UserInGameRow)]) : RichGame= {
     RichGame(g, users.map(u => RichUser(u._1, u._2)))
   }
 }

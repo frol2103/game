@@ -1,5 +1,6 @@
-package be.frol.game.api
+package be.frol.game.api.controller
 
+import be.frol.game.api.model.{Game, GameDescription}
 import be.frol.game.mapper.GameMapper
 import be.frol.game.repository.{GameRepository, UserRepository}
 import be.frol.game.utils.OptionUtils._

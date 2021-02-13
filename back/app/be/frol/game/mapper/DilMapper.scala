@@ -7,7 +7,7 @@ import be.frol.game.utils.OptionUtils._
 
 object DilMapper {
 
-  def toDto(g: DilRichGame) = {
+  def toDto(g: DilRichGame) : DefineItLyGame= {
     new DefineItLyGame(
       Option(GameMapper.toDto(g.game)),
       g.rounds.map(toDto(_, g)).toList.toOpt,
@@ -15,7 +15,7 @@ object DilMapper {
     )
   }
 
-  def toDto(round: DilRichRound, g: DilRichGame) = {
+  def toDto(round: DilRichRound, g: DilRichGame): DefineItLyRound = {
     DefineItLyRound(
       UserMapper.toDto(round.userId, g.game),
       round.id,
@@ -26,7 +26,7 @@ object DilMapper {
     )
   }
 
-  def toDto(r: DilRichResponse, g: DilRichGame) = {
+  def toDto(r: DilRichResponse, g: DilRichGame): DefineItLyResponse = {
     DefineItLyResponse(
       r.response.uuid.toOpt(),
       r.response.response.toOpt(),
