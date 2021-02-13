@@ -2,21 +2,30 @@
     <div class="col-md-2">
         <div class="mb-md-3">
             <button type="button" *ngFor="let color of availableColors" class="btn btn-secondary m-1" (click)="currentStyle.strokeStyle=color" [disabled]="currentStyle.strokeStyle==color" title="{{ 'drawing_tool_size_big' | translate }}">
-                <i class="fas fa-pencil-alt" [ngStyle]="{color: color}"></i>
+                <i class="fas fa-pencil-alt" [ngStyle]="{color: color}" *ngIf="color != '#ffffff'"></i>
+                <i class="fas fa-eraser" [ngStyle]="{color: color}" *ngIf="color == '#ffffff'"></i>
             </button>
         </div>
 
         <div class="mb-md-3">
-            <button type="button" *ngFor="let size of availablePenSizes" class="btn btn-secondary m-1" (click)="currentStyle.lineWidth=size" [disabled]="currentStyle.lineWidth==size" title="{{ size }}">
-                {{ size }}
+            <button type="button" *ngFor="let size of availablePenSizes"
+                    class="btn btn-secondary m-1 size-button"
+                    (click)="currentStyle.lineWidth=size"
+                    [disabled]="currentStyle.lineWidth==size"
+                    title="{{ size }}">
+                <span>
+                    <span style="border-radius: 50%; display: inline-block"
+                          [ngStyle]="{'height' : relativeSizePercents(size)+'%', 'width' : relativeSizePercents(size)+'%', 'background-color': currentStyle.strokeStyle}">
+                    </span>
+                </span>
             </button>
         </div>
 
         <div class="mb-md-3">
-            <button type="button" class="btn btn-secondary m-1" (click)="undo()" [disabled]="!activeStrokes.length" title="{{ 'drawing_tool_undo' | translate }}">
+            <button type="button" class="btn btn-secondary m-1" (click)="undo()" [disabled]="!activeDrawingElements.length" title="{{ 'drawing_tool_undo' | translate }}">
                 <i class="fas fa-backward"></i>
             </button>
-            <button type="button" class="btn btn-secondary m-1" (click)="redo()" [disabled]="!removedStrokes.length" title="{{ 'drawing_tool_redo' | translate }}">
+            <button type="button" class="btn btn-secondary m-1" (click)="redo()" [disabled]="!removedDrawingElements.length" title="{{ 'drawing_tool_redo' | translate }}">
                 <i class="fas fa-forward"></i>
             </button>
         </div>
