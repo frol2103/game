@@ -3,3 +3,23 @@
     cursor: pointer !important;
     touch-action: pinch-zoom;
 }
+
+.size-button {
+    padding: 1px;
+}
+
+.size-button > span {
+    vertical-align: middle;
+    text-align: center;
+    width: 2.4rem;
+    height: 2.4rem;
+    overflow: hidden;
+    display: inline-block
+}
+
+.size-button > span > span {
+    vertical-align: middle;
+    text-align: center;
+    overflow: hidden;
+    display: inline-block
+}

@@ -17,46 +17,46 @@ import {pairwise, switchMap, takeUntil} from "rxjs/operators";
   templateUrl: './drawing.component.html',
   styleUrls: ['./drawing.component.css']
 })
-export class DrawingComponent implements  AfterViewInit, AfterViewChecked {
+export class DrawingComponent implements  AfterViewInit,AfterViewChecked {
   sketchpad: any
   @ViewChild('drawingcanvas') canvas: ElementRef | undefined
+  @ViewChild('drawingcanvasparent') canvasParent: ElementRef | undefined
   size = 600
-  ctx : CanvasRenderingContext2D | undefined
+  lastCheckSize = 600
 
-  currentTool: (Event) => DrawElement = this.strokeTool
+  currentTool: (Event) => DrawElement = e => this.strokeTool(e)
 
   activeDrawingElements : Array<DrawElement> = []
   removedDrawingElements : Array<DrawElement> = []
   currentStyle : DrawStyle = new DrawStyle()
 
   availablePenSizes = [
+        2,
         3,
-        5,
+        6,
         10,
         20,
         50
       ]
 
   availableColors = [
-      '#000000',
-      '#ffffff',
-      '#ff0000',
-      '#ffff00',
-      '#029102',
-      '#0000ff',
-      '#ee02eb',
-      '#6d6d6d',
-      '#604026',
+    '#000000',
+    '#ff0000',
+    '#ffff00',
+    '#029102',
+    '#0000ff',
+    '#ee02eb',
+    '#6d6d6d',
+    '#604026',
+    '#ffffff',
   ]
 
   constructor() { }
 
-  ngAfterViewChecked(): void {
-    this.setCanvasSizeForWindowSize()
-    }
 
   @HostListener('window:resize', ['$event'])
   onResize(event) {
+    console.log("detected window resize " )
     this.setCanvasSizeForWindowSize()
   }
 
@@ -67,20 +67,32 @@ export class DrawingComponent implements  AfterViewInit, AfterViewChecked {
     return stroke
   }
 
+  relativeSizePercents(size: number) {
+    return 100 * size / this.availablePenSizes[this.availablePenSizes.length - 1]
+  }
+
   private getCanvas() {
     return this.canvas.nativeElement!;
+  }
+
+  ngAfterViewChecked(): void {
+    if(this.lastCheckSize != this.size) {
+      console.log("Will redraw after size changed from "+this.lastCheckSize+" to "+this.size)
+      this.redraw()
+    }
+    this.lastCheckSize = this.size
   }
 
   private setCanvasSizeForWindowSize() {
     let windowHeight = window.innerHeight
     var canvasParentWidth = this.getCanvas().parentElement!.getBoundingClientRect().width
-    if(!canvasParentWidth) {
-      canvasParentWidth = 600
-      console.log("defaulted to canvas parent width " + canvasParentWidth)
+    let newSize = Math.round(Math.min(windowHeight - 100, canvasParentWidth-20))
+    let oldSize = this.size
+    if(oldSize != newSize && newSize > 0) {
+      this.size = newSize
+      this.getCanvas().width = this.size
+      this.getCanvas().height = this.size
     }
-    this.size = Math.min(windowHeight - 100, canvasParentWidth-20)
-    console.log("set canvas size to " + this.size)
-    this.redraw()
   }
 
   saveCanvasAsBlob() : Promise<Blob> {
@@ -88,7 +100,7 @@ export class DrawingComponent implements  AfterViewInit, AfterViewChecked {
   }
 
   ngAfterViewInit(): void {
-    this.initContext(this.getCanvas())
+    this.availablePenSizes.sort((a: number, b: number) => a - b)
     this.captureStrokes('mousedown', 'mousemove', 'mouseup', 'mouseleave')
     this.captureStrokes('touchstart', 'touchmove', 'touchend', 'touchcancel')
   }
@@ -108,12 +120,8 @@ export class DrawingComponent implements  AfterViewInit, AfterViewChecked {
         .subscribe(stroke=> this.registerPointerMove(this.toCoordinates(stroke[0]), this.toCoordinates(stroke[1])))
   }
 
-  private initContext(canvas: HTMLCanvasElement) {
-    this.ctx = canvas.getContext('2d')
-  }
-
   clear() {
-    this.ctx!.clearRect(0, 0, this.size, this.size)
+    this.getCanvas().getContext('2d')!.clearRect(0, 0, this.size, this.size)
     this.removedDrawingElements = this.activeDrawingElements.reverse()
     this.activeDrawingElements = []
   }
@@ -130,7 +138,7 @@ export class DrawingComponent implements  AfterViewInit, AfterViewChecked {
   }
 
   private redraw() {
-    this.ctx!.clearRect(0, 0, this.size, this.size)
+    this.getCanvas().getContext('2d')!.clearRect(0, 0, this.size, this.size)
     console.log("Will redraw "+this.activeDrawingElements.length+" strokes")
     this.activeDrawingElements.forEach(s => this.drawElementOnCanvas(s))
   }
@@ -171,6 +179,8 @@ export class DrawingComponent implements  AfterViewInit, AfterViewChecked {
 }
 
 class DrawStyle {
+  referenceCanvasWidth = 600
+
   constructor(public lineCap: CanvasLineCap = 'round' ,
               public lineWidth: number = 3,
               public lineJoin: CanvasLineJoin = 'round',
@@ -179,7 +189,7 @@ class DrawStyle {
 
   apply(context : CanvasRenderingContext2D) {
     context.lineCap = this.lineCap
-    context.lineWidth = this.lineWidth
+    context.lineWidth = this.lineWidth * context.canvas.width / this.referenceCanvasWidth
     context.lineJoin = this.lineJoin
     context.strokeStyle = this.strokeStyle
   }
