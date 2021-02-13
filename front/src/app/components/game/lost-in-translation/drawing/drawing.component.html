@@ -13,10 +13,10 @@
         </div>
 
         <div class="mb-md-3">
-            <button type="button" class="btn btn-secondary m-1" (click)="undo()" [disabled]="!activeStrokes.length" title="{{ 'drawing_tool_undo' | translate }}">
+            <button type="button" class="btn btn-secondary m-1" (click)="undo()" [disabled]="!activeDrawingElements.length" title="{{ 'drawing_tool_undo' | translate }}">
                 <i class="fas fa-backward"></i>
             </button>
-            <button type="button" class="btn btn-secondary m-1" (click)="redo()" [disabled]="!removedStrokes.length" title="{{ 'drawing_tool_redo' | translate }}">
+            <button type="button" class="btn btn-secondary m-1" (click)="redo()" [disabled]="!removedDrawingElements.length" title="{{ 'drawing_tool_redo' | translate }}">
                 <i class="fas fa-forward"></i>
             </button>
         </div>
