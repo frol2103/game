@@ -50,6 +50,9 @@ export class DrawingComponent implements  AfterViewInit,AfterViewChecked {
     '#604026',
     '#ffffff',
   ]
+  colorPickerDropdownOpen: boolean = false
+  sizePickerDropdownOpen: boolean = false
+  toolsDropdownOpen: boolean = false
 
   constructor() { }
 
@@ -62,8 +65,8 @@ export class DrawingComponent implements  AfterViewInit,AfterViewChecked {
 
   strokeTool(event : Event) : DrawStroke {
     let stroke = new DrawStroke(this.currentStyle)
-    let startPoint = this.toCoordinates(event)
-    stroke.onPointerMove(startPoint, startPoint, this.getCanvas())
+    // let startPoint = this.toCoordinates(event)
+    // stroke.onPointerMove(startPoint, startPoint, this.getCanvas())
     return stroke
   }
 
@@ -73,6 +76,13 @@ export class DrawingComponent implements  AfterViewInit,AfterViewChecked {
 
   private getCanvas() {
     return this.canvas.nativeElement!;
+  }
+
+  ngAfterViewInit(): void {
+    this.availablePenSizes.sort((a: number, b: number) => a - b)
+    this.captureStrokes('mousedown', 'mousemove', 'mouseup', 'mouseleave')
+    this.captureStrokes('touchstart', 'touchmove', 'touchend', 'touchcancel')
+    setTimeout(() => this.setCanvasSizeForWindowSize(), 100)
   }
 
   ngAfterViewChecked(): void {
@@ -85,8 +95,11 @@ export class DrawingComponent implements  AfterViewInit,AfterViewChecked {
 
   private setCanvasSizeForWindowSize() {
     let windowHeight = window.innerHeight
+    let windowWidth = window.innerWidth
     var canvasParentWidth = this.getCanvas().parentElement!.getBoundingClientRect().width
-    let newSize = Math.round(Math.min(windowHeight - 100, canvasParentWidth-20))
+    let maxWidth = Math.min(canvasParentWidth-30, windowWidth-20);
+    let maxHeight = windowHeight - 100;
+    let newSize = Math.round(Math.min(maxHeight, maxWidth))
     let oldSize = this.size
     if(oldSize != newSize && newSize > 0) {
       this.size = newSize
@@ -97,12 +110,6 @@ export class DrawingComponent implements  AfterViewInit,AfterViewChecked {
 
   saveCanvasAsBlob() : Promise<Blob> {
     return new Promise<Blob>((resolve, reject) => this.getCanvas().toBlob((b : Blob) => b ? resolve(b!) : reject()))
-  }
-
-  ngAfterViewInit(): void {
-    this.availablePenSizes.sort((a: number, b: number) => a - b)
-    this.captureStrokes('mousedown', 'mousemove', 'mouseup', 'mouseleave')
-    this.captureStrokes('touchstart', 'touchmove', 'touchend', 'touchcancel')
   }
 
   private fromEvent(eventType : string) : Observable<Event> {
@@ -176,6 +183,17 @@ export class DrawingComponent implements  AfterViewInit,AfterViewChecked {
   }
 
 
+  toggleMenu(name : string) {
+    let previousValue = this[name]
+    this.closeMenus()
+    this[name] = !previousValue
+  }
+
+  closeMenus() {
+    this.colorPickerDropdownOpen = false
+    this.sizePickerDropdownOpen = false
+    this.toolsDropdownOpen = false
+  }
 }
 
 class DrawStyle {

@@ -1,16 +1,16 @@
 <div class="row">
-    <div class="col-md-2">
-        <div class="mb-md-3">
-            <button type="button" *ngFor="let color of availableColors" class="btn btn-secondary m-1" (click)="currentStyle.strokeStyle=color" [disabled]="currentStyle.strokeStyle==color" title="{{ 'drawing_tool_size_big' | translate }}">
+    <div class="col-md-2 drawing-tools">
+        <ng-template #colorPicker>
+            <button type="button" *ngFor="let color of availableColors" class="btn btn-secondary m-1" (click)="currentStyle.strokeStyle=color; closeMenus()" [disabled]="currentStyle.strokeStyle==color" title="{{ 'drawing_tool_size_big' | translate }}">
                 <i class="fas fa-pencil-alt" [ngStyle]="{color: color}" *ngIf="color != '#ffffff'"></i>
                 <i class="fas fa-eraser" [ngStyle]="{color: color}" *ngIf="color == '#ffffff'"></i>
             </button>
-        </div>
+        </ng-template>
 
-        <div class="mb-md-3">
+        <ng-template #sizePicker>
             <button type="button" *ngFor="let size of availablePenSizes"
                     class="btn btn-secondary m-1 size-button"
-                    (click)="currentStyle.lineWidth=size"
+                    (click)="currentStyle.lineWidth=size; closeMenus()"
                     [disabled]="currentStyle.lineWidth==size"
                     title="{{ size }}">
                 <span>
@@ -19,23 +19,73 @@
                     </span>
                 </span>
             </button>
+        </ng-template>
+
+        <ng-template #otherTools>
+            <div class="mb-md-3">
+                <button type="button" class="btn btn-secondary m-1" (click)="undo(); closeMenus()" [disabled]="!activeDrawingElements.length" title="{{ 'drawing_tool_undo' | translate }}">
+                    <i class="fas fa-backward"></i>
+                </button>
+                <button type="button" class="btn btn-secondary m-1" (click)="redo(); closeMenus()" [disabled]="!removedDrawingElements.length" title="{{ 'drawing_tool_redo' | translate }}">
+                    <i class="fas fa-forward"></i>
+                </button>
+            </div>
+
+            <div class="mb-md-3">
+                <button type="button" class="btn btn-danger m-1" (click)="clear(); closeMenus()" title="{{ 'drawing_tool_clear' | translate }}">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </div>
+        </ng-template>
+
+        <div class="d-block d-md-none">
+            <span class="tools-dropdown" >
+                <button type="button" class="btn btn-secondary m-1" (click)="toggleMenu('colorPickerDropdownOpen')">
+                    <i class="fas fa-pencil-alt" [ngStyle]="{color: currentStyle.strokeStyle}" *ngIf="currentStyle.strokeStyle != '#ffffff'"></i>
+                    <i class="fas fa-eraser" [ngStyle]="{color: currentStyle.strokeStyle}" *ngIf="currentStyle.strokeStyle == '#ffffff'"></i>
+                </button>
+
+                <div class="tools-dropdown-menu" *ngIf="colorPickerDropdownOpen" >
+                    <ng-container *ngTemplateOutlet="colorPicker"></ng-container>
+                </div>
+            </span>
+
+            <span class="tools-dropdown" >
+                <button type="button" class="btn btn-secondary m-1 size-button" (click)="toggleMenu('sizePickerDropdownOpen')">
+                    <span>
+                        <span style="border-radius: 50%; display: inline-block"
+                              [ngStyle]="{'height' : relativeSizePercents(currentStyle.lineWidth)+'%', 'width' : relativeSizePercents(currentStyle.lineWidth)+'%', 'background-color': currentStyle.strokeStyle}">
+                        </span>
+                    </span>
+                </button>
+
+                <div class="tools-dropdown-menu" *ngIf="sizePickerDropdownOpen" >
+                    <ng-container *ngTemplateOutlet="sizePicker"></ng-container>
+                </div>
+            </span>
+
+            <span class="tools-dropdown" >
+                <button type="button" class="btn btn-secondary m-1" (click)="toggleMenu('toolsDropdownOpen')">
+                    <i class="fas fa-cogs"></i>
+                </button>
+
+                <div class="tools-dropdown-menu ml-5" *ngIf="toolsDropdownOpen" >
+                      <ng-container *ngTemplateOutlet="otherTools"></ng-container>
+                </div>
+            </span>
         </div>
 
-        <div class="mb-md-3">
-            <button type="button" class="btn btn-secondary m-1" (click)="undo()" [disabled]="!activeDrawingElements.length" title="{{ 'drawing_tool_undo' | translate }}">
-                <i class="fas fa-backward"></i>
-            </button>
-            <button type="button" class="btn btn-secondary m-1" (click)="redo()" [disabled]="!removedDrawingElements.length" title="{{ 'drawing_tool_redo' | translate }}">
-                <i class="fas fa-forward"></i>
-            </button>
-        </div>
+        <div class="d-none d-md-block">
+            <div class="mb-md-3">
+                <ng-container *ngTemplateOutlet="colorPicker"></ng-container>
+            </div>
 
-        <div class="mb-md-3">
-            <button type="button" class="btn btn-danger m-1" (click)="clear()" title="{{ 'drawing_tool_clear' | translate }}">
-                <i class="fas fa-trash"></i>
-            </button>
-        </div>
+            <div class="mb-md-3">
+                <ng-container *ngTemplateOutlet="sizePicker"></ng-container>
+            </div>
 
+            <ng-container *ngTemplateOutlet="otherTools"></ng-container>
+        </div>
     </div>
     <div class="col-md-10 text-center">
         <canvas #drawingcanvas
