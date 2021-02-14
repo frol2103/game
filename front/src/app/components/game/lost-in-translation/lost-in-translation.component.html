@@ -21,6 +21,7 @@
                     <div class="form-group">
                         <div class="input-group">
                             <input type="text" class="form-control" id="text"
+                                   maxlength="5000"
                                    required
                                    [(ngModel)]="text" name="text">
                             <div class="input-group-append">
@@ -40,18 +41,40 @@
             <div class="form-group">
                 <div class="input-group">
                     <input type="text" class="form-control"
+                           maxlength="5000"
                            disabled
                            [ngModel]="lostInTranslationService.getPreviousRound().text" />
                 </div>
             </div>
-            <div>
+            <div *ngIf="isInputDraw()">
                 <lit-drawing #litdrawing></lit-drawing>
             </div>
+            <div *ngIf="isInputCamera()">
+                <camera-snapshot #litcamera></camera-snapshot>
+            </div>
             <div class="text-center">
-                <button type="button" class="btn btn-primary btn-lg" (click)="sendDrawing()">
-                    <i class="fas fa-check"></i>
-                    {{ 'lit_text_round_send_button' | translate }}
-                </button>
+                <ng-container *ngIf="isInputDraw()">
+                    <i class="fa fa-spinner rotate" *ngIf="!deviceHasCameraReady" title="{{ 'waiting' | translate }}"></i>
+                    <button type="button" class="btn btn-secondary btn-lg ml-2" (click)="switchInputType()" *ngIf="isInputCameraAvailable()">
+                        <i class="fas fa-camera"></i>
+                        {{ 'lit_use_camera_button' | translate }}
+                    </button>
+                    <button type="button" class="btn btn-primary btn-lg ml-2" (click)="sendDrawing()">
+                        <i class="fas fa-check"></i>
+                        {{ 'lit_text_round_send_button' | translate }}
+                    </button>
+                </ng-container>
+
+                <ng-container *ngIf="isInputCamera()">
+                    <button type="button" class="btn btn-secondary btn-lg ml-2" (click)="switchInputType()">
+                        <i class="fas fa-edit"></i>
+                        {{ 'lit_use_draw_button' | translate }}
+                    </button>
+                    <button type="button" class="btn btn-primary btn-lg ml-2" (click)="sendCameraCapture()">
+                        <i class="fas fa-check"></i>
+                        {{ 'lit_text_round_send_button' | translate }}
+                    </button>
+                </ng-container>
             </div>
         </panel>
     </div>

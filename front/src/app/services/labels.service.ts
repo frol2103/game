@@ -59,6 +59,8 @@ export class LabelsService {
     'lit_finished_of': "The story of : ",
    'dil_write_question_title': "Write your question",
     'dil_question_instructions': "It's your turn to write a question",
+    'lit_use_camera_button': "Take a picture of your drawing",
+    'lit_use_draw_button': "Draw on your screen",
     'dil_wait_first_question_instructions': "Waiting for the first question",
     'dil_send_question_button':"Send",
     'dil_response_instructions':"Enter your response to this question",

@@ -19,7 +19,7 @@ import {pairwise, switchMap, takeUntil} from "rxjs/operators";
 })
 export class DrawingComponent implements  AfterViewInit,AfterViewChecked {
   sketchpad: any
-  @ViewChild('drawingcanvas') canvas: ElementRef | undefined
+  @ViewChild('drawingcanvas') canvas: ElementRef<HTMLCanvasElement> | undefined
   @ViewChild('drawingcanvasparent') canvasParent: ElementRef | undefined
   size = 600
   lastCheckSize = 600

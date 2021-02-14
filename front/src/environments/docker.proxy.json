@@ -2,7 +2,7 @@
   "/api/*": {
     "target": "http://back:9000/",
     "protected": false,
-    "logLevel": "debug",
+    "logLevel": "info",
     "pathRewrite": {
       "^": ""
     },

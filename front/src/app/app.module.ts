@@ -22,6 +22,7 @@ import { PanelComponent } from './components/utils/panel/panel.component';
 import { WaitForComponent } from './components/utils/wait-for/wait-for.component';
 import { DrawingComponent } from './components/game/lost-in-translation/drawing/drawing.component';
 import { DefineItLyComponent } from './components/game/define-it-ly/define-it-ly.component';
+import { CameraSnapshotComponent } from './components/game/lost-in-translation/camera-snapshot/camera-snapshot.component';
 import { DilFinishedRoundComponent } from './components/game/define-it-ly/dil-finished-round/dil-finished-round.component';
 
 const routes: Routes = [
@@ -50,6 +51,7 @@ const routes: Routes = [
         WaitForComponent,
         DrawingComponent,
         DefineItLyComponent,
+        CameraSnapshotComponent,
         DilFinishedRoundComponent,
     ],
     imports: [
@@ -63,6 +65,7 @@ const routes: Routes = [
     exports: [RouterModule],
     providers: [
         Title,
+        TranslatePipe,
         {provide: BASE_PATH, useValue: environment.apiBaseUrl}
     ],
     bootstrap: [AppComponent]

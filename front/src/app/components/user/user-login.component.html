@@ -3,6 +3,7 @@
     <div class="form-group">
       <label for="name">{{ 'login_form_name' | translate }}</label>
       <input type="text" class="form-control" id="name"
+             maxlength="100"
              required
              [(ngModel)]="form.name" name="name">
     </div>
