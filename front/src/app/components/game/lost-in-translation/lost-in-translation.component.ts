@@ -33,6 +33,8 @@ export class LostInTranslationComponent implements OnInit, AfterViewInit, OnDest
 
   drawing: DrawingComponent | null = null
   deviceHasCamera: boolean = false
+  deviceHasCameraReady: boolean = false
+
 
   ngAfterViewInit(): void {
     this.childrenDrawings.changes.subscribe((comps: QueryList<DrawingComponent>) =>
@@ -47,6 +49,7 @@ export class LostInTranslationComponent implements OnInit, AfterViewInit, OnDest
     this.lostInTranslationService.init()
     navigator.mediaDevices.getUserMedia({ video: {facingMode: "environment"} })
         .then(media => this.deviceHasCamera = media != null)
+        .finally(() => this.deviceHasCameraReady = true)
   }
 
   ngOnDestroy(): void {

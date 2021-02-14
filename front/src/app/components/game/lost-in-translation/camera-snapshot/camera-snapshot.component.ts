@@ -14,14 +14,12 @@ export class CameraSnapshotComponent implements OnInit {
     @ViewChild("canvas")
     public canvas: ElementRef<HTMLCanvasElement>;
 
-    @ViewChild("videofull")
-    public videofull: ElementRef<HTMLVideoElement>;
-
     public captures: Array<any>;
     stream: MediaStream
 
     inputWidth: number = 0
     inputHeight: number = 0
+    inputMin: number = 0
 
     videoWidth: number = 0
     videoHeight: number = 0
@@ -69,9 +67,14 @@ export class CameraSnapshotComponent implements OnInit {
                 .then((stream: MediaStream) => {
                     console.log("received user approval to use video input")
                     this.stream = stream.clone()
-                    let videoSettings = this.stream.getVideoTracks()[0].getSettings();
+                    let videoTrack = this.stream.getVideoTracks()[0];
+                    let videoSettings = videoTrack.getSettings();
                     this.inputWidth = videoSettings.width
                     this.inputHeight = videoSettings.height
+                    this.inputMin = Math.min(this.inputWidth, this.inputHeight)
+                    let constraints = videoTrack.getConstraints()
+                    constraints.advanced
+                    videoTrack.applyConstraints(constraints)
                     console.log("stream with reoslution " + videoSettings.width + "x" + videoSettings.height)
                     this.video.nativeElement.srcObject = stream
                     this.video.nativeElement.play()
@@ -89,7 +92,6 @@ export class CameraSnapshotComponent implements OnInit {
         let canvas = this.canvas.nativeElement;
         canvas.getContext("2d")
             .drawImage(this.video.nativeElement, 0, 0, this.inputWidth, this.inputHeight);
-        //todo crop as needed
         return new Promise<Blob>((resolve, reject) => canvas.toBlob((b: Blob) => b ? resolve(b!) : reject()))
     }
 

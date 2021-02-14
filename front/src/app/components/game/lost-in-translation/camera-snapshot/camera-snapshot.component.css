@@ -8,7 +8,7 @@
     display: inline-block;
     border: black 2px solid;
     overflow: hidden;
-    text-align: center;
+    text-align: left;
     vertical-align: middle;
 }
 

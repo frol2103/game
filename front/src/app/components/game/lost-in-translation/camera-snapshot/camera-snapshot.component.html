@@ -2,8 +2,7 @@
     <div class="video-preview-container" [ngStyle]="{width: viewSize+'px', height: viewSize+'px' }">
         <video #video class="video-preview" [width]="videoWidth" [height]="videoHeight" autoplay></video>
     </div>
-    <canvas #canvas class="d-none" [width]="inputWidth" [height]="inputHeight"></canvas>
-    <canvas #videofull class="d-none" [width]="inputWidth" [height]="inputHeight"></canvas>
+    <canvas #canvas class="d-none" [width]="inputMin" [height]="inputMin"></canvas>
 </div>
 
 <div *ngIf="error">

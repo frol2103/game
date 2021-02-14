@@ -54,6 +54,7 @@
             </div>
             <div class="text-center">
                 <ng-container *ngIf="isInputDraw()">
+                    <i class="fa fa-spinner rotate" *ngIf="!deviceHasCameraReady" title="{{ 'waiting' | translate }}"></i>
                     <button type="button" class="btn btn-secondary btn-lg ml-2" (click)="switchInputType()" *ngIf="isInputCameraAvailable()">
                         <i class="fas fa-camera"></i>
                         {{ 'lit_use_camera_button' | translate }}
