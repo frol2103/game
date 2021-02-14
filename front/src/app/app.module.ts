@@ -61,6 +61,7 @@ const routes: Routes = [
     exports: [RouterModule],
     providers: [
         Title,
+        TranslatePipe,
         {provide: BASE_PATH, useValue: environment.apiBaseUrl}
     ],
     bootstrap: [AppComponent]
