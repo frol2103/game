@@ -1,6 +1,6 @@
 package be.frol.game.api.controller
 
-import be.frol.game.api.model.DefineItLyGame
+import be.frol.game.api.model.{DefineItLyGame, StringWrapper}
 import be.frol.game.error.{FunctionalError, IllegalPlay}
 import be.frol.game.mapper.DilMapper
 import be.frol.game.model.DilRichGame
@@ -31,23 +31,24 @@ class DefineitlyApiController @Inject()(
 
   import api._
 
-  def addQuestion(uuid: String) = updateGame[String](uuid) { (r, u, request) =>
+  def addQuestion(uuid: String) = updateGame[StringWrapper](uuid) { (r, u, request) =>
     if (r.nextRound.flatMap(_.userId).map(_ == u.id).getOrElse(true))
-      DilRound += DilRoundRow(0L, randomUuid(), r.game.id, u.id, request.body, DateUtils.ts.toOpt)
+      DilRound += DilRoundRow(0L, randomUuid(), r.game.id, u.id, request.body.value, DateUtils.ts.toOpt)
     else throw new IllegalPlay
   }
 
 
-  def addResponse(uuid: String, questionUuid: String) = updateGame[String](uuid) { (r,u,request) =>
+  def addResponse(uuid: String, questionUuid: String) = updateGame[StringWrapper](uuid) { (r,u,request) =>
       Tables.DilResponse += Tables.DilResponseRow(0l, randomUuid(), r.game.id, u.id,
-        r.round(questionUuid).flatMap(_.round).get.id, request.body, DateUtils.ts.toOpt)
+        r.round(questionUuid).flatMap(_.round).get.id, request.body.value, DateUtils.ts.toOpt)
   }
 
-  def choseResponse(uuid: String, questionUuid: String) = updateGame[String](uuid) { (r,u,request) =>
+  def choseResponse(uuid: String, questionUuid: String) = updateGame[StringWrapper](uuid) { (r,u,request) =>
     val round = r.round(questionUuid).get
     if(round.userId.get == u.id) throw new IllegalPlay
+    if(round.response(request.body.value).map(_.fkUserId).get == u.id) throw new IllegalPlay
     Tables.DilChoice += Tables.DilChoiceRow(0l, randomUuid(), r.game.id, u.id,
-      round.round.get.id, round.response(request.body).get.id, DateUtils.ts.toOpt)
+      round.round.get.id, round.response(request.body.value).get.id, DateUtils.ts.toOpt)
   }
 
   def getGame(uuid: String) = run { implicit request =>
@@ -75,7 +76,9 @@ class DefineitlyApiController @Inject()(
         .flatMap {
           v =>
             UserInGame.filter(_.fkGameId === v.id).join(User).on(_.fkUserId === _.id).result
-              .zipWith(DilRound.filter(_.fkGameId === v.id).result)(_ -> _)
+              .zipWith(DilRound.filter(_.fkGameId === v.id).filter(
+                DilRound.filter(_.fkGameId === v.id).map(_.id).max === _.id
+              ).result)(_ -> _)
               .zipWith(DilResponse.filter(_.fkGameId === v.id).result)(_ -> _)
               .zipWith(DilChoice.filter(_.fkGameId === v.id).result)(_ -> _)
               .map(v -> _)

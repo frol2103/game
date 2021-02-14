@@ -7,7 +7,7 @@ import play.api.mvc._
 import be.frol.game.api.model.LostInTranslationGame
 import play.api.libs.Files.TemporaryFile
 
-@javax.annotation.Generated(value = Array("org.openapitools.codegen.languages.ScalaPlayFrameworkServerCodegen"), date = "2021-02-12T22:33:44.691Z[Etc/UTC]")
+@javax.annotation.Generated(value = Array("org.openapitools.codegen.languages.ScalaPlayFrameworkServerCodegen"), date = "2021-02-13T21:54:18.160Z[Etc/UTC]")
 @Singleton
 class LostInTranslationApiController @Inject()(cc: ControllerComponents, api: LostInTranslationApi) extends AbstractController(cc) {
   /**

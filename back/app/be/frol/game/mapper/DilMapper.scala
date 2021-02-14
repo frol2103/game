@@ -18,10 +18,10 @@ object DilMapper {
   def toDto(round: DilRichRound, g: DilRichGame): DefineItLyRound = {
     DefineItLyRound(
       UserMapper.toDto(round.userId, g.game),
-      round.id,
+      round.uuid,
       round.timestamp.map(_.toOffsetDateTime),
       round.question,
-      round.responses.map(toDto(_, g)).toList.toOpt(),
+      round.responses.sortBy(_.response.uuid).map(toDto(_, g)).toList.toOpt(),
       round.status.toOpt()
     )
   }
@@ -30,9 +30,9 @@ object DilMapper {
     DefineItLyResponse(
       r.response.uuid.toOpt(),
       r.response.response.toOpt(),
-      UserMapper.toDto(r.response.fkUserId, g.game),
+      GameMapper.toDto(r.points, g.game).headOption,
       r.response.timestamp.map(_.toOffsetDateTime),
-      GameMapper.toDto(r.points, g.game).toList.toOpt()
+      r.choices.sortBy(_.uuid).map(_.fkUserId).map(UserMapper.toDto(_,g.game)).flatten.toList.toOpt()
     )
   }
 }

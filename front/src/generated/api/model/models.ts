@@ -7,6 +7,7 @@ export * from './lostInTranslationGame';
 export * from './lostInTranslationRound';
 export * from './lostInTranslationStory';
 export * from './score';
+export * from './stringWrapper';
 export * from './user';
 export * from './userAssociation';
 export * from './userWithScore';

@@ -28,6 +28,7 @@ export class LabelsService {
     'game_home_title': "Welcome",
     'create_game_button': "Create a new game",
     'lostInTranslation_label': "Lost in transcription",
+    'define-it-ly_label': "Define-it-ly",
     'no_game': "You are not currently in any active game. You can either create your own game and invite friends or use an invite url to join a game.",
     'active_games_list_title': "You are in these games : ",
     'toStart_label': "Game not started",

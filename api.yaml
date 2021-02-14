@@ -338,7 +338,7 @@ paths:
           description: "the question"
           required: true
           schema:
-            type: string
+            $ref: "#/definitions/StringWrapper"
       responses:
         "200":
           description: "ok"
@@ -370,7 +370,7 @@ paths:
           description: "the response"
           required: true
           schema:
-            type: string
+            $ref: "#/definitions/StringWrapper"
       responses:
         "200":
           description: "ok"
@@ -402,7 +402,7 @@ paths:
           description: "the response uuid"
           required: true
           schema:
-            type: string
+            $ref: "#/definitions/StringWrapper"
       responses:
         "200":
           description: "ok"
@@ -576,14 +576,14 @@ definitions:
       response:
         type: string
       responseByUser:
-        $ref: "#/definitions/User"
+        $ref: "#/definitions/UserWithScore"
       submissionDate:
         type: "string"
         format: "date-time"
       chosenBy:
         type: array
         items:
-          $ref: "#/definitions/UserWithScore"
+          $ref: "#/definitions/User"
 
   UserWithScore:
     type: "object"
@@ -603,4 +603,10 @@ definitions:
       category:
         type: string
 
-
+  StringWrapper:
+    type: "object"
+    required:
+      - value
+    properties:
+      value:
+        type: string

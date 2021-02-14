@@ -32,7 +32,7 @@ case class RichGame(game: GameRow, users: List[RichUser]) {
 
   def nextPlayer(user:Option[Long]): RichUser = {
     if(user.isEmpty) sortedUsers.head
-    else Stream(sortedUsers, sortedUsers).flatten.dropWhile(_.u.id != user).drop(1).head
+    else Stream(sortedUsers, sortedUsers).flatten.dropWhile(_.u.id != user.get).drop(1).head
   }
 }
 

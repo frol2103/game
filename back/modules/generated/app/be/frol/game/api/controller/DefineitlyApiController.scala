@@ -5,8 +5,9 @@ import javax.inject.{Inject, Singleton}
 import play.api.libs.json._
 import play.api.mvc._
 import be.frol.game.api.model.DefineItLyGame
+import be.frol.game.api.model.StringWrapper
 
-@javax.annotation.Generated(value = Array("org.openapitools.codegen.languages.ScalaPlayFrameworkServerCodegen"), date = "2021-02-12T22:33:44.691Z[Etc/UTC]")
+@javax.annotation.Generated(value = Array("org.openapitools.codegen.languages.ScalaPlayFrameworkServerCodegen"), date = "2021-02-13T21:54:18.160Z[Etc/UTC]")
 @Singleton
 class DefineitlyApiController @Inject()(cc: ControllerComponents, api: DefineitlyApi) extends AbstractController(cc) {
   /**
@@ -14,7 +15,7 @@ class DefineitlyApiController @Inject()(cc: ControllerComponents, api: Defineitl
     */
   def addQuestion(uuid: String): Action[AnyContent] = Action { request =>
     def executeApi(): DefineItLyGame = {
-      val text = request.body.asJson.map(_.as[String]).getOrElse {
+      val text = request.body.asJson.map(_.as[StringWrapper]).getOrElse {
         throw new OpenApiExceptions.MissingRequiredParameterException("body", "text")
       }
       api.addQuestion(uuid, text)
@@ -30,7 +31,7 @@ class DefineitlyApiController @Inject()(cc: ControllerComponents, api: Defineitl
     */
   def addResponse(uuid: String, questionUuid: String): Action[AnyContent] = Action { request =>
     def executeApi(): DefineItLyGame = {
-      val text = request.body.asJson.map(_.as[String]).getOrElse {
+      val text = request.body.asJson.map(_.as[StringWrapper]).getOrElse {
         throw new OpenApiExceptions.MissingRequiredParameterException("body", "text")
       }
       api.addResponse(uuid, questionUuid, text)
@@ -46,7 +47,7 @@ class DefineitlyApiController @Inject()(cc: ControllerComponents, api: Defineitl
     */
   def choseResponse(uuid: String, questionUuid: String): Action[AnyContent] = Action { request =>
     def executeApi(): DefineItLyGame = {
-      val responseUuid = request.body.asJson.map(_.as[String]).getOrElse {
+      val responseUuid = request.body.asJson.map(_.as[StringWrapper]).getOrElse {
         throw new OpenApiExceptions.MissingRequiredParameterException("body", "responseUuid")
       }
       api.choseResponse(uuid, questionUuid, responseUuid)

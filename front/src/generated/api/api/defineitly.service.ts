@@ -18,6 +18,7 @@ import { CustomHttpParameterCodec }                          from '../encoder';
 import { Observable }                                        from 'rxjs';
 
 import { DefineItLyGame } from '../model/defineItLyGame';
+import { StringWrapper } from '../model/stringWrapper';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
@@ -56,10 +57,10 @@ export class DefineitlyService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public addQuestion(uuid: string, text: string, observe?: 'body', reportProgress?: boolean): Observable<DefineItLyGame>;
-    public addQuestion(uuid: string, text: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<DefineItLyGame>>;
-    public addQuestion(uuid: string, text: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<DefineItLyGame>>;
-    public addQuestion(uuid: string, text: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public addQuestion(uuid: string, text: StringWrapper, observe?: 'body', reportProgress?: boolean): Observable<DefineItLyGame>;
+    public addQuestion(uuid: string, text: StringWrapper, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<DefineItLyGame>>;
+    public addQuestion(uuid: string, text: StringWrapper, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<DefineItLyGame>>;
+    public addQuestion(uuid: string, text: StringWrapper, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
         if (uuid === null || uuid === undefined) {
             throw new Error('Required parameter uuid was null or undefined when calling addQuestion.');
         }
@@ -107,10 +108,10 @@ export class DefineitlyService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public addResponse(uuid: string, questionUuid: string, text: string, observe?: 'body', reportProgress?: boolean): Observable<DefineItLyGame>;
-    public addResponse(uuid: string, questionUuid: string, text: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<DefineItLyGame>>;
-    public addResponse(uuid: string, questionUuid: string, text: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<DefineItLyGame>>;
-    public addResponse(uuid: string, questionUuid: string, text: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public addResponse(uuid: string, questionUuid: string, text: StringWrapper, observe?: 'body', reportProgress?: boolean): Observable<DefineItLyGame>;
+    public addResponse(uuid: string, questionUuid: string, text: StringWrapper, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<DefineItLyGame>>;
+    public addResponse(uuid: string, questionUuid: string, text: StringWrapper, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<DefineItLyGame>>;
+    public addResponse(uuid: string, questionUuid: string, text: StringWrapper, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
         if (uuid === null || uuid === undefined) {
             throw new Error('Required parameter uuid was null or undefined when calling addResponse.');
         }
@@ -161,10 +162,10 @@ export class DefineitlyService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public choseResponse(uuid: string, questionUuid: string, responseUuid: string, observe?: 'body', reportProgress?: boolean): Observable<DefineItLyGame>;
-    public choseResponse(uuid: string, questionUuid: string, responseUuid: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<DefineItLyGame>>;
-    public choseResponse(uuid: string, questionUuid: string, responseUuid: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<DefineItLyGame>>;
-    public choseResponse(uuid: string, questionUuid: string, responseUuid: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public choseResponse(uuid: string, questionUuid: string, responseUuid: StringWrapper, observe?: 'body', reportProgress?: boolean): Observable<DefineItLyGame>;
+    public choseResponse(uuid: string, questionUuid: string, responseUuid: StringWrapper, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<DefineItLyGame>>;
+    public choseResponse(uuid: string, questionUuid: string, responseUuid: StringWrapper, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<DefineItLyGame>>;
+    public choseResponse(uuid: string, questionUuid: string, responseUuid: StringWrapper, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
         if (uuid === null || uuid === undefined) {
             throw new Error('Required parameter uuid was null or undefined when calling choseResponse.');
         }
