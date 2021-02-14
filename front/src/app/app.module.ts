@@ -21,6 +21,7 @@ import { UserLogoutComponent } from './components/user/user-logout/user-logout.c
 import { PanelComponent } from './components/utils/panel/panel.component';
 import { WaitForComponent } from './components/utils/wait-for/wait-for.component';
 import { DrawingComponent } from './components/game/lost-in-translation/drawing/drawing.component';
+import { CameraSnapshotComponent } from './components/game/lost-in-translation/camera-snapshot/camera-snapshot.component';
 
 const routes: Routes = [
     { path: 'logout', component: UserLogoutComponent },
@@ -47,6 +48,7 @@ const routes: Routes = [
         PanelComponent,
         WaitForComponent,
         DrawingComponent,
+        CameraSnapshotComponent,
     ],
     imports: [
         FormsModule,
@@ -59,6 +61,7 @@ const routes: Routes = [
     exports: [RouterModule],
     providers: [
         Title,
+        TranslatePipe,
         {provide: BASE_PATH, useValue: environment.apiBaseUrl}
     ],
     bootstrap: [AppComponent]

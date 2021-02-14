@@ -1,0 +1,12 @@
+<div class="camera-input mb-1" [ngClass]="{'d-none' : error}">
+    <div class="video-preview-container" [ngStyle]="{width: viewSize+'px', height: viewSize+'px' }">
+        <video #video class="video-preview" [width]="videoWidth" [height]="videoHeight" autoplay></video>
+    </div>
+    <canvas #canvas class="d-none" [width]="inputMin" [height]="inputMin"></canvas>
+</div>
+
+<div *ngIf="error">
+    <p>
+        {{ 'no_video_device_error' | translate }}
+    </p>
+</div>

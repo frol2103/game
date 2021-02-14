@@ -1,0 +1,17 @@
+.camera-input {
+    text-align: center;
+    color: #2c3e50;
+    margin-top: 60px;
+}
+
+.video-preview-container {
+    display: inline-block;
+    border: black 2px solid;
+    overflow: hidden;
+    text-align: left;
+    vertical-align: middle;
+}
+
+.video-preview {
+    background-color: #000000;
+}

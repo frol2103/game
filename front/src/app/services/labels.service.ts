@@ -56,6 +56,8 @@ export class LabelsService {
     'lit_finished_title': "Game finished",
     'lit_finished_title_description': "Here is your game summary : ",
     'lit_finished_of': "The story of : ",
+    'lit_use_camera_button': "Take a picture of your drawing",
+    'lit_use_draw_button': "Draw on your screen",
   }
 
   public translate(key: string) : string {
