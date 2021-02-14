@@ -1,0 +1,10 @@
+.back-home-button {
+    position: absolute;
+    left: 0;
+}
+
+@media only screen and (max-width: 760px) {
+    .main-game-container {
+        padding: 0;
+    }
+}

@@ -3,16 +3,16 @@
     <div *ngIf="!isGameFinished() && !lostInTranslationService.isWaitingForOtherPlayers">
         <panel title="lit_text_round_title" *ngIf="lostInTranslationService.isTextRound">
                             <div *ngIf="lostInTranslationService.isFirstRound">
-                    <div class="m-2">
+                    <div class="m-1">
                         {{ 'lit_first_text_round_instructions' | translate }}
                     </div>
                 </div>
                 <div *ngIf="!lostInTranslationService.isFirstRound">
-                    <div class="m-2">
+                    <div class="m-1">
                         {{ 'lit_text_round_instructions' | translate }}
                     </div>
 
-                    <div class="m-2">
+                    <div class="m-1">
                         <img [src]="lostInTranslationService.imageUrl(lostInTranslationService.getPreviousRound().drawing)" />
                     </div>
                 </div>
@@ -36,24 +36,19 @@
         </panel>
 
 
-        <panel title="lit_draw_round_title" *ngIf="!lostInTranslationService.isTextRound">
-            <div>
-                {{ 'lit_draw_description' | translate }}
-            </div>
-            <div>
-                <div class="form-group">
-                    <div class="input-group">
-                        <input type="text" class="form-control"
-                               disabled
-                               [ngModel]="lostInTranslationService.getPreviousRound().text" />
-                    </div>
+        <panel title="lit_draw_description" *ngIf="!lostInTranslationService.isTextRound">
+            <div class="form-group">
+                <div class="input-group">
+                    <input type="text" class="form-control"
+                           disabled
+                           [ngModel]="lostInTranslationService.getPreviousRound().text" />
                 </div>
             </div>
             <div>
                 <lit-drawing #litdrawing></lit-drawing>
             </div>
-            <div>
-                <button type="button" class="btn btn-primary" (click)="sendDrawing()">
+            <div class="text-center">
+                <button type="button" class="btn btn-primary btn-lg" (click)="sendDrawing()">
                     <i class="fas fa-check"></i>
                     {{ 'lit_text_round_send_button' | translate }}
                 </button>
@@ -74,9 +69,5 @@
 
     <lost-in-translation-finished *ngIf="isGameFinished()"></lost-in-translation-finished>
 
-    <p>DEBUG: </p>
-    <p>
-        {{ lostInTranslationService.game | json }}
-    </p>
 </wait-for>
 

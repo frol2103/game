@@ -1,11 +1,11 @@
-<div class="card m-2">
+<div class="card m-1">
     <div class="card-header" *ngIf="title">
         {{ title | translate }}
     </div>
     <div class="card-header" *ngIf="titleRaw">
         {{ titleRaw }}
     </div>
-    <div class="card-body">
+    <div class="card-body p-1 p-md-2">
         <ng-content></ng-content>
     </div>
 </div>

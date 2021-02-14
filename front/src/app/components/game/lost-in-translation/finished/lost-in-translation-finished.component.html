@@ -3,14 +3,14 @@
         {{ 'lit_finished_title_description' | translate }}
     </div>
     <div *ngFor="let story of lostInTranslationService.game.stories">
-        <panel [title-raw]="story.originalUser.name">
+        <panel title-raw="{{ 'lit_finished_of' | translate }} {{ story.originalUser.name }}">
             <div *ngFor="let round of story.rounds">
-                <panel [title-raw]="round.roundUser.name" *ngIf="round.text || round.drawing">
+                <panel [title-raw]="round.roundUser.name" *ngIf="round.text || round.drawing" class="m-0">
                     <div *ngIf="round.roundType == 'text'">
                         {{ round.text }}
                     </div>
                     <div *ngIf="round.roundType == 'drawing'">
-                        <img [src]="lostInTranslationService.imageUrl(round.drawing)" />
+                        <img [src]="lostInTranslationService.imageUrl(round.drawing)" width="100%" height="auto"/>
                     </div>
                 </panel>
             </div>

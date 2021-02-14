@@ -1,4 +1,44 @@
 .drawing-canvas {
     border: #1b1b1b 1px solid;
     cursor: pointer !important;
+    touch-action: pinch-zoom;
+}
+
+.size-button {
+    padding: 1px;
+}
+
+.size-button > span {
+    vertical-align: middle;
+    text-align: center;
+    width: 2.2rem;
+    height: 2.2rem;
+    overflow: hidden;
+    display: inline-block
+}
+
+.size-button > span > span {
+    vertical-align: middle;
+    text-align: center;
+    overflow: hidden;
+    display: inline-block
+}
+
+.tools-dropdown {
+    display: inline-block;
+}
+
+.tools-dropdown-menu {
+    position: absolute;
+    top: 3em;
+    left: 0px;
+    z-index: 1000;
+    float: left;
+    min-width: 10rem;
+    text-align: left;
+    list-style: none;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid rgba(0,0,0,.15);
+    border-radius: .25rem;
 }
