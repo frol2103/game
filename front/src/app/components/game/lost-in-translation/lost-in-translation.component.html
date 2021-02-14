@@ -2,7 +2,7 @@
 
     <div *ngIf="!isGameFinished() && !lostInTranslationService.isWaitingForOtherPlayers">
         <panel title="lit_text_round_title" *ngIf="lostInTranslationService.isTextRound">
-                            <div *ngIf="lostInTranslationService.isFirstRound">
+                <div *ngIf="lostInTranslationService.isFirstRound">
                     <div class="m-1">
                         {{ 'lit_first_text_round_instructions' | translate }}
                     </div>
