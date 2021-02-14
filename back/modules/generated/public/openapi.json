@@ -398,6 +398,170 @@
         "tags" : [ "lostInTranslation" ]
       }
     },
+    "/game/DefineItLy/{uuid}" : {
+      "get" : {
+        "operationId" : "getGame",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "uuid",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "query",
+          "name" : "withHistory",
+          "schema" : {
+            "type" : "boolean"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/DefineItLyGame"
+                }
+              }
+            },
+            "description" : "ok"
+          }
+        },
+        "summary" : "Get a DefineItLy game",
+        "tags" : [ "defineitly" ]
+      }
+    },
+    "/game/DefineItLy/{uuid}/question" : {
+      "post" : {
+        "operationId" : "addQuestion",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "uuid",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/StringWrapper"
+              }
+            }
+          },
+          "description" : "the question",
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/DefineItLyGame"
+                }
+              }
+            },
+            "description" : "ok"
+          }
+        },
+        "summary" : "Add a definitely question",
+        "tags" : [ "defineitly" ],
+        "x-codegen-request-body-name" : "text"
+      }
+    },
+    "/game/DefineItLy/{uuid}/question/{questionUuid}" : {
+      "post" : {
+        "operationId" : "addResponse",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "uuid",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "questionUuid",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/StringWrapper"
+              }
+            }
+          },
+          "description" : "the response",
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/DefineItLyGame"
+                }
+              }
+            },
+            "description" : "ok"
+          }
+        },
+        "summary" : "Add a definitely response to a question",
+        "tags" : [ "defineitly" ],
+        "x-codegen-request-body-name" : "text"
+      }
+    },
+    "/game/DefineItLy/{uuid}/question/{questionUuid}/choice" : {
+      "post" : {
+        "operationId" : "choseResponse",
+        "parameters" : [ {
+          "in" : "path",
+          "name" : "uuid",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "in" : "path",
+          "name" : "questionUuid",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/StringWrapper"
+              }
+            }
+          },
+          "description" : "the response uuid",
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/DefineItLyGame"
+                }
+              }
+            },
+            "description" : "ok"
+          }
+        },
+        "summary" : "Chose a response to a question",
+        "tags" : [ "defineitly" ],
+        "x-codegen-request-body-name" : "responseUuid"
+      }
+    },
     "/file/{id}" : {
       "get" : {
         "description" : "get a file",
@@ -496,7 +660,7 @@
             "type" : "string"
           },
           "gameType" : {
-            "enum" : [ "lostInTranslation" ],
+            "enum" : [ "lostInTranslation", "define-it-ly" ],
             "type" : "string"
           }
         },
@@ -811,6 +975,608 @@
             "type" : "string"
           }
         },
+        "type" : "object"
+      },
+      "DefineItLyGame" : {
+        "example" : {
+          "game" : {
+            "description" : {
+              "gameType" : "lostInTranslation",
+              "startTime" : "2000-01-23T04:56:07.000+00:00",
+              "id" : 0,
+              "uuid" : "uuid",
+              "status" : "toStart"
+            },
+            "users" : [ {
+              "canAdministrageGame" : true,
+              "name" : "name",
+              "linkedAccounts" : [ {
+                "linkType" : "Facebook",
+                "accessToken" : "accessToken"
+              }, {
+                "linkType" : "Facebook",
+                "accessToken" : "accessToken"
+              } ],
+              "uuid" : "uuid"
+            }, {
+              "canAdministrageGame" : true,
+              "name" : "name",
+              "linkedAccounts" : [ {
+                "linkType" : "Facebook",
+                "accessToken" : "accessToken"
+              }, {
+                "linkType" : "Facebook",
+                "accessToken" : "accessToken"
+              } ],
+              "uuid" : "uuid"
+            } ]
+          },
+          "rounds" : [ {
+            "question" : "question",
+            "quedtionByUser" : {
+              "canAdministrageGame" : true,
+              "name" : "name",
+              "linkedAccounts" : [ {
+                "linkType" : "Facebook",
+                "accessToken" : "accessToken"
+              }, {
+                "linkType" : "Facebook",
+                "accessToken" : "accessToken"
+              } ],
+              "uuid" : "uuid"
+            },
+            "responses" : [ {
+              "chosenBy" : [ {
+                "canAdministrageGame" : true,
+                "name" : "name",
+                "linkedAccounts" : [ {
+                  "linkType" : "Facebook",
+                  "accessToken" : "accessToken"
+                }, {
+                  "linkType" : "Facebook",
+                  "accessToken" : "accessToken"
+                } ],
+                "uuid" : "uuid"
+              }, {
+                "canAdministrageGame" : true,
+                "name" : "name",
+                "linkedAccounts" : [ {
+                  "linkType" : "Facebook",
+                  "accessToken" : "accessToken"
+                }, {
+                  "linkType" : "Facebook",
+                  "accessToken" : "accessToken"
+                } ],
+                "uuid" : "uuid"
+              } ],
+              "response" : "response",
+              "submissionDate" : "2000-01-23T04:56:07.000+00:00",
+              "uuid" : "uuid",
+              "responseByUser" : {
+                "user" : {
+                  "canAdministrageGame" : true,
+                  "name" : "name",
+                  "linkedAccounts" : [ {
+                    "linkType" : "Facebook",
+                    "accessToken" : "accessToken"
+                  }, {
+                    "linkType" : "Facebook",
+                    "accessToken" : "accessToken"
+                  } ],
+                  "uuid" : "uuid"
+                },
+                "points" : [ {
+                  "amount" : 0.8008281904610115,
+                  "category" : "category"
+                }, {
+                  "amount" : 0.8008281904610115,
+                  "category" : "category"
+                } ]
+              }
+            }, {
+              "chosenBy" : [ {
+                "canAdministrageGame" : true,
+                "name" : "name",
+                "linkedAccounts" : [ {
+                  "linkType" : "Facebook",
+                  "accessToken" : "accessToken"
+                }, {
+                  "linkType" : "Facebook",
+                  "accessToken" : "accessToken"
+                } ],
+                "uuid" : "uuid"
+              }, {
+                "canAdministrageGame" : true,
+                "name" : "name",
+                "linkedAccounts" : [ {
+                  "linkType" : "Facebook",
+                  "accessToken" : "accessToken"
+                }, {
+                  "linkType" : "Facebook",
+                  "accessToken" : "accessToken"
+                } ],
+                "uuid" : "uuid"
+              } ],
+              "response" : "response",
+              "submissionDate" : "2000-01-23T04:56:07.000+00:00",
+              "uuid" : "uuid",
+              "responseByUser" : {
+                "user" : {
+                  "canAdministrageGame" : true,
+                  "name" : "name",
+                  "linkedAccounts" : [ {
+                    "linkType" : "Facebook",
+                    "accessToken" : "accessToken"
+                  }, {
+                    "linkType" : "Facebook",
+                    "accessToken" : "accessToken"
+                  } ],
+                  "uuid" : "uuid"
+                },
+                "points" : [ {
+                  "amount" : 0.8008281904610115,
+                  "category" : "category"
+                }, {
+                  "amount" : 0.8008281904610115,
+                  "category" : "category"
+                } ]
+              }
+            } ],
+            "submissionDate" : "2000-01-23T04:56:07.000+00:00",
+            "roundId" : "roundId",
+            "status" : "waitQuestion"
+          }, {
+            "question" : "question",
+            "quedtionByUser" : {
+              "canAdministrageGame" : true,
+              "name" : "name",
+              "linkedAccounts" : [ {
+                "linkType" : "Facebook",
+                "accessToken" : "accessToken"
+              }, {
+                "linkType" : "Facebook",
+                "accessToken" : "accessToken"
+              } ],
+              "uuid" : "uuid"
+            },
+            "responses" : [ {
+              "chosenBy" : [ {
+                "canAdministrageGame" : true,
+                "name" : "name",
+                "linkedAccounts" : [ {
+                  "linkType" : "Facebook",
+                  "accessToken" : "accessToken"
+                }, {
+                  "linkType" : "Facebook",
+                  "accessToken" : "accessToken"
+                } ],
+                "uuid" : "uuid"
+              }, {
+                "canAdministrageGame" : true,
+                "name" : "name",
+                "linkedAccounts" : [ {
+                  "linkType" : "Facebook",
+                  "accessToken" : "accessToken"
+                }, {
+                  "linkType" : "Facebook",
+                  "accessToken" : "accessToken"
+                } ],
+                "uuid" : "uuid"
+              } ],
+              "response" : "response",
+              "submissionDate" : "2000-01-23T04:56:07.000+00:00",
+              "uuid" : "uuid",
+              "responseByUser" : {
+                "user" : {
+                  "canAdministrageGame" : true,
+                  "name" : "name",
+                  "linkedAccounts" : [ {
+                    "linkType" : "Facebook",
+                    "accessToken" : "accessToken"
+                  }, {
+                    "linkType" : "Facebook",
+                    "accessToken" : "accessToken"
+                  } ],
+                  "uuid" : "uuid"
+                },
+                "points" : [ {
+                  "amount" : 0.8008281904610115,
+                  "category" : "category"
+                }, {
+                  "amount" : 0.8008281904610115,
+                  "category" : "category"
+                } ]
+              }
+            }, {
+              "chosenBy" : [ {
+                "canAdministrageGame" : true,
+                "name" : "name",
+                "linkedAccounts" : [ {
+                  "linkType" : "Facebook",
+                  "accessToken" : "accessToken"
+                }, {
+                  "linkType" : "Facebook",
+                  "accessToken" : "accessToken"
+                } ],
+                "uuid" : "uuid"
+              }, {
+                "canAdministrageGame" : true,
+                "name" : "name",
+                "linkedAccounts" : [ {
+                  "linkType" : "Facebook",
+                  "accessToken" : "accessToken"
+                }, {
+                  "linkType" : "Facebook",
+                  "accessToken" : "accessToken"
+                } ],
+                "uuid" : "uuid"
+              } ],
+              "response" : "response",
+              "submissionDate" : "2000-01-23T04:56:07.000+00:00",
+              "uuid" : "uuid",
+              "responseByUser" : {
+                "user" : {
+                  "canAdministrageGame" : true,
+                  "name" : "name",
+                  "linkedAccounts" : [ {
+                    "linkType" : "Facebook",
+                    "accessToken" : "accessToken"
+                  }, {
+                    "linkType" : "Facebook",
+                    "accessToken" : "accessToken"
+                  } ],
+                  "uuid" : "uuid"
+                },
+                "points" : [ {
+                  "amount" : 0.8008281904610115,
+                  "category" : "category"
+                }, {
+                  "amount" : 0.8008281904610115,
+                  "category" : "category"
+                } ]
+              }
+            } ],
+            "submissionDate" : "2000-01-23T04:56:07.000+00:00",
+            "roundId" : "roundId",
+            "status" : "waitQuestion"
+          } ],
+          "points" : [ {
+            "user" : {
+              "canAdministrageGame" : true,
+              "name" : "name",
+              "linkedAccounts" : [ {
+                "linkType" : "Facebook",
+                "accessToken" : "accessToken"
+              }, {
+                "linkType" : "Facebook",
+                "accessToken" : "accessToken"
+              } ],
+              "uuid" : "uuid"
+            },
+            "points" : [ {
+              "amount" : 0.8008281904610115,
+              "category" : "category"
+            }, {
+              "amount" : 0.8008281904610115,
+              "category" : "category"
+            } ]
+          }, {
+            "user" : {
+              "canAdministrageGame" : true,
+              "name" : "name",
+              "linkedAccounts" : [ {
+                "linkType" : "Facebook",
+                "accessToken" : "accessToken"
+              }, {
+                "linkType" : "Facebook",
+                "accessToken" : "accessToken"
+              } ],
+              "uuid" : "uuid"
+            },
+            "points" : [ {
+              "amount" : 0.8008281904610115,
+              "category" : "category"
+            }, {
+              "amount" : 0.8008281904610115,
+              "category" : "category"
+            } ]
+          } ]
+        },
+        "properties" : {
+          "game" : {
+            "$ref" : "#/components/schemas/Game"
+          },
+          "rounds" : {
+            "items" : {
+              "$ref" : "#/components/schemas/DefineItLyRound"
+            },
+            "type" : "array"
+          },
+          "points" : {
+            "items" : {
+              "$ref" : "#/components/schemas/UserWithScore"
+            },
+            "type" : "array"
+          }
+        },
+        "type" : "object"
+      },
+      "DefineItLyRound" : {
+        "example" : {
+          "question" : "question",
+          "quedtionByUser" : {
+            "canAdministrageGame" : true,
+            "name" : "name",
+            "linkedAccounts" : [ {
+              "linkType" : "Facebook",
+              "accessToken" : "accessToken"
+            }, {
+              "linkType" : "Facebook",
+              "accessToken" : "accessToken"
+            } ],
+            "uuid" : "uuid"
+          },
+          "responses" : [ {
+            "chosenBy" : [ {
+              "canAdministrageGame" : true,
+              "name" : "name",
+              "linkedAccounts" : [ {
+                "linkType" : "Facebook",
+                "accessToken" : "accessToken"
+              }, {
+                "linkType" : "Facebook",
+                "accessToken" : "accessToken"
+              } ],
+              "uuid" : "uuid"
+            }, {
+              "canAdministrageGame" : true,
+              "name" : "name",
+              "linkedAccounts" : [ {
+                "linkType" : "Facebook",
+                "accessToken" : "accessToken"
+              }, {
+                "linkType" : "Facebook",
+                "accessToken" : "accessToken"
+              } ],
+              "uuid" : "uuid"
+            } ],
+            "response" : "response",
+            "submissionDate" : "2000-01-23T04:56:07.000+00:00",
+            "uuid" : "uuid",
+            "responseByUser" : {
+              "user" : {
+                "canAdministrageGame" : true,
+                "name" : "name",
+                "linkedAccounts" : [ {
+                  "linkType" : "Facebook",
+                  "accessToken" : "accessToken"
+                }, {
+                  "linkType" : "Facebook",
+                  "accessToken" : "accessToken"
+                } ],
+                "uuid" : "uuid"
+              },
+              "points" : [ {
+                "amount" : 0.8008281904610115,
+                "category" : "category"
+              }, {
+                "amount" : 0.8008281904610115,
+                "category" : "category"
+              } ]
+            }
+          }, {
+            "chosenBy" : [ {
+              "canAdministrageGame" : true,
+              "name" : "name",
+              "linkedAccounts" : [ {
+                "linkType" : "Facebook",
+                "accessToken" : "accessToken"
+              }, {
+                "linkType" : "Facebook",
+                "accessToken" : "accessToken"
+              } ],
+              "uuid" : "uuid"
+            }, {
+              "canAdministrageGame" : true,
+              "name" : "name",
+              "linkedAccounts" : [ {
+                "linkType" : "Facebook",
+                "accessToken" : "accessToken"
+              }, {
+                "linkType" : "Facebook",
+                "accessToken" : "accessToken"
+              } ],
+              "uuid" : "uuid"
+            } ],
+            "response" : "response",
+            "submissionDate" : "2000-01-23T04:56:07.000+00:00",
+            "uuid" : "uuid",
+            "responseByUser" : {
+              "user" : {
+                "canAdministrageGame" : true,
+                "name" : "name",
+                "linkedAccounts" : [ {
+                  "linkType" : "Facebook",
+                  "accessToken" : "accessToken"
+                }, {
+                  "linkType" : "Facebook",
+                  "accessToken" : "accessToken"
+                } ],
+                "uuid" : "uuid"
+              },
+              "points" : [ {
+                "amount" : 0.8008281904610115,
+                "category" : "category"
+              }, {
+                "amount" : 0.8008281904610115,
+                "category" : "category"
+              } ]
+            }
+          } ],
+          "submissionDate" : "2000-01-23T04:56:07.000+00:00",
+          "roundId" : "roundId",
+          "status" : "waitQuestion"
+        },
+        "properties" : {
+          "quedtionByUser" : {
+            "$ref" : "#/components/schemas/User"
+          },
+          "roundId" : {
+            "type" : "string"
+          },
+          "submissionDate" : {
+            "format" : "date-time",
+            "type" : "string"
+          },
+          "question" : {
+            "type" : "string"
+          },
+          "responses" : {
+            "items" : {
+              "$ref" : "#/components/schemas/DefineItLyResponse"
+            },
+            "type" : "array"
+          },
+          "status" : {
+            "enum" : [ "waitQuestion", "waitResponses", "waitChoices", "finished" ],
+            "type" : "string"
+          }
+        },
+        "type" : "object"
+      },
+      "DefineItLyResponse" : {
+        "example" : {
+          "chosenBy" : [ {
+            "canAdministrageGame" : true,
+            "name" : "name",
+            "linkedAccounts" : [ {
+              "linkType" : "Facebook",
+              "accessToken" : "accessToken"
+            }, {
+              "linkType" : "Facebook",
+              "accessToken" : "accessToken"
+            } ],
+            "uuid" : "uuid"
+          }, {
+            "canAdministrageGame" : true,
+            "name" : "name",
+            "linkedAccounts" : [ {
+              "linkType" : "Facebook",
+              "accessToken" : "accessToken"
+            }, {
+              "linkType" : "Facebook",
+              "accessToken" : "accessToken"
+            } ],
+            "uuid" : "uuid"
+          } ],
+          "response" : "response",
+          "submissionDate" : "2000-01-23T04:56:07.000+00:00",
+          "uuid" : "uuid",
+          "responseByUser" : {
+            "user" : {
+              "canAdministrageGame" : true,
+              "name" : "name",
+              "linkedAccounts" : [ {
+                "linkType" : "Facebook",
+                "accessToken" : "accessToken"
+              }, {
+                "linkType" : "Facebook",
+                "accessToken" : "accessToken"
+              } ],
+              "uuid" : "uuid"
+            },
+            "points" : [ {
+              "amount" : 0.8008281904610115,
+              "category" : "category"
+            }, {
+              "amount" : 0.8008281904610115,
+              "category" : "category"
+            } ]
+          }
+        },
+        "properties" : {
+          "uuid" : {
+            "type" : "string"
+          },
+          "response" : {
+            "type" : "string"
+          },
+          "responseByUser" : {
+            "$ref" : "#/components/schemas/UserWithScore"
+          },
+          "submissionDate" : {
+            "format" : "date-time",
+            "type" : "string"
+          },
+          "chosenBy" : {
+            "items" : {
+              "$ref" : "#/components/schemas/User"
+            },
+            "type" : "array"
+          }
+        },
+        "type" : "object"
+      },
+      "UserWithScore" : {
+        "example" : {
+          "user" : {
+            "canAdministrageGame" : true,
+            "name" : "name",
+            "linkedAccounts" : [ {
+              "linkType" : "Facebook",
+              "accessToken" : "accessToken"
+            }, {
+              "linkType" : "Facebook",
+              "accessToken" : "accessToken"
+            } ],
+            "uuid" : "uuid"
+          },
+          "points" : [ {
+            "amount" : 0.8008281904610115,
+            "category" : "category"
+          }, {
+            "amount" : 0.8008281904610115,
+            "category" : "category"
+          } ]
+        },
+        "properties" : {
+          "user" : {
+            "$ref" : "#/components/schemas/User"
+          },
+          "points" : {
+            "items" : {
+              "$ref" : "#/components/schemas/Score"
+            },
+            "type" : "array"
+          }
+        },
+        "type" : "object"
+      },
+      "Score" : {
+        "example" : {
+          "amount" : 0.8008281904610115,
+          "category" : "category"
+        },
+        "properties" : {
+          "amount" : {
+            "type" : "number"
+          },
+          "category" : {
+            "type" : "string"
+          }
+        },
+        "type" : "object"
+      },
+      "StringWrapper" : {
+        "example" : {
+          "value" : "value"
+        },
+        "properties" : {
+          "value" : {
+            "type" : "string"
+          }
+        },
+        "required" : [ "value" ],
         "type" : "object"
       }
     }

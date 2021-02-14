@@ -14,9 +14,147 @@ trait Tables {
   import slick.jdbc.{GetResult => GR}
 
   /** DDL for all tables. Call .create to execute. */
-  lazy val schema: profile.SchemaDescription = Array(File.schema, Game.schema, LitRound.schema, PlayEvolutions.schema, User.schema, UserInGame.schema, UserReference.schema).reduceLeft(_ ++ _)
+  lazy val schema: profile.SchemaDescription = Array(DilChoice.schema, DilResponse.schema, DilRound.schema, File.schema, Game.schema, LitRound.schema, PlayEvolutions.schema, User.schema, UserInGame.schema, UserReference.schema).reduceLeft(_ ++ _)
   @deprecated("Use .schema instead of .ddl", "3.0")
   def ddl = schema
+
+  /** Entity class storing rows of table DilChoice
+   *  @param id Database column id SqlType(BIGINT), AutoInc, PrimaryKey
+   *  @param uuid Database column uuid SqlType(VARCHAR), Length(255,true)
+   *  @param fkGameId Database column fk_game_id SqlType(BIGINT)
+   *  @param fkUserId Database column fk_user_id SqlType(BIGINT)
+   *  @param fkRoundId Database column fk_round_id SqlType(BIGINT)
+   *  @param fkResponseId Database column fk_response_id SqlType(BIGINT)
+   *  @param timestamp Database column timestamp SqlType(TIMESTAMP) */
+  case class DilChoiceRow(id: Long, uuid: String, fkGameId: Long, fkUserId: Long, fkRoundId: Long, fkResponseId: Long, timestamp: Option[java.sql.Timestamp])
+  /** GetResult implicit for fetching DilChoiceRow objects using plain SQL queries */
+  implicit def GetResultDilChoiceRow(implicit e0: GR[Long], e1: GR[String], e2: GR[Option[java.sql.Timestamp]]): GR[DilChoiceRow] = GR{
+    prs => import prs._
+    DilChoiceRow.tupled((<<[Long], <<[String], <<[Long], <<[Long], <<[Long], <<[Long], <<?[java.sql.Timestamp]))
+  }
+  /** Table description of table dil_choice. Objects of this class serve as prototypes for rows in queries. */
+  class DilChoice(_tableTag: Tag) extends profile.api.Table[DilChoiceRow](_tableTag, Some("db"), "dil_choice") {
+    def * = (id, uuid, fkGameId, fkUserId, fkRoundId, fkResponseId, timestamp) <> (DilChoiceRow.tupled, DilChoiceRow.unapply)
+    /** Maps whole row to an option. Useful for outer joins. */
+    def ? = ((Rep.Some(id), Rep.Some(uuid), Rep.Some(fkGameId), Rep.Some(fkUserId), Rep.Some(fkRoundId), Rep.Some(fkResponseId), timestamp)).shaped.<>({r=>import r._; _1.map(_=> DilChoiceRow.tupled((_1.get, _2.get, _3.get, _4.get, _5.get, _6.get, _7)))}, (_:Any) =>  throw new Exception("Inserting into ? projection not supported."))
+
+    /** Database column id SqlType(BIGINT), AutoInc, PrimaryKey */
+    val id: Rep[Long] = column[Long]("id", O.AutoInc, O.PrimaryKey)
+    /** Database column uuid SqlType(VARCHAR), Length(255,true) */
+    val uuid: Rep[String] = column[String]("uuid", O.Length(255,varying=true))
+    /** Database column fk_game_id SqlType(BIGINT) */
+    val fkGameId: Rep[Long] = column[Long]("fk_game_id")
+    /** Database column fk_user_id SqlType(BIGINT) */
+    val fkUserId: Rep[Long] = column[Long]("fk_user_id")
+    /** Database column fk_round_id SqlType(BIGINT) */
+    val fkRoundId: Rep[Long] = column[Long]("fk_round_id")
+    /** Database column fk_response_id SqlType(BIGINT) */
+    val fkResponseId: Rep[Long] = column[Long]("fk_response_id")
+    /** Database column timestamp SqlType(TIMESTAMP) */
+    val timestamp: Rep[Option[java.sql.Timestamp]] = column[Option[java.sql.Timestamp]]("timestamp")
+
+    /** Foreign key referencing DilResponse (database name dil_choice_ibfk_4) */
+    lazy val dilResponseFk = foreignKey("dil_choice_ibfk_4", fkResponseId, DilResponse)(r => r.id, onUpdate=ForeignKeyAction.NoAction, onDelete=ForeignKeyAction.NoAction)
+    /** Foreign key referencing DilRound (database name dil_choice_ibfk_1) */
+    lazy val dilRoundFk = foreignKey("dil_choice_ibfk_1", fkRoundId, DilRound)(r => r.id, onUpdate=ForeignKeyAction.NoAction, onDelete=ForeignKeyAction.NoAction)
+    /** Foreign key referencing Game (database name dil_choice_ibfk_3) */
+    lazy val gameFk = foreignKey("dil_choice_ibfk_3", fkGameId, Game)(r => r.id, onUpdate=ForeignKeyAction.NoAction, onDelete=ForeignKeyAction.NoAction)
+    /** Foreign key referencing User (database name dil_choice_ibfk_2) */
+    lazy val userFk = foreignKey("dil_choice_ibfk_2", fkUserId, User)(r => r.id, onUpdate=ForeignKeyAction.NoAction, onDelete=ForeignKeyAction.NoAction)
+
+    /** Uniqueness Index over (fkUserId,fkRoundId) (database name dil_one_choice_by_user) */
+    val index1 = index("dil_one_choice_by_user", (fkUserId, fkRoundId), unique=true)
+  }
+  /** Collection-like TableQuery object for table DilChoice */
+  lazy val DilChoice = new TableQuery(tag => new DilChoice(tag))
+
+  /** Entity class storing rows of table DilResponse
+   *  @param id Database column id SqlType(BIGINT), AutoInc, PrimaryKey
+   *  @param uuid Database column uuid SqlType(VARCHAR), Length(255,true)
+   *  @param fkGameId Database column fk_game_id SqlType(BIGINT)
+   *  @param fkUserId Database column fk_user_id SqlType(BIGINT)
+   *  @param fkRoundId Database column fk_round_id SqlType(BIGINT)
+   *  @param response Database column response SqlType(VARCHAR), Length(255,true)
+   *  @param timestamp Database column timestamp SqlType(TIMESTAMP) */
+  case class DilResponseRow(id: Long, uuid: String, fkGameId: Long, fkUserId: Long, fkRoundId: Long, response: String, timestamp: Option[java.sql.Timestamp])
+  /** GetResult implicit for fetching DilResponseRow objects using plain SQL queries */
+  implicit def GetResultDilResponseRow(implicit e0: GR[Long], e1: GR[String], e2: GR[Option[java.sql.Timestamp]]): GR[DilResponseRow] = GR{
+    prs => import prs._
+    DilResponseRow.tupled((<<[Long], <<[String], <<[Long], <<[Long], <<[Long], <<[String], <<?[java.sql.Timestamp]))
+  }
+  /** Table description of table dil_response. Objects of this class serve as prototypes for rows in queries. */
+  class DilResponse(_tableTag: Tag) extends profile.api.Table[DilResponseRow](_tableTag, Some("db"), "dil_response") {
+    def * = (id, uuid, fkGameId, fkUserId, fkRoundId, response, timestamp) <> (DilResponseRow.tupled, DilResponseRow.unapply)
+    /** Maps whole row to an option. Useful for outer joins. */
+    def ? = ((Rep.Some(id), Rep.Some(uuid), Rep.Some(fkGameId), Rep.Some(fkUserId), Rep.Some(fkRoundId), Rep.Some(response), timestamp)).shaped.<>({r=>import r._; _1.map(_=> DilResponseRow.tupled((_1.get, _2.get, _3.get, _4.get, _5.get, _6.get, _7)))}, (_:Any) =>  throw new Exception("Inserting into ? projection not supported."))
+
+    /** Database column id SqlType(BIGINT), AutoInc, PrimaryKey */
+    val id: Rep[Long] = column[Long]("id", O.AutoInc, O.PrimaryKey)
+    /** Database column uuid SqlType(VARCHAR), Length(255,true) */
+    val uuid: Rep[String] = column[String]("uuid", O.Length(255,varying=true))
+    /** Database column fk_game_id SqlType(BIGINT) */
+    val fkGameId: Rep[Long] = column[Long]("fk_game_id")
+    /** Database column fk_user_id SqlType(BIGINT) */
+    val fkUserId: Rep[Long] = column[Long]("fk_user_id")
+    /** Database column fk_round_id SqlType(BIGINT) */
+    val fkRoundId: Rep[Long] = column[Long]("fk_round_id")
+    /** Database column response SqlType(VARCHAR), Length(255,true) */
+    val response: Rep[String] = column[String]("response", O.Length(255,varying=true))
+    /** Database column timestamp SqlType(TIMESTAMP) */
+    val timestamp: Rep[Option[java.sql.Timestamp]] = column[Option[java.sql.Timestamp]]("timestamp")
+
+    /** Foreign key referencing DilRound (database name dil_response_ibfk_3) */
+    lazy val dilRoundFk = foreignKey("dil_response_ibfk_3", fkRoundId, DilRound)(r => r.id, onUpdate=ForeignKeyAction.NoAction, onDelete=ForeignKeyAction.NoAction)
+    /** Foreign key referencing Game (database name dil_response_ibfk_2) */
+    lazy val gameFk = foreignKey("dil_response_ibfk_2", fkGameId, Game)(r => r.id, onUpdate=ForeignKeyAction.NoAction, onDelete=ForeignKeyAction.NoAction)
+    /** Foreign key referencing User (database name dil_response_ibfk_1) */
+    lazy val userFk = foreignKey("dil_response_ibfk_1", fkUserId, User)(r => r.id, onUpdate=ForeignKeyAction.NoAction, onDelete=ForeignKeyAction.NoAction)
+
+    /** Uniqueness Index over (fkUserId,fkRoundId) (database name dil_one_response_by_user) */
+    val index1 = index("dil_one_response_by_user", (fkUserId, fkRoundId), unique=true)
+  }
+  /** Collection-like TableQuery object for table DilResponse */
+  lazy val DilResponse = new TableQuery(tag => new DilResponse(tag))
+
+  /** Entity class storing rows of table DilRound
+   *  @param id Database column id SqlType(BIGINT), AutoInc, PrimaryKey
+   *  @param uuid Database column uuid SqlType(VARCHAR), Length(255,true)
+   *  @param fkGameId Database column fk_game_id SqlType(BIGINT)
+   *  @param fkUserId Database column fk_user_id SqlType(BIGINT)
+   *  @param question Database column question SqlType(VARCHAR), Length(255,true)
+   *  @param timestamp Database column timestamp SqlType(TIMESTAMP) */
+  case class DilRoundRow(id: Long, uuid: String, fkGameId: Long, fkUserId: Long, question: String, timestamp: Option[java.sql.Timestamp])
+  /** GetResult implicit for fetching DilRoundRow objects using plain SQL queries */
+  implicit def GetResultDilRoundRow(implicit e0: GR[Long], e1: GR[String], e2: GR[Option[java.sql.Timestamp]]): GR[DilRoundRow] = GR{
+    prs => import prs._
+    DilRoundRow.tupled((<<[Long], <<[String], <<[Long], <<[Long], <<[String], <<?[java.sql.Timestamp]))
+  }
+  /** Table description of table dil_round. Objects of this class serve as prototypes for rows in queries. */
+  class DilRound(_tableTag: Tag) extends profile.api.Table[DilRoundRow](_tableTag, Some("db"), "dil_round") {
+    def * = (id, uuid, fkGameId, fkUserId, question, timestamp) <> (DilRoundRow.tupled, DilRoundRow.unapply)
+    /** Maps whole row to an option. Useful for outer joins. */
+    def ? = ((Rep.Some(id), Rep.Some(uuid), Rep.Some(fkGameId), Rep.Some(fkUserId), Rep.Some(question), timestamp)).shaped.<>({r=>import r._; _1.map(_=> DilRoundRow.tupled((_1.get, _2.get, _3.get, _4.get, _5.get, _6)))}, (_:Any) =>  throw new Exception("Inserting into ? projection not supported."))
+
+    /** Database column id SqlType(BIGINT), AutoInc, PrimaryKey */
+    val id: Rep[Long] = column[Long]("id", O.AutoInc, O.PrimaryKey)
+    /** Database column uuid SqlType(VARCHAR), Length(255,true) */
+    val uuid: Rep[String] = column[String]("uuid", O.Length(255,varying=true))
+    /** Database column fk_game_id SqlType(BIGINT) */
+    val fkGameId: Rep[Long] = column[Long]("fk_game_id")
+    /** Database column fk_user_id SqlType(BIGINT) */
+    val fkUserId: Rep[Long] = column[Long]("fk_user_id")
+    /** Database column question SqlType(VARCHAR), Length(255,true) */
+    val question: Rep[String] = column[String]("question", O.Length(255,varying=true))
+    /** Database column timestamp SqlType(TIMESTAMP) */
+    val timestamp: Rep[Option[java.sql.Timestamp]] = column[Option[java.sql.Timestamp]]("timestamp")
+
+    /** Foreign key referencing Game (database name dil_round_ibfk_2) */
+    lazy val gameFk = foreignKey("dil_round_ibfk_2", fkGameId, Game)(r => r.id, onUpdate=ForeignKeyAction.NoAction, onDelete=ForeignKeyAction.NoAction)
+    /** Foreign key referencing User (database name dil_round_ibfk_1) */
+    lazy val userFk = foreignKey("dil_round_ibfk_1", fkUserId, User)(r => r.id, onUpdate=ForeignKeyAction.NoAction, onDelete=ForeignKeyAction.NoAction)
+  }
+  /** Collection-like TableQuery object for table DilRound */
+  lazy val DilRound = new TableQuery(tag => new DilRound(tag))
 
   /** Entity class storing rows of table File
    *  @param id Database column id SqlType(VARCHAR), PrimaryKey, Length(36,true)
@@ -275,8 +413,8 @@ trait Tables {
     /** Foreign key referencing User (database name user_reference_ibfk_1) */
     lazy val userFk = foreignKey("user_reference_ibfk_1", fkUserId, User)(r => r.id, onUpdate=ForeignKeyAction.NoAction, onDelete=ForeignKeyAction.NoAction)
 
-    /** Uniqueness Index over (reference) (database name user_reference) */
-    val index1 = index("user_reference", reference, unique=true)
+    /** Uniqueness Index over (reference,service) (database name user_reference) */
+    val index1 = index("user_reference", (reference, service), unique=true)
   }
   /** Collection-like TableQuery object for table UserReference */
   lazy val UserReference = new TableQuery(tag => new UserReference(tag))

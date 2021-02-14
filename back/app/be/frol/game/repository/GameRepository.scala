@@ -1,8 +1,9 @@
 package be.frol.game.repository
 
 import be.frol.game.DbContext
+import be.frol.game.api.model.GameDescription
 import be.frol.game.error.FunctionalError
-import be.frol.game.model.{GameDescription, RichGame}
+import be.frol.game.model.RichGame
 import be.frol.game.tables.Tables
 import be.frol.game.tables.Tables._
 import be.frol.game.utils.DateUtils
@@ -23,7 +24,7 @@ class GameRepository @Inject()(
       into ((v, id) => v.copy(id = id))) += p)
   }
 
-  def update(g : Tables.GameRow) = Tables.Game.filter(_.id === g.id).update(g)
+  def update(g: Tables.GameRow) = Tables.Game.filter(_.id === g.id).update(g)
 
   def add(p: Tables.UserInGameRow)(implicit executionContext: ExecutionContext) = {
     ((Tables.UserInGame returning Tables.UserInGame.map(_.id)

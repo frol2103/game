@@ -45,7 +45,9 @@
 
 
 
-    <button type="button" [disabled]="createDisabled" (click)="createGame()" class="btn btn-primary m-2 "> {{ 'create_game_button' | translate }}</button>
+    <div *ngFor="let gtype of gameTypes">
+      <button  type="button" [disabled]="createDisabled" (click)="createGame(gtype)" class="btn btn-primary m-2 "> {{ 'create_game_button' | translate }} {{gtype+'_label' | translate}}</button>
+    </div>
 <!--    <button type="button" routerLink="/join" routerLinkActive="active" class="btn btn-primary m-2 "> {{ 'join_game_button' | translate }}</button>-->
 
 </panel>

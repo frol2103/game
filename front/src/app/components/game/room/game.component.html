@@ -13,6 +13,7 @@
 
 <div *ngIf="isInLobbyDuringGame()">
   <lost-in-translation *ngIf="roomService.game?.description?.gameType == 'lostInTranslation'"></lost-in-translation>
+  <define-it-ly *ngIf="roomService.game?.description?.gameType == 'define-it-ly'"></define-it-ly>
 </div>
 
 

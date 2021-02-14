@@ -3,6 +3,7 @@ import {LoginService} from "../../services/login.service";
 import {RoomService} from "../../services/room.service";
 import {Router} from "@angular/router";
 import {Game, GameDescription} from "../../../generated/api";
+import GameTypeEnum = GameDescription.GameTypeEnum;
 
 @Component({
     selector: 'game-home',
@@ -13,6 +14,7 @@ export class HomeComponent implements OnInit {
     createDisabled: boolean = false
     inviteUrl: string = ''
     games : Array<GameDescription> = []
+    gameTypes = Object.keys(GameDescription.GameTypeEnum).map(k => GameDescription.GameTypeEnum[k])
 
     constructor(public loginService: LoginService, public roomService : RoomService, private router : Router) {
     }
@@ -22,11 +24,10 @@ export class HomeComponent implements OnInit {
     }
 
 
-    createGame() {
+    createGame(gameType:GameTypeEnum) {
         console.log("Button clicked to create new game")
         this.createDisabled = true
-        //todo add game type choice
-        this.roomService.createLostInTranslationGame()
+        this.roomService.createGame(gameType)
             .then(game => this.navigateToGamePage(game.description?.uuid))
     }
 

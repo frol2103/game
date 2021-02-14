@@ -40,8 +40,8 @@ lazy val generated = (project in generatedApiPath).enablePlugins(PlayScala)
       "routesFileName" -> "be.frol.game.generated.routes"),
     openapiArtifactId := Some("generated-api"),
     openapiArtifactVersion := Some("1.0-SNAPSHOT"),
-    openapiApiPackage := Some("be.frol.game.api"),
-    openapiModelPackage := Some("be.frol.game.model"),
+    openapiApiPackage := Some("be.frol.game.api.controller"),
+    openapiModelPackage := Some("be.frol.game.api.model"),
   )
 
 libraryDependencies ++= Seq(

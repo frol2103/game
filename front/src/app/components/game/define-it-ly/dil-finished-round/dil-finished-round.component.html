@@ -1,0 +1,10 @@
+<panel title-raw="{{round.question}} ({{round.quedtionByUser.name}})">
+    <ul>
+        <li *ngFor="let r of round.responses">
+            <b>{{r.responseByUser.user.name}} - {{points(r)}} {{'points' | translate}}</b> {{r.response}}
+            <ul>
+                <li *ngFor="let u of r.chosenBy">{{u.name}}</li>
+            </ul>
+        </li>
+    </ul>
+</panel>

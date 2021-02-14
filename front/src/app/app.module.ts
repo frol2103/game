@@ -21,6 +21,8 @@ import { UserLogoutComponent } from './components/user/user-logout/user-logout.c
 import { PanelComponent } from './components/utils/panel/panel.component';
 import { WaitForComponent } from './components/utils/wait-for/wait-for.component';
 import { DrawingComponent } from './components/game/lost-in-translation/drawing/drawing.component';
+import { DefineItLyComponent } from './components/game/define-it-ly/define-it-ly.component';
+import { DilFinishedRoundComponent } from './components/game/define-it-ly/dil-finished-round/dil-finished-round.component';
 
 const routes: Routes = [
     { path: 'logout', component: UserLogoutComponent },
@@ -47,6 +49,8 @@ const routes: Routes = [
         PanelComponent,
         WaitForComponent,
         DrawingComponent,
+        DefineItLyComponent,
+        DilFinishedRoundComponent,
     ],
     imports: [
         FormsModule,
