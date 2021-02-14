@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, HostListener, OnInit, ViewChild} from '@angular/core';
 
 @Component({
   selector: 'camera-snapshot',
@@ -18,8 +18,14 @@ export class CameraSnapshotComponent implements OnInit {
 
   public captures: Array<any>;
   stream : MediaStream
+
   inputWidth: number = 0
   inputHeight: number = 0
+
+  videoWidth: number = 0
+  videoHeight: number = 0
+
+  viewSize: number = 0
 
 
   public constructor() {
@@ -27,6 +33,32 @@ export class CameraSnapshotComponent implements OnInit {
   }
 
   public ngOnInit() { }
+
+    @HostListener('window:resize', ['$event'])
+    onResize(event) {
+        this.setVideoPreviewSize()
+    }
+
+  private setVideoPreviewSize() {
+      let inputRatio = this.inputWidth/this.inputHeight
+
+      let video = this.video.nativeElement;
+      let videoView = video.parentElement;
+      let videoViewContainer = videoView.parentElement;
+
+      let containerWidth = videoViewContainer.getBoundingClientRect().width
+
+      this.viewSize = containerWidth
+
+      if(inputRatio > 1) {
+        this.videoHeight = this.viewSize
+        this.videoWidth = this.viewSize * inputRatio
+      } else {
+          this.videoWidth = this.viewSize
+          this.videoHeight = this.viewSize / inputRatio
+      }
+
+  }
 
   public ngAfterViewInit() {
     if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
@@ -40,6 +72,8 @@ export class CameraSnapshotComponent implements OnInit {
             console.log("stream with reoslution "+videoSettings.width+"x"+videoSettings.height)
             this.video.nativeElement.srcObject = stream
             this.video.nativeElement.play()
+
+            this.setVideoPreviewSize()
       });
     }
   }

@@ -1,6 +1,6 @@
 <div class="camera-input">
-    <div>
-        <video #video class="video-preview" width="100%" height="auto" autoplay></video>
+    <div class="video-preview-container" [ngStyle]="{width: viewSize+'px', height: viewSize+'px', }">
+        <video #video class="video-preview" [width]="videoWidth" [height]="videoHeight" autoplay></video>
     </div>
     <canvas #canvas class="d-none" [width]="inputWidth" [height]="inputHeight"></canvas>
     <canvas #videofull class="d-none" [width]="inputWidth" [height]="inputHeight"></canvas>

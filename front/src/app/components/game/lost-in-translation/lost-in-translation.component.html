@@ -54,22 +54,22 @@
             </div>
             <div class="text-center">
                 <ng-container *ngIf="isInputDraw()">
-                    <button type="button" class="btn btn-secondary btn-lg" (click)="switchInputType()" *ngIf="isInputCameraAvailable()">
+                    <button type="button" class="btn btn-secondary btn-lg ml-2" (click)="switchInputType()" *ngIf="isInputCameraAvailable()">
                         <i class="fas fa-camera"></i>
                         {{ 'lit_use_camera_button' | translate }}
                     </button>
-                    <button type="button" class="btn btn-primary btn-lg" (click)="sendDrawing()">
+                    <button type="button" class="btn btn-primary btn-lg ml-2" (click)="sendDrawing()">
                         <i class="fas fa-check"></i>
                         {{ 'lit_text_round_send_button' | translate }}
                     </button>
                 </ng-container>
 
                 <ng-container *ngIf="isInputCamera()">
-                    <button type="button" class="btn btn-secondary btn-lg" (click)="switchInputType()">
+                    <button type="button" class="btn btn-secondary btn-lg ml-2" (click)="switchInputType()">
                         <i class="fas fa-edit"></i>
                         {{ 'lit_use_draw_button' | translate }}
                     </button>
-                    <button type="button" class="btn btn-primary btn-lg" (click)="sendCameraCapture()">
+                    <button type="button" class="btn btn-primary btn-lg ml-2" (click)="sendCameraCapture()">
                         <i class="fas fa-check"></i>
                         {{ 'lit_text_round_send_button' | translate }}
                     </button>
