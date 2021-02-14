@@ -5,7 +5,7 @@
     <div *ngFor="let story of lostInTranslationService.game.stories">
         <panel [title-raw]="story.originalUser.name">
             <div *ngFor="let round of story.rounds">
-                <panel [title-raw]="round.roundUser.name" *ngIf="round.text || round.drawing">
+                <panel [title-raw]="round.roundUser.name" *ngIf="round.text || round.drawing" class="m-0">
                     <div *ngIf="round.roundType == 'text'">
                         {{ round.text }}
                     </div>
