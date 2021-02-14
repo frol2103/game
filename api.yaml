@@ -311,6 +311,10 @@ paths:
           in: "path"
           required: true
           type: "string"
+        - name: "withHistory"
+          in: "query"
+          required: false
+          type: boolean
       responses:
         "200":
           description: "ok"

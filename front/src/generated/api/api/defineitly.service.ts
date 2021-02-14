@@ -211,15 +211,21 @@ export class DefineitlyService {
     /**
      * Get a DefineItLy game
      * @param uuid 
+     * @param withHistory 
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public getGame(uuid: string, observe?: 'body', reportProgress?: boolean): Observable<DefineItLyGame>;
-    public getGame(uuid: string, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<DefineItLyGame>>;
-    public getGame(uuid: string, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<DefineItLyGame>>;
-    public getGame(uuid: string, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public getGame(uuid: string, withHistory?: boolean, observe?: 'body', reportProgress?: boolean): Observable<DefineItLyGame>;
+    public getGame(uuid: string, withHistory?: boolean, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<DefineItLyGame>>;
+    public getGame(uuid: string, withHistory?: boolean, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<DefineItLyGame>>;
+    public getGame(uuid: string, withHistory?: boolean, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
         if (uuid === null || uuid === undefined) {
             throw new Error('Required parameter uuid was null or undefined when calling getGame.');
+        }
+
+        let queryParameters = new HttpParams({encoder: this.encoder});
+        if (withHistory !== undefined && withHistory !== null) {
+            queryParameters = queryParameters.set('withHistory', <any>withHistory);
         }
 
         let headers = this.defaultHeaders;
@@ -236,6 +242,7 @@ export class DefineitlyService {
 
         return this.httpClient.get<DefineItLyGame>(`${this.configuration.basePath}/game/DefineItLy/${encodeURIComponent(String(uuid))}`,
             {
+                params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
                 headers: headers,
                 observe: observe,

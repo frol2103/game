@@ -11,7 +11,7 @@ object DilMapper {
     new DefineItLyGame(
       Option(GameMapper.toDto(g.game)),
       g.rounds.map(toDto(_, g)).toList.toOpt,
-      GameMapper.toDto(g.points, g.game).toList.toOpt()
+      GameMapper.toDto(g.points, g.game).toList.sortBy(BigDecimal(0) - _.points.map(_.map(_.amount.getOrElse(BigDecimal(0))).sum).getOrElse(BigDecimal(0))).toOpt()
     )
   }
 

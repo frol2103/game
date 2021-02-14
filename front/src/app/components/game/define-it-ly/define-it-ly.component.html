@@ -1,6 +1,16 @@
 <wait-for [condition]="game !== undefined" spinner-class="fa-2x">
+
+    <h2>{{ "leaderboard" | translate}}</h2>
+    <div *ngIf="gameWithHistory">
+        <ul>
+            <li *ngFor="let p of gameWithHistory.points">
+                <b>{{p.points[0].amount}} {{"points" | translate}}</b> : {{p.user.name}}
+            </li>
+        </ul>
+    </div>
+
     <div class="m-2" *ngIf="!currentRound && !questionRound">
-        {{ 'dil_wait_first_question_instructions' | translate }}
+        <b>{{ 'dil_wait_first_question_instructions' | translate }}</b>
     </div>
 
     <div *ngIf="currentRound && currentRoundFinished()" >
@@ -75,5 +85,10 @@
                 </div>
             </form>
         </panel>
+    </div>
+
+    <h2 (click)="showHistory = !showHistory">{{ "history" | translate}}</h2>
+    <div *ngIf="gameWithHistory && showHistory">
+        <dil-finished-round *ngFor="let r of finishedRounds(gameWithHistory)" [game]="gameWithHistory" [round]="r"></dil-finished-round>
     </div>
 </wait-for>

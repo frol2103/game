@@ -28,11 +28,14 @@ export class DefineItLyComponent implements OnInit, OnDestroy {
   ) { }
 
   game : DefineItLyGame
+  gameWithHistory: DefineItLyGame
+
   currentRound: DefineItLyRound
   questionRound: DefineItLyRound
   refresh: boolean = true
   refreshSub : Subscription
   input : string =""
+  showHistory: boolean = true
 
   ngOnInit(): void {
     this.refreshSub = timer(0, 2000).pipe(
@@ -112,5 +115,15 @@ export class DefineItLyComponent implements OnInit, OnDestroy {
     this.currentRound = this.game.rounds.filter(r => r.status !== DefineItLyRound.StatusEnum.WaitQuestion).slice(-1)[0]
     this.questionRound = this.game.rounds.filter(r => r.status === DefineItLyRound.StatusEnum.WaitQuestion
         && this.isMyRound(r)).slice(-1)[0]
+
+    const lastFinishedRoundInHistory =(this.gameWithHistory)?this.gameWithHistory.rounds.filter(r => r.status !== DefineItLyRound.StatusEnum.Finished).slice(-1)[0]:undefined
+    const lastFinishedRoundInGame =this.game.rounds.filter(r => r.status !== DefineItLyRound.StatusEnum.Finished).slice(-1)[0]
+    if(lastFinishedRoundInGame && (!lastFinishedRoundInHistory || lastFinishedRoundInHistory.roundId !== lastFinishedRoundInGame.roundId)){
+      this.dilService.getGame(this.roomService.game.description.uuid,true).toPromise().then(v => this.gameWithHistory = v)
+    }
+  }
+
+  finishedRounds(g: DefineItLyGame) {
+    return g.rounds.filter(v => v.status === DefineItLyRound.StatusEnum.Finished)
   }
 }

@@ -57,6 +57,16 @@ export class LabelsService {
     'lit_finished_title': "Game finished",
     'lit_finished_title_description': "Here is your game summary : ",
     'lit_finished_of': "The story of : ",
+   'dil_write_question_title': "Write your question",
+    'dil_question_instructions': "It's your turn to write a question",
+    'dil_wait_first_question_instructions': "Waiting for the first question",
+    'dil_send_question_button':"Send",
+    'dil_response_instructions':"Enter your response to this question",
+    'dil_wait_for_responses_instructions': "Wait for other players to respond",
+    'dil_chose_response_instructions': "Chose your response",
+    'points': "point(s)",
+    'history': "history",
+    'leaderboard':"leaderboard",
   }
 
   public translate(key: string) : string {

@@ -6,7 +6,7 @@ import be.frol.game.api.model.StringWrapper
 /**
   * Provides a default implementation for [[DefineitlyApi]].
   */
-@javax.annotation.Generated(value = Array("org.openapitools.codegen.languages.ScalaPlayFrameworkServerCodegen"), date = "2021-02-13T21:54:18.160Z[Etc/UTC]")
+@javax.annotation.Generated(value = Array("org.openapitools.codegen.languages.ScalaPlayFrameworkServerCodegen"), date = "2021-02-14T13:37:56.361Z[Etc/UTC]")
 class DefineitlyApiImpl extends DefineitlyApi {
   /**
     * @inheritdoc
@@ -38,7 +38,7 @@ class DefineitlyApiImpl extends DefineitlyApi {
   /**
     * @inheritdoc
     */
-  override def getGame(uuid: String): DefineItLyGame = {
+  override def getGame(uuid: String, withHistory: Option[Boolean]): DefineItLyGame = {
     // TODO: Implement better logic
 
     DefineItLyGame(None, None, None)

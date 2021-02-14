@@ -52,7 +52,7 @@ class DefineitlyApiController @Inject()(
   }
 
   def getGame(uuid: String) = run { implicit request =>
-    db.run(getCurrentGameDto(uuid))
+    db.run(getCurrentGameDto(uuid, withHistory=request.getQueryString("withHistory").map(_.toBoolean).getOrElse(false)))
   }
 
   private def updateGame[T](uuid: String)(f: (DilRichGame, UserRow, Request[T]) => DBIO[_])(implicit r:Reads[T]) =
@@ -66,19 +66,24 @@ class DefineitlyApiController @Inject()(
       )
     }
 
-  private def getCurrentGameDto(uuid: String)(implicit request: Request[_]) = {
-    getCurrentGameInfo(uuid).map(toDto)
+  private def getCurrentGameDto(uuid: String, withHistory:Boolean = false)(implicit request: Request[_]) = {
+    getCurrentGameInfo(uuid, withHistory).map(toDto)
   }
 
-  private def getCurrentGameInfo(uuid: String)(implicit request: Request[_]): DBIO[DilRichGame] = {
+  private def getCurrentGameInfo(uuid: String, withHistory:Boolean=false)(implicit request: Request[_]): DBIO[DilRichGame] = {
+    def roundRequest(v: Tables.GameRow) = {
+      if(withHistory) DilRound.filter(_.fkGameId === v.id)
+      else DilRound.filter(_.fkGameId === v.id).filter(
+        (DilRound.filter(_.fkGameId === v.id).map(_.id).max === _.id)
+      )
+    }
+
     currentUser.flatMap { u =>
       Game.filter(_.uuid === uuid).result.head
         .flatMap {
           v =>
             UserInGame.filter(_.fkGameId === v.id).join(User).on(_.fkUserId === _.id).result
-              .zipWith(DilRound.filter(_.fkGameId === v.id).filter(
-                DilRound.filter(_.fkGameId === v.id).map(_.id).max === _.id
-              ).result)(_ -> _)
+              .zipWith(roundRequest(v).result)(_ -> _)
               .zipWith(DilResponse.filter(_.fkGameId === v.id).result)(_ -> _)
               .zipWith(DilChoice.filter(_.fkGameId === v.id).result)(_ -> _)
               .map(v -> _)

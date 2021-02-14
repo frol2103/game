@@ -7,7 +7,7 @@ import play.api.mvc._
 import be.frol.game.api.model.DefineItLyGame
 import be.frol.game.api.model.StringWrapper
 
-@javax.annotation.Generated(value = Array("org.openapitools.codegen.languages.ScalaPlayFrameworkServerCodegen"), date = "2021-02-13T21:54:18.160Z[Etc/UTC]")
+@javax.annotation.Generated(value = Array("org.openapitools.codegen.languages.ScalaPlayFrameworkServerCodegen"), date = "2021-02-14T13:37:56.361Z[Etc/UTC]")
 @Singleton
 class DefineitlyApiController @Inject()(cc: ControllerComponents, api: DefineitlyApi) extends AbstractController(cc) {
   /**
@@ -59,11 +59,13 @@ class DefineitlyApiController @Inject()(cc: ControllerComponents, api: Defineitl
   }
 
   /**
-    * GET /api/game/DefineItLy/:uuid
+    * GET /api/game/DefineItLy/:uuid?withHistory=[value]
     */
   def getGame(uuid: String): Action[AnyContent] = Action { request =>
     def executeApi(): DefineItLyGame = {
-      api.getGame(uuid)
+      val withHistory = request.getQueryString("withHistory")
+        .map(value => value.toBoolean)
+      api.getGame(uuid, withHistory)
     }
 
     val result = executeApi()

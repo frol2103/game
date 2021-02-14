@@ -18,7 +18,9 @@ case class DilRichGame(game: RichGame, playedRounds: Seq[DilRichRound]) extends 
 
   lazy val lastPlayedRound = playedRounds.maxByOption(_.id)
 
-  def points: Seq[Score] = Nil
+  lazy val points: Seq[Score] = {
+    rounds.flatMap(_.responses).flatMap(_.points).groupBy(_.userUuid).mapValues(_.reduce(_ + _)).values.toSeq
+  }
 }
 
 case class DilRichRound(game: RichGame, round: Option[DilRoundRow], responsesRows: Seq[DilResponseRow], choices: Seq[DilChoiceRow], newRoundUser: Option[Long] = None) {
