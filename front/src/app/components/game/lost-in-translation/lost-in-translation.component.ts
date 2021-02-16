@@ -47,9 +47,10 @@ export class LostInTranslationComponent implements OnInit, AfterViewInit, OnDest
 
   ngOnInit(): void {
     this.lostInTranslationService.init()
-    navigator.mediaDevices.getUserMedia({ video: {facingMode: "environment"} })
-        .then(media => this.deviceHasCamera = media != null)
-        .finally(() => this.deviceHasCameraReady = true)
+    this.text = ''
+
+    this.deviceHasCamera = navigator.mediaDevices != null
+    this.deviceHasCameraReady = true
   }
 
   ngOnDestroy(): void {
@@ -58,6 +59,7 @@ export class LostInTranslationComponent implements OnInit, AfterViewInit, OnDest
 
   sendText() {
     this.lostInTranslationService.sendText(this.text)
+    this.text = ''
   }
 
   switchInputType() {
