@@ -6,7 +6,8 @@ import {
   GameService,
   LostInTranslationGame,
   LostInTranslationRound,
-  LostInTranslationService
+  LostInTranslationService, 
+  LostInTranslationStory,
 } from "../../generated/api";
 import {Observable, timer} from "rxjs";
 import {RoomService} from "./room.service";
@@ -78,31 +79,31 @@ export class LitService {
   private priority(round: LostInTranslationRound) {
     return - this.findStory(round)!.rounds!.filter(r => r.submissionDate).length
   }
+  private storyPiority(story: LostInTranslationStory) {
+    return - story.rounds!.length
+  }
 
   private findStory(round: LostInTranslationRound) {
     return this.game!.stories!.find(s => s.storyId == round.storyId);
   }
 
-  private getRoundsToPlay() {
-    let stories = this.game?.stories ? this.game?.stories : []
+  getStoryToPlay() : LostInTranslationStory | undefined {
+    const candidates =  this.game.stories.filter(s => {
+      const lastRound = s.rounds.slice(-1)[0]
+      return lastRound.roundUser.uuid === this.login.user.uuid && !lastRound.submissionDate
+    }).sort((s1,s2) => this.storyPiority(s2) - this.storyPiority(s1))
+    return (candidates.length > 0)?candidates[0]:undefined;
 
-    return stories.flatMap(s => s.rounds!
-        .filter(r => r.roundUser?.uuid == this.login.user?.uuid && !r.submissionDate)
-    ).sort((r1, r2) => this.priority(r2) - this.priority(r1));
   }
 
   getCurrentRound() : LostInTranslationRound | null {
-    let roundsToPlay = this.getRoundsToPlay();
-    return roundsToPlay && roundsToPlay.length ? roundsToPlay[0] : null
+    const stoplay = this.getStoryToPlay();
+    return (stoplay)?stoplay.rounds.slice(-1)[0]:undefined;
   }
 
   getPreviousRound() : LostInTranslationRound {
-    let current = this.getCurrentRound()!
-
-    //todo: this is the only way currrently but it won't wokr if the same user can play multiple times ina  story!!
-    let rounds = this.findStory(current)!.rounds!;
-    let currentRoundIndex = rounds.findIndex(r => r.roundUser?.uuid == current.roundUser?.uuid)!
-    return rounds[Math.min(currentRoundIndex - 1, 0)]
+    const story = this.getStoryToPlay();
+    return (story.rounds.length>1)?story.rounds.slice(-2)[0]:undefined;
   }
 
   sendText(text: string) : Promise<LostInTranslationGame> {

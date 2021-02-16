@@ -1,0 +1,94 @@
+<wait-for [condition]="game !== undefined" spinner-class="fa-2x">
+
+    <h2>{{ "leaderboard" | translate}}</h2>
+    <div *ngIf="gameWithHistory">
+        <ul>
+            <li *ngFor="let p of gameWithHistory.points">
+                <b>{{p.points[0].amount}} {{"points" | translate}}</b> : {{p.user.name}}
+            </li>
+        </ul>
+    </div>
+
+    <div class="m-2" *ngIf="!currentRound && !questionRound">
+        <b>{{ 'dil_wait_first_question_instructions' | translate }}</b>
+    </div>
+
+    <div *ngIf="currentRound && currentRoundFinished()" >
+        <dil-finished-round [game]="game" [round]="currentRound"></dil-finished-round>
+    </div>
+
+    <div *ngIf="currentRound && !currentRoundFinished()" >
+        <panel title-raw="{{currentRound.question}} ({{currentRound.quedtionByUser.name}})" >
+            <div *ngIf="!shouldEnterResponse() && waitResponses()">
+                {{ 'dil_wait_for_responses_instructions' | translate }}
+            </div>
+            <div *ngIf="shouldEnterResponse()">
+                <div class="m-2">
+                    {{ 'dil_response_instructions' | translate }}
+                </div>
+
+                <form (ngSubmit)="sendResponse()">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="text"
+                                   required
+                                   [(ngModel)]="input" name="text">
+                            <div class="input-group-append">
+                                <button type="submit" class="btn btn-primary ">
+                                    <i class="fas fa-check"></i>
+                                    {{ 'dil_send_question_button' | translate }}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div *ngIf="showResponses()">
+                <div class="m-2" *ngIf="allowChoice()">
+                    {{ 'dil_chose_response_instructions' | translate }}
+                </div>
+
+                <div class="m-2" *ngIf="!allowChoice()">
+                    {{ 'dil_wait_choice_response_instructions' | translate }}
+                </div>
+
+                <ul>
+                    <li *ngFor="let r of currentRound.responses">
+                        <input [disabled]="!enableChoice()" [ngModel]="r === currentChoice()" *ngIf="allowChoice() && myResponse() !== r" type="checkbox" (click)="chose(r)"> {{r.response}}
+                    </li>
+                </ul>
+            </div>
+        </panel>
+    </div>
+
+    <div *ngIf="questionRound">
+        <panel title="dil_write_question_title">
+            <div class="m-2">
+                {{ 'dil_question_instructions' | translate }}
+            </div>
+
+            <form (ngSubmit)="sendQuestion()">
+                <div class="form-group">
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="text"
+                               required
+                               [(ngModel)]="input" name="text">
+                        <div class="input-group-append">
+                            <button type="submit" class="btn btn-primary ">
+                                <i class="fas fa-check"></i>
+                                {{ 'dil_send_question_button' | translate }}
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </form>
+        </panel>
+    </div>
+
+    <h2 (click)="showHistory = !showHistory">{{ "history" | translate}}</h2>
+    <div *ngIf="gameWithHistory && showHistory">
+        <dil-finished-round *ngFor="let r of finishedRounds(gameWithHistory)" [game]="gameWithHistory" [round]="r"></dil-finished-round>
+    </div>
+</wait-for>

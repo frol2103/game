@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {finalize} from "rxjs/operators";
 import {Game, GameDescription, GameService} from "../../generated/api";
 import {Observable, timer} from "rxjs";
+import GameTypeEnum = GameDescription.GameTypeEnum;
 
 
 @Injectable({
@@ -16,9 +17,9 @@ export class RoomService {
     timer(0, 1500).subscribe(time => this.fetchGameInfo())
   }
 
-  public createLostInTranslationGame() : Promise<Game> {
+  public createGame(gameType:GameTypeEnum) : Promise<Game> {
     console.log("Creating new game")
-    let gamePromise = this.backendGameService.createAGame(new NewGame(GameDescription.GameTypeEnum.LostInTranslation))
+    let gamePromise = this.backendGameService.createAGame(new NewGame(gameType))
         .toPromise();
     gamePromise.then(game => this.gameUpdated(game))
     return gamePromise
