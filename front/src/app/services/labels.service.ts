@@ -49,6 +49,7 @@ export class LabelsService {
     'account_linked_to_facebook_label': 'Linked to facebook',
     'lit_text_round_title': "Start the game",
     'lit_first_text_round_instructions': "Write a few words or a short sentence that the next player will have to draw.",
+    'lit_text_round_instructions': "Describe the picture using a few words or a short sentence.",
     'lit_text_round_send_button': "Send",
     'lit_waiting_title': "Waiting for other players...",
     'lit_waiting_for_other_player_description': "You have completed your tasks before the other players. Wait for them to finish the round to go to the next round.",

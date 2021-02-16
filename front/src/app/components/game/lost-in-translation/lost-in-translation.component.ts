@@ -13,6 +13,7 @@ import {LitService} from "../../../services/lit.service";
 import {GameDescription, LostInTranslationGame} from "../../../../generated/api";
 import {DrawingComponent} from "./drawing/drawing.component";
 import {CameraSnapshotComponent} from "./camera-snapshot/camera-snapshot.component";
+import {LoginService} from "../../../services/login.service";
 
 
 
@@ -22,7 +23,7 @@ import {CameraSnapshotComponent} from "./camera-snapshot/camera-snapshot.compone
   styleUrls: ['./lost-in-translation.component.css']
 })
 export class LostInTranslationComponent implements OnInit, AfterViewInit, OnDestroy {
-  constructor(public lostInTranslationService: LitService) { }
+  constructor(public lostInTranslationService: LitService, public userService : LoginService) { }
   text: string = '';
 
   inputType : LostInTranslationInputType = LostInTranslationInputType.Draw
@@ -46,10 +47,16 @@ export class LostInTranslationComponent implements OnInit, AfterViewInit, OnDest
   }
 
   ngOnInit(): void {
+    if(this.userService.userPrefs['lostInTranslationInputType']) {
+      this.inputType = this.userService.userPrefs['lostInTranslationInputType']
+    }
+
+
     this.lostInTranslationService.init()
-    navigator.mediaDevices.getUserMedia({ video: {facingMode: "environment"} })
-        .then(media => this.deviceHasCamera = media != null)
-        .finally(() => this.deviceHasCameraReady = true)
+    this.text = ''
+
+    this.deviceHasCamera = navigator.mediaDevices != null
+    this.deviceHasCameraReady = true
   }
 
   ngOnDestroy(): void {
@@ -58,6 +65,7 @@ export class LostInTranslationComponent implements OnInit, AfterViewInit, OnDest
 
   sendText() {
     this.lostInTranslationService.sendText(this.text)
+    this.text = ''
   }
 
   switchInputType() {
@@ -66,6 +74,7 @@ export class LostInTranslationComponent implements OnInit, AfterViewInit, OnDest
     } else {
       this.inputType = LostInTranslationInputType.Draw
     }
+    this.userService.userPrefs['lostInTranslationInputType'] = this.inputType
   }
 
   sendCameraCapture() {

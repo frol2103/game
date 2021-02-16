@@ -11,6 +11,7 @@ import StatusResponse = facebook.StatusResponse;
 export class LoginService {
   public ready : boolean = false
   public user : User|null = null
+  public userPrefs : any = {}
 
   public constructor(private backendAuthService : AuthService) {
     timer(0, 30000).subscribe(time => this.fetchUser())

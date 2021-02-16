@@ -1,6 +1,6 @@
 <div class="camera-input mb-1" [ngClass]="{'d-none' : error}">
     <div class="video-preview-container" [ngStyle]="{width: viewSize+'px', height: viewSize+'px' }">
-        <video #video class="video-preview" [width]="videoWidth" [height]="videoHeight" autoplay></video>
+        <video #video class="video-preview" [width]="videoWidth" [height]="videoHeight" [ngStyle]="{'margin-left': videoOffsetLeft+'px', 'margin-top': videoOffsetTop+'px' }" autoplay></video>
     </div>
     <canvas #canvas class="d-none" [width]="inputMin" [height]="inputMin"></canvas>
 </div>

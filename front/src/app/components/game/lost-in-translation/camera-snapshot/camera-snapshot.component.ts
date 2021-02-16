@@ -22,9 +22,12 @@ export class CameraSnapshotComponent implements OnInit {
     inputMin: number = 0
 
     videoWidth: number = 0
+    videoOffsetLeft: number = 0
+    videoOffsetTop: number = 0
     videoHeight: number = 0
 
     viewSize: number = 0
+    inputToViewRatio: number = 0
     error: boolean = false
 
 
@@ -43,6 +46,8 @@ export class CameraSnapshotComponent implements OnInit {
     private setVideoPreviewSize() {
         let inputRatio = this.inputWidth / this.inputHeight
 
+        console.log("input ratio : "+inputRatio+" ("+this.inputWidth+"x"+this.inputHeight+")")
+
         let video = this.video.nativeElement;
         let videoView = video.parentElement;
         let videoViewContainer = videoView.parentElement;
@@ -50,13 +55,18 @@ export class CameraSnapshotComponent implements OnInit {
         let containerWidth = videoViewContainer.getBoundingClientRect().width
 
         this.viewSize = containerWidth
+        this.inputToViewRatio = this.viewSize / this.inputMin
 
         if (inputRatio > 1) {
             this.videoHeight = this.viewSize
             this.videoWidth = this.viewSize * inputRatio
+            this.videoOffsetLeft = (this.viewSize - this.videoWidth)/2
+            this.videoOffsetTop = 0
         } else {
-            this.videoWidth = this.viewSize
             this.videoHeight = this.viewSize / inputRatio
+            this.videoWidth = this.viewSize
+            this.videoOffsetLeft = 0
+            this.videoOffsetTop = (this.viewSize - this.videoHeight)/2
         }
 
     }
@@ -91,7 +101,11 @@ export class CameraSnapshotComponent implements OnInit {
     captureAsBlob(): Promise<Blob> {
         let canvas = this.canvas.nativeElement;
         canvas.getContext("2d")
-            .drawImage(this.video.nativeElement, 0, 0, this.inputWidth, this.inputHeight);
+            .drawImage(this.video.nativeElement,
+                (this.inputMin - this.inputWidth)/2,
+                (this.inputMin - this.inputHeight)/2,
+                this.inputWidth,
+                this.inputHeight);
         return new Promise<Blob>((resolve, reject) => canvas.toBlob((b: Blob) => b ? resolve(b!) : reject()))
     }
 
