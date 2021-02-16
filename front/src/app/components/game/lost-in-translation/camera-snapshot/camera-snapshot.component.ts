@@ -27,6 +27,7 @@ export class CameraSnapshotComponent implements OnInit {
     videoHeight: number = 0
 
     viewSize: number = 0
+    inputToViewRatio: number = 0
     error: boolean = false
 
 
@@ -54,6 +55,7 @@ export class CameraSnapshotComponent implements OnInit {
         let containerWidth = videoViewContainer.getBoundingClientRect().width
 
         this.viewSize = containerWidth
+        this.inputToViewRatio = this.viewSize / this.inputMin
 
         if (inputRatio > 1) {
             this.videoHeight = this.viewSize
@@ -99,7 +101,11 @@ export class CameraSnapshotComponent implements OnInit {
     captureAsBlob(): Promise<Blob> {
         let canvas = this.canvas.nativeElement;
         canvas.getContext("2d")
-            .drawImage(this.video.nativeElement, 0, 0, this.inputWidth, this.inputHeight);
+            .drawImage(this.video.nativeElement,
+                (this.inputMin - this.inputWidth)/2,
+                (this.inputMin - this.inputHeight)/2,
+                this.inputWidth,
+                this.inputHeight);
         return new Promise<Blob>((resolve, reject) => canvas.toBlob((b: Blob) => b ? resolve(b!) : reject()))
     }
 
