@@ -1,4 +1,4 @@
-import {Component, ElementRef, HostListener, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {LitImageProvider} from "../lost-in-translation.component";
 
@@ -7,7 +7,7 @@ import {LitImageProvider} from "../lost-in-translation.component";
     templateUrl: './camera-snapshot.component.html',
     styleUrls: ['./camera-snapshot.component.css']
 })
-export class CameraSnapshotComponent implements OnInit, LitImageProvider {
+export class CameraSnapshotComponent implements OnInit, OnDestroy, LitImageProvider {
 
     @ViewChild("video")
     public video: ElementRef<HTMLVideoElement>;
@@ -16,6 +16,7 @@ export class CameraSnapshotComponent implements OnInit, LitImageProvider {
     public canvas: ElementRef<HTMLCanvasElement>;
 
     public captures: Array<any>;
+
     stream: MediaStream
 
     inputWidth: number = 0
@@ -30,10 +31,17 @@ export class CameraSnapshotComponent implements OnInit, LitImageProvider {
     viewSize: number = 0
     inputToViewRatio: number = 0
     error: boolean = false
+    ready: boolean = false
 
 
     public constructor() {
         this.captures = [];
+    }
+
+    ngOnDestroy(): void {
+        if(this.stream) {
+            this.stream.getTracks().forEach(track => track.stop())
+        }
     }
 
     public ngOnInit() {
@@ -96,6 +104,8 @@ export class CameraSnapshotComponent implements OnInit, LitImageProvider {
                     console.log('Could not find video input : ' + error)
                     this.error = true
                 })
+        } else {
+            this.error = true
         }
     }
 

@@ -28,23 +28,15 @@ export class LostInTranslationComponent implements OnInit, AfterViewInit, OnDest
 
   inputType : LostInTranslationInputType = LostInTranslationInputType.Draw
 
-  @ViewChildren(DrawingComponent) childrenDrawings: QueryList<DrawingComponent> = new QueryList<DrawingComponent>()
-
+  @ViewChild('litdrawing') drawing: DrawingComponent
   @ViewChild('litcamera') camera: CameraSnapshotComponent
   @ViewChild('litupload') uploader: ImageUploadComponent
 
-  drawing: DrawingComponent | null = null
   deviceHasCamera: boolean = false
   deviceHasCameraReady: boolean = false
 
 
   ngAfterViewInit(): void {
-    this.childrenDrawings.changes.subscribe((comps: QueryList<DrawingComponent>) =>
-    {
-      console.log("found child component")
-      this.drawing = comps.last
-      console.log("found child component --> "+this.drawing)
-    });
   }
 
   ngOnInit(): void {
@@ -94,7 +86,7 @@ export class LostInTranslationComponent implements OnInit, AfterViewInit, OnDest
     } else if(this.inputType == LostInTranslationInputType.Upload) {
       return this.uploader
     } else {
-      return this.childrenDrawings.last
+      return this.drawing
     }
   }
 
