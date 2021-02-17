@@ -18,7 +18,10 @@
               </span>
 
               <span>
-                <button type="button" style="width:100%" (click)="openGame(game.uuid!)" class="btn btn-primary" [title]="game.uuid!">
+                <button type="button" style="width:100%"
+                        (click)="openGame(game.uuid!)"
+                        class="btn {{ game.status == 'finished' ? 'btn-secondary' : 'btn-primary' }}"
+                        [title]="game.uuid!">
                     <span *ngIf="game.status != 'finished'">
                       {{ 'open_game_button' | translate }}
                     </span>
@@ -37,14 +40,14 @@
         <div *ngIf="games.length > pageSize" class="d-flex w-100 justify-content-between">
             <span>
                 <button *ngIf="pageStart >= pageSize"
-                        class="btn btn-primary m-2"
+                        class="btn btn-secondary m-2"
                         type="button" (click)="pageStart = pageStart-pageSize">
                      <i class="fas fa-angle-double-left"></i>
                 </button>
             </span>
             <span>
                 <button *ngIf="pageStart + pageSize < games.length"
-                        class="btn btn-primary m-2"
+                        class="btn btn-secondary m-2"
                         type="button" (click)="pageStart = pageStart+pageSize">
                   <i class="fas fa-angle-double-right"></i>
                </button>
