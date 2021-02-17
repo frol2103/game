@@ -49,10 +49,9 @@
 
             <div>
                 <ul class="nav nav-tabs">
-                    <li class="nav-item" *ngFor="let inputTypeCandidate of inputTypes()!">
+                    <li class="nav-item mr-1" *ngFor="let inputTypeCandidate of inputTypes()!">
                         <a [routerLink]=""
-                           class="nav-link"
-                           [ngClass]="{ 'active' : true }"
+                           class="nav-link {{ inputTypeCandidate == inputType ? 'active' : 'inactive' }}"
                            (click)="setInputType(inputTypeCandidate)">
                             {{ 'lit_input_type_'+inputTypeCandidate | translate }}
                         </a>

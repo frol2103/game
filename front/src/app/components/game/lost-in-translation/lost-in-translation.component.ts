@@ -111,6 +111,7 @@ export class LostInTranslationComponent implements OnInit, AfterViewInit, OnDest
 
 export interface LitImageProvider {
   captureDrawingAsBlob(): Promise<Blob>
+  confirmDrawingSent() : void
 }
 
 enum LostInTranslationInputType {

@@ -11,6 +11,7 @@ import {
 import {fromEvent, Observable, throwError} from "rxjs";
 import {pairwise, switchMap, takeUntil} from "rxjs/operators";
 import {LitImageProvider} from "../lost-in-translation.component";
+import {LitService} from "../../../../services/lit.service";
 
 const savedLitDrawingKey = 'litDrawing';
 
@@ -55,7 +56,7 @@ export class DrawingComponent implements  AfterViewInit,AfterViewChecked, LitIma
   sizePickerDropdownOpen: boolean = false
   toolsDropdownOpen: boolean = false
 
-  constructor() {
+  constructor(private lostInTranslationService: LitService) {
 
   }
 
@@ -81,9 +82,8 @@ export class DrawingComponent implements  AfterViewInit,AfterViewChecked, LitIma
     return this.canvas.nativeElement!;
   }
 
-  loadDrawing() {
-    let stored = localStorage.getItem(savedLitDrawingKey)
-    console.log('Found drawing stored : '+stored)
+  loadSavedDrawing() {
+    let stored = localStorage.getItem(this.localStorageKey())
     if(stored && stored.length) {
       let storedObjects = JSON.parse(stored)
       this.activeDrawingElements = storedObjects.flatMap(o => {
@@ -98,17 +98,20 @@ export class DrawingComponent implements  AfterViewInit,AfterViewChecked, LitIma
         }
       })
       this.removedDrawingElements = []
-      console.log('Restored previous strokes : '+this.activeDrawingElements)
       this.redraw()
     }
   }
 
   saveDrawing() {
-    localStorage.setItem(savedLitDrawingKey, JSON.stringify(this.activeDrawingElements))
+    localStorage.setItem(this.localStorageKey(), JSON.stringify(this.activeDrawingElements))
   }
 
-  clearSavedDrawing() {
-    localStorage.setItem(savedLitDrawingKey, '')
+  private localStorageKey() {
+    return savedLitDrawingKey+'-'+this.lostInTranslationService.game.game.description.uuid!;
+  }
+
+  public clearSavedDrawing() {
+    localStorage.setItem(this.localStorageKey(), '')
   }
 
   ngAfterViewInit(): void {
@@ -118,7 +121,7 @@ export class DrawingComponent implements  AfterViewInit,AfterViewChecked, LitIma
     this.captureStrokes('touchstart', 'touchmove', 'touchend', 'touchcancel')
 
     setTimeout(() => this.setCanvasSizeForWindowSize(), 100)
-    setTimeout(() => this.loadDrawing(), 100)
+    setTimeout(() => this.loadSavedDrawing(), 100)
   }
 
   ngAfterViewChecked(): void {
@@ -236,6 +239,10 @@ export class DrawingComponent implements  AfterViewInit,AfterViewChecked, LitIma
 
   private finishedElement(event: Event) {
     this.saveDrawing()
+  }
+
+  confirmDrawingSent(): void {
+    this.clearSavedDrawing()
   }
 }
 

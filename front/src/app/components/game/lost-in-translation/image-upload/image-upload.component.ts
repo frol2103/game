@@ -28,4 +28,7 @@ export class ImageUploadComponent implements OnInit, LitImageProvider {
       }
     })
   }
+
+  confirmDrawingSent(): void {
+  }
 }

@@ -110,5 +110,8 @@ export class CameraSnapshotComponent implements OnInit, LitImageProvider {
         return new Promise<Blob>((resolve, reject) => canvas.toBlob((b: Blob) => b ? resolve(b!) : reject()))
     }
 
+    confirmDrawingSent(): void {
+    }
+
 
 }
