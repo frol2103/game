@@ -1,30 +1,44 @@
-# Game
+# Paper(less) games
 
-simple online game
+A web applications with some paper-based games to play with friends.
 
-```bash
-export PATH_TO_GAME=~/projects/game
+## Dev environment
 
-export UID
+#### Create aliases for the docker-compose 
 
-alias dcg="docker-compose -f $PATH_TO_GAME/dev-env/docker-compose.yml"
+- On linux :
 
-alias dbGame="docker-compose -f $PATH_TO_GAME/dev-env/docker-compose.yml exec db mysql -h localhost -uuser -ppass db"
+    ```bash
+    export PATH_TO_GAME=~/projects/game
+    
+    export UID
+    
+    alias dcg="docker-compose -f $PATH_TO_GAME/dev-env/docker-compose.yml"
+    
+    alias dbGame="docker-compose -f $PATH_TO_GAME/dev-env/docker-compose.yml exec db mysql -h localhost -uuser -ppass db"
+    
+    ```
 
-```
+- On windows, use powershell and execute this after replacing `PROJECT_ROOT` with the path where you cloned this repository (or you can add this to your powershell `$profile` file) : 
+    ```powershell 
+    Function dcg { $env:GAME_SBT_CACHE_VOLUME = 'sbt_cache'; docker-compose -f PROJECT_ROOT\dev-env\docker-compose.yml $args}
+    ```
 
-On windows (you can add this to your powershell `$profile` file): 
-```powershell 
-Function dcg { $env:GAME_SBT_CACHE_VOLUME = 'sbt_cache'; docker-compose -f C:\Users\coren\IdeaProjects\game\dev-env\docker-compose.yml $args}
-```
+#### Local environment basic commands
 
-generate api
-```bash
-dcg run --rm back "; project generated; openapiGenerate"; dcg run --rm back "; project generateAngularClient; openapiGenerate";
-```
+- start/restart the local environment : 
+    ```bash
+    dcg down; dcg up -d --build
+    ```
+    You can then open the frontend on http://localhost:4200
 
-generate tables
-```bash
-dcg run --rm back "genTables"
-```
+ - generate sources from the openapi specifications : 
+    ```bash
+    dcg run --rm back "; project generated; openapiGenerate"; dcg run --rm back "; project generateAngularClient; openapiGenerate";
+    ```
+
+- generate tables
+    ```bash
+    dcg run --rm back "genTables"
+    ```
 
