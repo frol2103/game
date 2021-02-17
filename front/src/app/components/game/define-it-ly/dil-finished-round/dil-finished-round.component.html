@@ -3,14 +3,16 @@
         <li class="list-group-item" *ngFor="let r of round.responses">
             <div class="d-flex w-100 justify-content-between">
                 <h5 class="mb-1">{{r.response}}</h5>
-                <span class="badge badge-pill {{ points(r) > 0 ? 'badge-success' : 'badge-danger'}}">
+                <span class="badge badge-pill pt-md-2 {{ points(r) > 0 ? 'badge-success' : 'badge-danger'}}">
                     {{ points(r) }} {{'points' | translate}}
                 </span>
             </div>
             <div class="d-flex w-100 justify-content-between">
                 <p class="mb-1 text-muted">{{r.responseByUser.user.name}}</p>
                 <span class="">
-                    <span class="badge badge-secondary" *ngFor="let u of r.chosenBy">{{u.name}}</span>
+                    <span class="badge badge-secondary" *ngFor="let u of r.chosenBy">
+                        {{u.name}}
+                    </span>
                 </span>
             </div>
         </li>

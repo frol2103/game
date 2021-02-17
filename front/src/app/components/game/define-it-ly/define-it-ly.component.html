@@ -53,6 +53,7 @@
                                                 [disabled]="!enableChoice()"
                                                 (click)="chose(r)"
                                                 class="btn btn-primary">
+                                            <i class="fas fa-thumbs-up"></i>
                                             {{ 'dil_vote' | translate }}
                                         </button>
                                     </div>
@@ -101,8 +102,13 @@
                 <panel title="leaderboard" >
                     <ul class="list-group">
                         <li class="list-group-item" *ngFor="let p of gameWithHistory.points">
-                            {{p.user.name}}
-                            <span class="badge badge-pill badge-success">{{p.points[0].amount}} {{'points' | translate}}</span>
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1">{{p.user.name}}</h5>
+                                <span class="badge badge-info pt-md-2">
+                                    {{p.points[0].amount}}
+                                    {{'points' | translate}}
+                                </span>
+                            </div>
                         </li>
                     </ul>
                 </panel>
