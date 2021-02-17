@@ -1,12 +1,13 @@
-import {Component, ElementRef, HostListener, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {CommonModule} from '@angular/common';
+import {LitImageProvider} from "../lost-in-translation.component";
 
 @Component({
     selector: 'camera-snapshot',
     templateUrl: './camera-snapshot.component.html',
     styleUrls: ['./camera-snapshot.component.css']
 })
-export class CameraSnapshotComponent implements OnInit {
+export class CameraSnapshotComponent implements OnInit, OnDestroy, LitImageProvider {
 
     @ViewChild("video")
     public video: ElementRef<HTMLVideoElement>;
@@ -15,6 +16,7 @@ export class CameraSnapshotComponent implements OnInit {
     public canvas: ElementRef<HTMLCanvasElement>;
 
     public captures: Array<any>;
+
     stream: MediaStream
 
     inputWidth: number = 0
@@ -29,10 +31,22 @@ export class CameraSnapshotComponent implements OnInit {
     viewSize: number = 0
     inputToViewRatio: number = 0
     error: boolean = false
+    active: boolean = true
 
 
     public constructor() {
         this.captures = [];
+    }
+
+    ngOnDestroy(): void {
+        this.stopStreams();
+    }
+
+    private stopStreams() {
+        if (this.stream) {
+            this.stream.getTracks().forEach(track => track.stop())
+        }
+        this.active = false
     }
 
     public ngOnInit() {
@@ -95,10 +109,12 @@ export class CameraSnapshotComponent implements OnInit {
                     console.log('Could not find video input : ' + error)
                     this.error = true
                 })
+        } else {
+            this.error = true
         }
     }
 
-    captureAsBlob(): Promise<Blob> {
+    captureDrawingAsBlob(): Promise<Blob> {
         let canvas = this.canvas.nativeElement;
         canvas.getContext("2d")
             .drawImage(this.video.nativeElement,
@@ -108,5 +124,14 @@ export class CameraSnapshotComponent implements OnInit {
                 this.inputHeight);
         return new Promise<Blob>((resolve, reject) => canvas.toBlob((b: Blob) => b ? resolve(b!) : reject()))
     }
+
+    confirmDrawingSent(): void {
+        this.stopStreams()
+    }
+
+    isDrawingReady(): boolean {
+        return this.stream && this.stream.getVideoTracks().length > 0
+    }
+
 
 }

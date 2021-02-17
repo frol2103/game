@@ -68,8 +68,13 @@ export class LabelsService {
     'dil_wait_for_responses_instructions': "Wait for other players to respond",
     'dil_chose_response_instructions': "Chose your response",
     'points': "point(s)",
-    'history': "history",
-    'leaderboard':"leaderboard",
+    'history': "History",
+    'leaderboard':"Leaderboard",
+    'dil_wait_for_other_instructions':"Another player is currently writing the next question.",
+    'lit_input_type_Draw':"Draw on screen",
+    'lit_input_type_Camera':"Take a picture",
+    'lit_input_type_Upload':"Upload a file",
+    'lit_file_upload_label':"Upload an image file with your drawing",
   }
 
   public translate(key: string) : string {

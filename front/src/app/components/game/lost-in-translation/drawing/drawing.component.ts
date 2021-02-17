@@ -10,15 +10,17 @@ import {
 } from '@angular/core';
 import {fromEvent, Observable, throwError} from "rxjs";
 import {pairwise, switchMap, takeUntil} from "rxjs/operators";
+import {LitImageProvider} from "../lost-in-translation.component";
+import {LitService} from "../../../../services/lit.service";
 
+const savedLitDrawingKey = 'litDrawing';
 
 @Component({
   selector: 'lit-drawing',
   templateUrl: './drawing.component.html',
   styleUrls: ['./drawing.component.css']
 })
-export class DrawingComponent implements  AfterViewInit,AfterViewChecked {
-  sketchpad: any
+export class DrawingComponent implements  AfterViewInit,AfterViewChecked, LitImageProvider {
   @ViewChild('drawingcanvas') canvas: ElementRef<HTMLCanvasElement> | undefined
   @ViewChild('drawingcanvasparent') canvasParent: ElementRef | undefined
   size = 600
@@ -54,7 +56,9 @@ export class DrawingComponent implements  AfterViewInit,AfterViewChecked {
   sizePickerDropdownOpen: boolean = false
   toolsDropdownOpen: boolean = false
 
-  constructor() { }
+  constructor(private lostInTranslationService: LitService) {
+
+  }
 
 
   @HostListener('window:resize', ['$event'])
@@ -78,11 +82,50 @@ export class DrawingComponent implements  AfterViewInit,AfterViewChecked {
     return this.canvas.nativeElement!;
   }
 
+  loadSavedDrawing() {
+    let stored = localStorage.getItem(this.localStorageKey())
+    if(stored && stored.length) {
+      let storedObjects = JSON.parse(stored)
+      this.activeDrawingElements = storedObjects.flatMap(o => {
+        if(o.type == 'stroke') {
+          let stroke = new DrawStroke()
+          stroke.segments = o.segments
+          stroke.style = new DrawStyle()
+          Object.assign(stroke.style, o.style)
+          return stroke
+        } else {
+          return []
+        }
+      })
+      this.removedDrawingElements = []
+      this.redraw()
+    }
+  }
+
+  isDrawingReady(): boolean {
+    return this.activeDrawingElements &&  this.activeDrawingElements.length > 0
+  }
+
+  saveDrawing() {
+    localStorage.setItem(this.localStorageKey(), JSON.stringify(this.activeDrawingElements))
+  }
+
+  private localStorageKey() {
+    return savedLitDrawingKey+'-'+this.lostInTranslationService.game.game.description.uuid!;
+  }
+
+  public clearSavedDrawing() {
+    localStorage.setItem(this.localStorageKey(), '')
+  }
+
   ngAfterViewInit(): void {
     this.availablePenSizes.sort((a: number, b: number) => a - b)
+
     this.captureStrokes('mousedown', 'mousemove', 'mouseup', 'mouseleave')
     this.captureStrokes('touchstart', 'touchmove', 'touchend', 'touchcancel')
+
     setTimeout(() => this.setCanvasSizeForWindowSize(), 100)
+    setTimeout(() => this.loadSavedDrawing(), 100)
   }
 
   ngAfterViewChecked(): void {
@@ -108,7 +151,7 @@ export class DrawingComponent implements  AfterViewInit,AfterViewChecked {
     }
   }
 
-  saveCanvasAsBlob() : Promise<Blob> {
+  captureDrawingAsBlob() : Promise<Blob> {
     return new Promise<Blob>((resolve, reject) => this.getCanvas().toBlob((b : Blob) => b ? resolve(b!) : reject()))
   }
 
@@ -125,6 +168,9 @@ export class DrawingComponent implements  AfterViewInit,AfterViewChecked {
             switchMap(event => this.fromEvent(moveEvent).pipe(takeUntil(this.fromEvent(stopEvent)), takeUntil(this.fromEvent(cancelEvent)), pairwise()))
         )
         .subscribe(stroke=> this.registerPointerMove(this.toCoordinates(stroke[0]), this.toCoordinates(stroke[1])))
+
+    this.fromEvent(stopEvent).subscribe(event => this.finishedElement(event))
+    this.fromEvent(cancelEvent).subscribe(event => this.finishedElement(event))
   }
 
   clear() {
@@ -194,6 +240,14 @@ export class DrawingComponent implements  AfterViewInit,AfterViewChecked {
     this.sizePickerDropdownOpen = false
     this.toolsDropdownOpen = false
   }
+
+  private finishedElement(event: Event) {
+    this.saveDrawing()
+  }
+
+  confirmDrawingSent(): void {
+    this.clearSavedDrawing()
+  }
 }
 
 class DrawStyle {
@@ -213,20 +267,18 @@ class DrawStyle {
   }
 }
 
-abstract class DrawElement {
-  constructor(public style : DrawStyle = new DrawStyle()) {
-  }
+interface DrawElement {
+  style : DrawStyle
+  drawOnCanvas(nativeElement: HTMLCanvasElement)
 
-  abstract drawOnCanvas(nativeElement: HTMLCanvasElement)
-
-  abstract onPointerMove(from: DrawPoint, to: DrawPoint, canvas: HTMLCanvasElement)
+  onPointerMove(from: DrawPoint, to: DrawPoint, canvas: HTMLCanvasElement)
 }
 
-class DrawStroke extends DrawElement {
+class DrawStroke implements DrawElement {
+  public type: string = 'stroke'
   public segments : Array<StrokeSegment> = []
 
-  constructor(style : DrawStyle = new DrawStyle()) {
-    super(style)
+  constructor(public style : DrawStyle = new DrawStyle()) {
   }
 
   onPointerMove(from: DrawPoint, to: DrawPoint, canvas: HTMLCanvasElement) {

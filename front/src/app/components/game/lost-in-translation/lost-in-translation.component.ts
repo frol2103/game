@@ -8,12 +8,12 @@ import {
   ViewChild,
   ViewChildren
 } from '@angular/core';
-import {RoomService} from "../../../services/room.service";
 import {LitService} from "../../../services/lit.service";
 import {GameDescription, LostInTranslationGame} from "../../../../generated/api";
 import {DrawingComponent} from "./drawing/drawing.component";
 import {CameraSnapshotComponent} from "./camera-snapshot/camera-snapshot.component";
 import {LoginService} from "../../../services/login.service";
+import {ImageUploadComponent} from "./image-upload/image-upload.component";
 
 
 
@@ -28,27 +28,21 @@ export class LostInTranslationComponent implements OnInit, AfterViewInit, OnDest
 
   inputType : LostInTranslationInputType = LostInTranslationInputType.Draw
 
-  @ViewChildren(DrawingComponent) childrenDrawings: QueryList<DrawingComponent> = new QueryList<DrawingComponent>()
-
+  @ViewChild('litdrawing') drawing: DrawingComponent
   @ViewChild('litcamera') camera: CameraSnapshotComponent
+  @ViewChild('litupload') uploader: ImageUploadComponent
 
-  drawing: DrawingComponent | null = null
   deviceHasCamera: boolean = false
   deviceHasCameraReady: boolean = false
 
 
   ngAfterViewInit(): void {
-    this.childrenDrawings.changes.subscribe((comps: QueryList<DrawingComponent>) =>
-    {
-      console.log("found child component")
-      this.drawing = comps.last
-      console.log("found child component --> "+this.drawing)
-    });
   }
 
   ngOnInit(): void {
-    if(this.userService.userPrefs['lostInTranslationInputType']) {
-      this.inputType = this.userService.userPrefs['lostInTranslationInputType']
+    let previoususerInputChoice = this.userService.getUserPref('lostInTranslationInputType')
+    if(previoususerInputChoice) {
+      this.inputType = previoususerInputChoice
     }
 
 
@@ -63,54 +57,63 @@ export class LostInTranslationComponent implements OnInit, AfterViewInit, OnDest
     this.lostInTranslationService.stop()
   }
 
+
   sendText() {
     this.lostInTranslationService.sendText(this.text)
     this.text = ''
   }
 
-  switchInputType() {
-    if(this.isInputDraw()) {
-      this.inputType = LostInTranslationInputType.Camera
-    } else {
-      this.inputType = LostInTranslationInputType.Draw
-    }
-    this.userService.userPrefs['lostInTranslationInputType'] = this.inputType
+  setInputType(newType : LostInTranslationInputType) {
+    this.inputType = newType
+    this.userService.storeUserPref('lostInTranslationInputType', this.inputType)
   }
 
-  sendCameraCapture() {
-    this.camera.captureAsBlob().then(blob => this.lostInTranslationService.sendDrawing(blob!))
-  }
-
-  sendDrawing() {
-    this.drawing!.saveCanvasAsBlob().then(blob => this.lostInTranslationService.sendDrawing(blob!))
+  send() {
+    this.getCurrentDrawingProvider().captureDrawingAsBlob().then(blob => this.lostInTranslationService.sendDrawing(blob!))
   }
 
   isGameFinished() {
       return this.lostInTranslationService.game?.game?.description?.status == GameDescription.StatusEnum.Finished
   }
 
-  isInputDraw() {
-    return this.inputType == LostInTranslationInputType.Draw
-  }
-
   isInputCameraAvailable() {
     return this.deviceHasCamera
   }
 
-  isInputCamera() {
-    return this.inputType == LostInTranslationInputType.Camera
+  getCurrentDrawingProvider() {
+    if(this.inputType == LostInTranslationInputType.Camera) {
+      return this.camera
+    } else if(this.inputType == LostInTranslationInputType.Upload) {
+      return this.uploader
+    } else {
+      return this.drawing
+    }
   }
 
-  onFileChange(event) {
-    this.lostInTranslationService.backendService.addDrawingRound(this.lostInTranslationService.game.game.description.uuid,
-        this.lostInTranslationService.getStoryToPlay().storyId,
-        event.target.files[0])
-      .toPromise()
-        .then(console.log)
+  inputTypes() : Array<LostInTranslationInputType> {
+    let types = []
+    types.push(LostInTranslationInputType.Draw)
+    if(this.isInputCameraAvailable()) {
+      types.push(LostInTranslationInputType.Camera)
+    }
+    types.push(LostInTranslationInputType.Upload)
+    return types
+  }
+
+  isDrawingReady() {
+    let provider = this.getCurrentDrawingProvider();
+    return provider && provider.isDrawingReady();
   }
 }
 
+export interface LitImageProvider {
+  captureDrawingAsBlob(): Promise<Blob>
+  confirmDrawingSent() : void
+  isDrawingReady() : boolean
+}
+
 enum LostInTranslationInputType {
-  Draw,
-  Camera
+  Draw = 'Draw',
+  Camera = 'Camera',
+  Upload = 'Upload'
 }

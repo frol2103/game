@@ -5,15 +5,23 @@ import {finalize} from "rxjs/operators";
 import StatusResponse = facebook.StatusResponse;
 
 
+const localStoragePreferencesKey = 'gameUserpreferences';
+
 @Injectable({
   providedIn: 'root'
 })
 export class LoginService {
   public ready : boolean = false
   public user : User|null = null
-  public userPrefs : any = {}
+  private userPrefs : any = {}
 
   public constructor(private backendAuthService : AuthService) {
+
+    let localStoragePrefs = localStorage.getItem(localStoragePreferencesKey)
+      if(localStoragePrefs) {
+          this.userPrefs = JSON.parse(localStoragePrefs)
+      }
+
     timer(0, 30000).subscribe(time => this.fetchUser())
   }
 
@@ -76,6 +84,18 @@ export class LoginService {
 
     public linkedToFb(){
         return this.user?.linkedAccounts?.find(v => v.linkType === UserAssociation.LinkTypeEnum.Facebook);
+    }
+
+    storeUserPref(key: string, value: any) {
+        this.userPrefs[key] = value
+        localStorage.setItem(localStoragePreferencesKey, JSON.stringify(this.userPrefs))
+        console.log('saved user pref : '+key+"="+value)
+    }
+
+    getUserPref(key: string) {
+        let pref = this.userPrefs[key];
+        console.log('found user pref : '+key+"="+pref)
+        return pref
     }
 }
 

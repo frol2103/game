@@ -41,14 +41,19 @@
       </p>
     </div>
 
-
-
-
-
-    <div *ngFor="let gtype of gameTypes">
-      <button  type="button" [disabled]="createDisabled" (click)="createGame(gtype)" class="btn btn-primary m-2 "> {{ 'create_game_button' | translate }} {{gtype+'_label' | translate}}</button>
+    <div class="text-center">
+        <div class="input-group m-2">
+          <select [(ngModel)]="chosenType" class="custom-select" id="gameTypeSelect">
+            <option *ngFor="let gtype of gameTypes" [value]="gtype" [selected]="gtype == chosenType">
+              {{ gtype+'_label' | translate }}
+            </option>
+          </select>
+          <div class="input-group-append">
+            <button  type="button" [disabled]="createDisabled" (click)="createGame()" class="btn btn-primary mr-3">
+              {{ 'create_game_button' | translate }}
+            </button>
+          </div>
+      </div>
     </div>
-<!--    <button type="button" routerLink="/join" routerLinkActive="active" class="btn btn-primary m-2 "> {{ 'join_game_button' | translate }}</button>-->
-
 </panel>
 

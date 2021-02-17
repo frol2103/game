@@ -14,7 +14,7 @@ export class RoomService {
   private refreshActive : boolean = false
 
   public constructor(private backendGameService : GameService) {
-    timer(0, 1500).subscribe(time => this.fetchGameInfo())
+    timer(0, 4000).subscribe(time => this.fetchGameInfo())
   }
 
   public createGame(gameType:GameTypeEnum) : Promise<Game> {
