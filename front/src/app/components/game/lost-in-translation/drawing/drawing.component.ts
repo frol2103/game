@@ -12,6 +12,7 @@ import {fromEvent, Observable, throwError} from "rxjs";
 import {pairwise, switchMap, takeUntil} from "rxjs/operators";
 import {LitImageProvider} from "../lost-in-translation.component";
 
+const savedLitDrawingKey = 'litDrawing';
 
 @Component({
   selector: 'lit-drawing',
@@ -19,7 +20,6 @@ import {LitImageProvider} from "../lost-in-translation.component";
   styleUrls: ['./drawing.component.css']
 })
 export class DrawingComponent implements  AfterViewInit,AfterViewChecked, LitImageProvider {
-  sketchpad: any
   @ViewChild('drawingcanvas') canvas: ElementRef<HTMLCanvasElement> | undefined
   @ViewChild('drawingcanvasparent') canvasParent: ElementRef | undefined
   size = 600
@@ -55,7 +55,9 @@ export class DrawingComponent implements  AfterViewInit,AfterViewChecked, LitIma
   sizePickerDropdownOpen: boolean = false
   toolsDropdownOpen: boolean = false
 
-  constructor() { }
+  constructor() {
+
+  }
 
 
   @HostListener('window:resize', ['$event'])
@@ -79,11 +81,44 @@ export class DrawingComponent implements  AfterViewInit,AfterViewChecked, LitIma
     return this.canvas.nativeElement!;
   }
 
+  loadDrawing() {
+    let stored = localStorage.getItem(savedLitDrawingKey)
+    console.log('Found drawing stored : '+stored)
+    if(stored && stored.length) {
+      let storedObjects = JSON.parse(stored)
+      this.activeDrawingElements = storedObjects.flatMap(o => {
+        if(o.type == 'stroke') {
+          let stroke = new DrawStroke()
+          stroke.segments = o.segments
+          stroke.style = new DrawStyle()
+          Object.assign(stroke.style, o.style)
+          return stroke
+        } else {
+          return []
+        }
+      })
+      this.removedDrawingElements = []
+      console.log('Restored previous strokes : '+this.activeDrawingElements)
+      this.redraw()
+    }
+  }
+
+  saveDrawing() {
+    localStorage.setItem(savedLitDrawingKey, JSON.stringify(this.activeDrawingElements))
+  }
+
+  clearSavedDrawing() {
+    localStorage.setItem(savedLitDrawingKey, '')
+  }
+
   ngAfterViewInit(): void {
     this.availablePenSizes.sort((a: number, b: number) => a - b)
+
     this.captureStrokes('mousedown', 'mousemove', 'mouseup', 'mouseleave')
     this.captureStrokes('touchstart', 'touchmove', 'touchend', 'touchcancel')
+
     setTimeout(() => this.setCanvasSizeForWindowSize(), 100)
+    setTimeout(() => this.loadDrawing(), 100)
   }
 
   ngAfterViewChecked(): void {
@@ -126,6 +161,9 @@ export class DrawingComponent implements  AfterViewInit,AfterViewChecked, LitIma
             switchMap(event => this.fromEvent(moveEvent).pipe(takeUntil(this.fromEvent(stopEvent)), takeUntil(this.fromEvent(cancelEvent)), pairwise()))
         )
         .subscribe(stroke=> this.registerPointerMove(this.toCoordinates(stroke[0]), this.toCoordinates(stroke[1])))
+
+    this.fromEvent(stopEvent).subscribe(event => this.finishedElement(event))
+    this.fromEvent(cancelEvent).subscribe(event => this.finishedElement(event))
   }
 
   clear() {
@@ -195,6 +233,10 @@ export class DrawingComponent implements  AfterViewInit,AfterViewChecked, LitIma
     this.sizePickerDropdownOpen = false
     this.toolsDropdownOpen = false
   }
+
+  private finishedElement(event: Event) {
+    this.saveDrawing()
+  }
 }
 
 class DrawStyle {
@@ -214,20 +256,18 @@ class DrawStyle {
   }
 }
 
-abstract class DrawElement {
-  constructor(public style : DrawStyle = new DrawStyle()) {
-  }
+interface DrawElement {
+  style : DrawStyle
+  drawOnCanvas(nativeElement: HTMLCanvasElement)
 
-  abstract drawOnCanvas(nativeElement: HTMLCanvasElement)
-
-  abstract onPointerMove(from: DrawPoint, to: DrawPoint, canvas: HTMLCanvasElement)
+  onPointerMove(from: DrawPoint, to: DrawPoint, canvas: HTMLCanvasElement)
 }
 
-class DrawStroke extends DrawElement {
+class DrawStroke implements DrawElement {
+  public type: string = 'stroke'
   public segments : Array<StrokeSegment> = []
 
-  constructor(style : DrawStyle = new DrawStyle()) {
-    super(style)
+  constructor(public style : DrawStyle = new DrawStyle()) {
   }
 
   onPointerMove(from: DrawPoint, to: DrawPoint, canvas: HTMLCanvasElement) {

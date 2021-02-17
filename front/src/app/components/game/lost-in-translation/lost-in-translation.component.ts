@@ -65,6 +65,7 @@ export class LostInTranslationComponent implements OnInit, AfterViewInit, OnDest
     this.lostInTranslationService.stop()
   }
 
+
   sendText() {
     this.lostInTranslationService.sendText(this.text)
     this.text = ''
@@ -104,7 +105,6 @@ export class LostInTranslationComponent implements OnInit, AfterViewInit, OnDest
       types.push(LostInTranslationInputType.Camera)
     }
     types.push(LostInTranslationInputType.Upload)
-    console.log("input types supported "+types)
     return types
   }
 }
