@@ -46,36 +46,38 @@
                            [ngModel]="lostInTranslationService.getPreviousRound().text" />
                 </div>
             </div>
-            <div *ngIf="isInputDraw()">
+
+            <div>
+                <ul class="nav nav-tabs">
+                    <li class="nav-item" *ngFor="let inputTypeCandidate of inputTypes()!">
+                        <a [routerLink]=""
+                           class="nav-link"
+                           [ngClass]="{ 'active' : true }"
+                           (click)="setInputType(inputTypeCandidate)">
+                            {{ 'lit_input_type_'+inputTypeCandidate | translate }}
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+
+
+            <div *ngIf="inputType == 'Draw'">
                 <lit-drawing #litdrawing></lit-drawing>
             </div>
-            <div *ngIf="isInputCamera()">
+            <div *ngIf="inputType == 'Camera'">
                 <camera-snapshot #litcamera></camera-snapshot>
             </div>
-            <div class="text-center">
-                <ng-container *ngIf="isInputDraw()">
-                    <i class="fa fa-spinner rotate" *ngIf="!deviceHasCameraReady" title="{{ 'waiting' | translate }}"></i>
-                    <button type="button" class="btn btn-secondary btn-lg ml-2" (click)="switchInputType()" *ngIf="isInputCameraAvailable()">
-                        <i class="fas fa-camera"></i>
-                        {{ 'lit_use_camera_button' | translate }}
-                    </button>
-                    <button type="button" class="btn btn-primary btn-lg ml-2" (click)="sendDrawing()">
-                        <i class="fas fa-check"></i>
-                        {{ 'lit_text_round_send_button' | translate }}
-                    </button>
-                </ng-container>
+            <div *ngIf="inputType == 'Upload'">
+                <lit-image-upload #litupload></lit-image-upload>
+            </div>
 
-                <ng-container *ngIf="isInputCamera()">
-                    <button type="button" class="btn btn-secondary btn-lg ml-2" (click)="switchInputType()">
-                        <i class="fas fa-edit"></i>
-                        {{ 'lit_use_draw_button' | translate }}
-                    </button>
-                    <button type="button" class="btn btn-primary btn-lg ml-2" (click)="sendCameraCapture()">
-                        <i class="fas fa-check"></i>
-                        {{ 'lit_text_round_send_button' | translate }}
-                    </button>
-                </ng-container>
-                <input type="file" accept="image/*" (change)="onFileChange($event)" capture="camera">
+
+            <div class="text-center">
+                <button type="button" class="btn btn-primary btn-lg ml-2" (click)="send()">
+                    <i class="fas fa-check"></i>
+                    {{ 'lit_text_round_send_button' | translate }}
+                </button>
             </div>
         </panel>
     </div>
@@ -85,7 +87,7 @@
             {{ 'lit_waiting_for_other_player_description' | translate }}
         </div>
         <div>
-<!--                    todo: add param to indicate that users should be displayed with their current round count : 4/7 or ...-->
+<!--        todo: add param to indicate that users should be displayed with their current round count : 4/7 or ...-->
             <users-list></users-list>
         </div>
     </panel>

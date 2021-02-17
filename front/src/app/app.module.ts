@@ -24,6 +24,7 @@ import { DrawingComponent } from './components/game/lost-in-translation/drawing/
 import { DefineItLyComponent } from './components/game/define-it-ly/define-it-ly.component';
 import { CameraSnapshotComponent } from './components/game/lost-in-translation/camera-snapshot/camera-snapshot.component';
 import { DilFinishedRoundComponent } from './components/game/define-it-ly/dil-finished-round/dil-finished-round.component';
+import { ImageUploadComponent } from './components/game/lost-in-translation/image-upload/image-upload.component';
 
 const routes: Routes = [
     { path: 'logout', component: UserLogoutComponent },
@@ -53,6 +54,7 @@ const routes: Routes = [
         DefineItLyComponent,
         CameraSnapshotComponent,
         DilFinishedRoundComponent,
+        ImageUploadComponent,
     ],
     imports: [
         FormsModule,

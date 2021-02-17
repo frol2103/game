@@ -31,7 +31,7 @@ export class LitService {
   public init() {
     this.stop()
     this.refreshActive = true
-    timer(0, 2000).subscribe(time => this.fetchGameInfo())
+    timer(0, 3000).subscribe(time => this.fetchGameInfo())
   }
 
   imageUrl(drawing: string) {

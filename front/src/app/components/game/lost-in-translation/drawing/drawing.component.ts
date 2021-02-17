@@ -10,6 +10,7 @@ import {
 } from '@angular/core';
 import {fromEvent, Observable, throwError} from "rxjs";
 import {pairwise, switchMap, takeUntil} from "rxjs/operators";
+import {LitImageProvider} from "../lost-in-translation.component";
 
 
 @Component({
@@ -17,7 +18,7 @@ import {pairwise, switchMap, takeUntil} from "rxjs/operators";
   templateUrl: './drawing.component.html',
   styleUrls: ['./drawing.component.css']
 })
-export class DrawingComponent implements  AfterViewInit,AfterViewChecked {
+export class DrawingComponent implements  AfterViewInit,AfterViewChecked, LitImageProvider {
   sketchpad: any
   @ViewChild('drawingcanvas') canvas: ElementRef<HTMLCanvasElement> | undefined
   @ViewChild('drawingcanvasparent') canvasParent: ElementRef | undefined
@@ -108,7 +109,7 @@ export class DrawingComponent implements  AfterViewInit,AfterViewChecked {
     }
   }
 
-  saveCanvasAsBlob() : Promise<Blob> {
+  captureDrawingAsBlob() : Promise<Blob> {
     return new Promise<Blob>((resolve, reject) => this.getCanvas().toBlob((b : Blob) => b ? resolve(b!) : reject()))
   }
 

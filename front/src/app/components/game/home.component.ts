@@ -15,6 +15,7 @@ export class HomeComponent implements OnInit {
     inviteUrl: string = ''
     games : Array<GameDescription> = []
     gameTypes = Object.keys(GameDescription.GameTypeEnum).map(k => GameDescription.GameTypeEnum[k])
+    chosenType : GameDescription.GameTypeEnum = GameDescription.GameTypeEnum.LostInTranslation
 
     constructor(public loginService: LoginService, public roomService : RoomService, private router : Router) {
     }
@@ -24,10 +25,10 @@ export class HomeComponent implements OnInit {
     }
 
 
-    createGame(gameType:GameTypeEnum) {
+    createGame() {
         console.log("Button clicked to create new game")
         this.createDisabled = true
-        this.roomService.createGame(gameType)
+        this.roomService.createGame(this.chosenType)
             .then(game => this.navigateToGamePage(game.description?.uuid))
     }
 

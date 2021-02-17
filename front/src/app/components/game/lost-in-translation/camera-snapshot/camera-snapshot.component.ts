@@ -1,12 +1,13 @@
 import {Component, ElementRef, HostListener, OnInit, ViewChild} from '@angular/core';
 import {CommonModule} from '@angular/common';
+import {LitImageProvider} from "../lost-in-translation.component";
 
 @Component({
     selector: 'camera-snapshot',
     templateUrl: './camera-snapshot.component.html',
     styleUrls: ['./camera-snapshot.component.css']
 })
-export class CameraSnapshotComponent implements OnInit {
+export class CameraSnapshotComponent implements OnInit, LitImageProvider {
 
     @ViewChild("video")
     public video: ElementRef<HTMLVideoElement>;
@@ -98,7 +99,7 @@ export class CameraSnapshotComponent implements OnInit {
         }
     }
 
-    captureAsBlob(): Promise<Blob> {
+    captureDrawingAsBlob(): Promise<Blob> {
         let canvas = this.canvas.nativeElement;
         canvas.getContext("2d")
             .drawImage(this.video.nativeElement,
@@ -108,5 +109,6 @@ export class CameraSnapshotComponent implements OnInit {
                 this.inputHeight);
         return new Promise<Blob>((resolve, reject) => canvas.toBlob((b: Blob) => b ? resolve(b!) : reject()))
     }
+
 
 }

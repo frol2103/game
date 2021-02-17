@@ -70,6 +70,10 @@ export class LabelsService {
     'points': "point(s)",
     'history': "history",
     'leaderboard':"leaderboard",
+    'lit_input_type_Draw':"Draw on screen",
+    'lit_input_type_Camera':"Take a picture",
+    'lit_input_type_Upload':"Upload a file",
+    'lit_file_upload_label':"Upload an image file with your drawing",
   }
 
   public translate(key: string) : string {
