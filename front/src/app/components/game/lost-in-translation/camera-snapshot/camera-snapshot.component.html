@@ -1,4 +1,4 @@
-<div class="camera-input mb-1" [ngClass]="{'d-none' : error}">
+<div class="camera-input mb-1" *ngIf="active" [ngClass]="{'d-none' : error}">
     <div class="video-preview-container" [ngStyle]="{width: viewSize+'px', height: viewSize+'px' }">
         <video #video class="video-preview" [width]="videoWidth" [height]="videoHeight" [ngStyle]="{'margin-left': videoOffsetLeft+'px', 'margin-top': videoOffsetTop+'px' }" autoplay></video>
     </div>

@@ -31,7 +31,7 @@ export class CameraSnapshotComponent implements OnInit, OnDestroy, LitImageProvi
     viewSize: number = 0
     inputToViewRatio: number = 0
     error: boolean = false
-    ready: boolean = false
+    active: boolean = true
 
 
     public constructor() {
@@ -39,9 +39,14 @@ export class CameraSnapshotComponent implements OnInit, OnDestroy, LitImageProvi
     }
 
     ngOnDestroy(): void {
-        if(this.stream) {
+        this.stopStreams();
+    }
+
+    private stopStreams() {
+        if (this.stream) {
             this.stream.getTracks().forEach(track => track.stop())
         }
+        this.active = false
     }
 
     public ngOnInit() {
@@ -121,6 +126,7 @@ export class CameraSnapshotComponent implements OnInit, OnDestroy, LitImageProvi
     }
 
     confirmDrawingSent(): void {
+        this.stopStreams()
     }
 
 
