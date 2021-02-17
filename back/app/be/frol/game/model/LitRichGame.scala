@@ -9,7 +9,7 @@ import play.api.Logging
 
 case class LitRichGame(game: RichGame, playedRounds: Seq[LitRoundRow]) extends Logging {
 
-  def haveToMarkGameFinished = !game.gameFinished() && finished
+  def haveToMarkGameFinished = !game.gameFinished() && areAllRoundPlayed
 
   def hasMoreRoundForUser(userId: Long) = playedRounds.count(_.fkUserId == userId) < game.users.size
 
@@ -19,7 +19,9 @@ case class LitRichGame(game: RichGame, playedRounds: Seq[LitRoundRow]) extends L
 
   def user(userUuid: String) = game.users.find(_.u.uuid == userUuid)
 
-  def finished = playedRounds.length == (game.users.size * game.users.size)
+  def areAllRoundPlayed = playedRounds.length == (game.users.size * game.users.size)
+
+  def finished = game.gameFinished()
 
   def rounds(): Iterable[LitRichRound] = playedRichRounds.toList ::: additionalRounds
 
