@@ -100,6 +100,14 @@ export class LostInTranslationComponent implements OnInit, AfterViewInit, OnDest
   isInputCamera() {
     return this.inputType == LostInTranslationInputType.Camera
   }
+
+  onFileChange(event) {
+    this.lostInTranslationService.backendService.addDrawingRound(this.lostInTranslationService.game.game.description.uuid,
+        this.lostInTranslationService.getStoryToPlay().storyId,
+        event.target.files[0])
+      .toPromise()
+        .then(console.log)
+  }
 }
 
 enum LostInTranslationInputType {

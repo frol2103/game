@@ -24,7 +24,7 @@ export class LitService {
   isFirstRound : boolean = true
   isWaitingForOtherPlayers : boolean = false
 
-  public constructor(public roomService : RoomService, private backendService : LostInTranslationService, private login : LoginService) {
+  public constructor(public roomService : RoomService, public backendService : LostInTranslationService, private login : LoginService) {
 
   }
 

@@ -75,6 +75,7 @@
                         {{ 'lit_text_round_send_button' | translate }}
                     </button>
                 </ng-container>
+                <input type="file" accept="image/*" (change)="onFileChange($event)" capture="camera">
             </div>
         </panel>
     </div>
