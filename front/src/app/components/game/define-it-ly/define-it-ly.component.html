@@ -1,11 +1,7 @@
 <wait-for [condition]="game !== undefined" spinner-class="fa-2x">
         <div class="row mt-2">
             <div class="col-md-12">
-                <div class="m-2" *ngIf="!currentRound && !questionRound">
-                    <b>{{ 'dil_wait_first_question_instructions' | translate }}</b>
-                </div>
-
-                <div *ngIf="currentRound && currentRoundFinished()" >
+                <div *ngIf="(currentRound && !questionRound && currentRoundFinished()) || (!currentRound && !questionRound)" >
                     <panel title="lit_waiting_title">
                         {{ 'dil_wait_for_other_instructions' | translate }}
                     </panel>
@@ -25,7 +21,7 @@
                             <form (ngSubmit)="sendResponse()">
                                 <div class="form-group">
                                     <div class="input-group">
-                                        <input type="text" class="form-control" id="text"
+                                        <input type="text" class="form-control"
                                                required
                                                [(ngModel)]="input" name="text">
                                         <div class="input-group-append">
@@ -48,9 +44,19 @@
                                 {{ 'dil_wait_choice_response_instructions' | translate }}
                             </div>
 
-                            <ul>
-                                <li *ngFor="let r of currentRound.responses">
-                                    <input [disabled]="!enableChoice()" [ngModel]="r === currentChoice()" *ngIf="allowChoice() && myResponse() !== r" type="checkbox" (click)="chose(r)"> {{r.response}}
+                            <ul class="list-group">
+                                <li class="list-group-item" *ngFor="let r of currentRound.responses">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h5 class="mb-1">{{r.response}}</h5>
+                                        <button type="button"
+                                                *ngIf="allowChoice() && myResponse() !== r"
+                                                [disabled]="!enableChoice()"
+                                                (click)="chose(r)"
+                                                class="btn btn-primary">
+                                            {{ 'dil_vote' | translate }}
+                                        </button>
+                                    </div>
+
                                 </li>
                             </ul>
                         </div>
@@ -67,7 +73,6 @@
                             <div class="form-group">
                                 <div class="input-group">
                                     <input type="text" class="form-control"
-                                           id="text"
                                            required
                                            [(ngModel)]="input" name="text">
                                     <div class="input-group-append">
