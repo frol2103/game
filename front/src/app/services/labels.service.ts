@@ -66,7 +66,7 @@ export class LabelsService {
     'dil_send_question_button':"Send",
     'dil_response_instructions':"Enter your response to this question",
     'dil_wait_for_responses_instructions': "Wait for other players to respond",
-    'dil_chose_response_instructions': "Chose your response",
+    'dil_chose_response_instructions': "Vote for the best/correct response",
     'points': "point(s)",
     'history': "History",
     'leaderboard':"Leaderboard",
@@ -75,6 +75,7 @@ export class LabelsService {
     'lit_input_type_Camera':"Take a picture",
     'lit_input_type_Upload':"Upload a file",
     'lit_file_upload_label':"Upload an image file with your drawing",
+    'dil_vote':"Vote for this",
   }
 
   public translate(key: string) : string {
