@@ -4,6 +4,11 @@ A web applications with some paper-based games to play with friends.
 
 ## Dev environment
 
+#### Tools needed
+- Docker 
+- Docker-compose 
+- An IDE or text editor 
+
 #### Create aliases for the docker-compose 
 
 - On linux :
