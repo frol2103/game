@@ -26,6 +26,7 @@ import { CameraSnapshotComponent } from './components/game/lost-in-translation/c
 import { DilFinishedRoundComponent } from './components/game/define-it-ly/dil-finished-round/dil-finished-round.component';
 import { ImageUploadComponent } from './components/game/lost-in-translation/image-upload/image-upload.component';
 import {ImageCropperModule} from "ngx-image-cropper";
+import {OrderModule} from "ngx-order-pipe";
 
 const routes: Routes = [
     { path: 'logout', component: UserLogoutComponent },
@@ -64,7 +65,8 @@ const routes: Routes = [
         HttpClientModule,
         ApiModule,
         RouterModule.forRoot(routes),
-        ImageCropperModule
+        ImageCropperModule,
+        OrderModule
     ],
     exports: [RouterModule],
     providers: [

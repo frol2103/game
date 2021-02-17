@@ -1,6 +1,6 @@
 <wait-for [condition]="isReady()" spinner-class="fa-2x">
-    <ul>
-        <li *ngFor="let user of roomService.game!.users!">
+    <ul class="list-group">
+        <li class="list-group-item" *ngFor="let user of roomService.game!.users!">
             <i *ngIf="!user.canAdministrageGame" class="fas fa-user"></i>
             <i *ngIf="user.canAdministrageGame" class="fas fa-crown"></i>
             {{ user.name }}

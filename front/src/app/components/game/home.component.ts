@@ -16,6 +16,8 @@ export class HomeComponent implements OnInit {
     games : Array<GameDescription> = []
     gameTypes = Object.keys(GameDescription.GameTypeEnum).map(k => GameDescription.GameTypeEnum[k])
     chosenType : GameDescription.GameTypeEnum = GameDescription.GameTypeEnum.LostInTranslation
+    pageStart: number = 0
+    pageSize: number = 5
 
     constructor(public loginService: LoginService, public roomService : RoomService, private router : Router) {
     }
