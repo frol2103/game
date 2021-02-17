@@ -1,14 +1,20 @@
 
 <div class="form-group">
-    <div class="input-group">
-        <label class="form-label" for="litUploadFile"> {{ 'lit_file_upload_label' | translate }} </label>
-        <input type="file"class="form-control" id="litUploadFile"  accept="image/*" (change)="onFileChange($event)" capture="camera"/>
-    </div>
+    <label class="form-label" for="litUploadFile"> {{ 'lit_file_upload_label' | translate }} </label>
+    <input type="file"class="form-control" id="litUploadFile"  accept="image/*" (change)="onFileChange($event)" capture="camera"/>
 </div>
 
 <div>
-
-    TODO : crop and rotate picture as needed
+    <image-cropper
+            [imageChangedEvent]="imageChangedEvent"
+            [maintainAspectRatio]="true"
+            [aspectRatio]="1"
+            format="png"
+            (imageCropped)="imageCropped($event)"
+            (imageLoaded)="imageLoaded()"
+            (cropperReady)="cropperReady()"
+            (loadImageFailed)="loadImageFailed()"
+    ></image-cropper>
 </div>
 
 

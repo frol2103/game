@@ -129,5 +129,9 @@ export class CameraSnapshotComponent implements OnInit, OnDestroy, LitImageProvi
         this.stopStreams()
     }
 
+    isDrawingReady(): boolean {
+        return this.stream && this.stream.getVideoTracks().length > 0
+    }
+
 
 }

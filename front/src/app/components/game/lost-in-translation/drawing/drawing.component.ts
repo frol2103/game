@@ -102,6 +102,10 @@ export class DrawingComponent implements  AfterViewInit,AfterViewChecked, LitIma
     }
   }
 
+  isDrawingReady(): boolean {
+    return this.activeDrawingElements &&  this.activeDrawingElements.length > 0
+  }
+
   saveDrawing() {
     localStorage.setItem(this.localStorageKey(), JSON.stringify(this.activeDrawingElements))
   }

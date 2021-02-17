@@ -80,7 +80,7 @@ export class LostInTranslationComponent implements OnInit, AfterViewInit, OnDest
     return this.deviceHasCamera
   }
 
-  private getCurrentDrawingProvider() {
+  getCurrentDrawingProvider() {
     if(this.inputType == LostInTranslationInputType.Camera) {
       return this.camera
     } else if(this.inputType == LostInTranslationInputType.Upload) {
@@ -99,11 +99,17 @@ export class LostInTranslationComponent implements OnInit, AfterViewInit, OnDest
     types.push(LostInTranslationInputType.Upload)
     return types
   }
+
+  isDrawingReady() {
+    let provider = this.getCurrentDrawingProvider();
+    return provider && provider.isDrawingReady();
+  }
 }
 
 export interface LitImageProvider {
   captureDrawingAsBlob(): Promise<Blob>
   confirmDrawingSent() : void
+  isDrawingReady() : boolean
 }
 
 enum LostInTranslationInputType {

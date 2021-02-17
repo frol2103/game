@@ -48,7 +48,7 @@
             </div>
 
             <div>
-                <ul class="nav nav-tabs">
+                <ul class="nav nav-tabs mb-1">
                     <li class="nav-item mr-1" *ngFor="let inputTypeCandidate of inputTypes()!">
                         <a [routerLink]=""
                            class="nav-link {{ inputTypeCandidate == inputType ? 'active' : 'inactive' }}"
@@ -73,7 +73,9 @@
 
 
             <div class="text-center">
-                <button type="button" class="btn btn-primary btn-lg ml-2" (click)="send()">
+                <button type="button" class="btn btn-primary btn-lg ml-2"
+                        [disabled]="!isDrawingReady()"
+                        (click)="send()">
                     <i class="fas fa-check"></i>
                     {{ 'lit_text_round_send_button' | translate }}
                 </button>
