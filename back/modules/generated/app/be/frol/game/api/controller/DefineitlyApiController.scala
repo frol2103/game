@@ -7,7 +7,7 @@ import play.api.mvc._
 import be.frol.game.api.model.DefineItLyGame
 import be.frol.game.api.model.StringWrapper
 
-@javax.annotation.Generated(value = Array("org.openapitools.codegen.languages.ScalaPlayFrameworkServerCodegen"), date = "2021-02-14T14:44:44.961Z[Etc/UTC]")
+@javax.annotation.Generated(value = Array("org.openapitools.codegen.languages.ScalaPlayFrameworkServerCodegen"), date = "2021-02-19T18:53:26.135Z[Etc/UTC]")
 @Singleton
 class DefineitlyApiController @Inject()(cc: ControllerComponents, api: DefineitlyApi) extends AbstractController(cc) {
   /**

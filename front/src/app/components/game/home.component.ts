@@ -41,5 +41,10 @@ export class HomeComponent implements OnInit {
     openGame(uuid: string) {
         this.navigateToGamePage(uuid)
     }
+
+    gamesPage() {
+        let sortedGames = this.games.sort((a, b) => a.startTime.getTime() - b.startTime.getTime())
+        return sortedGames.slice(this.pageStart, this.pageStart+this.pageSize)
+    }
 }
 
