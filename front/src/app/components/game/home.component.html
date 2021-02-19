@@ -10,7 +10,7 @@
 
       <div>
         <ul class="list-group">
-          <li class="list-group-item" *ngFor="let game of games | orderBy: 'startTime':true | slice:pageStart:pageStart+pageSize">
+          <li class="list-group-item" *ngFor="let game of gamesPage()">
             <div class="d-flex w-100 justify-content-between">
               <span>
                 <h5 class="mb-1">{{ game.gameType + '_label' | translate }}</h5>

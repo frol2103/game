@@ -3,7 +3,6 @@ generated-api
 *.swp
 tmp_build
 front/dist
-front/package-lock.json
 *.orig
 sbt_cache
 run/docker-compose.yml

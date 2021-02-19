@@ -2,7 +2,6 @@ import {BrowserModule, Title} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
 
 import {AppComponent} from './app.component';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {FormsModule} from '@angular/forms';
 import {TranslatePipe} from './pipes/translate.pipe';
 import {ApiModule, BASE_PATH} from "../generated/api";
@@ -61,7 +60,6 @@ const routes: Routes = [
     imports: [
         FormsModule,
         BrowserModule,
-        NgbModule,
         HttpClientModule,
         ApiModule,
         RouterModule.forRoot(routes),

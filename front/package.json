@@ -24,11 +24,13 @@
     "@fortawesome/fontawesome-free": "^5.15.2",
     "@fortawesome/fontawesome-svg-core": "^1.2.34",
     "@fortawesome/free-solid-svg-icons": "^5.15.2",
-    "@ng-bootstrap/ng-bootstrap": "^8.0.0",
+    "@ng-bootstrap/schematics": "^2.0.0-alpha.1",
     "@types/facebook-js-sdk": "^3.3.1",
-    "bootstrap": "^4.5.0",
+    "bootstrap": "^4.6.0",
+    "jquery": "^3.5.1",
     "ngx-image-cropper": "^3.3.4",
     "ngx-order-pipe": "^2.1.1",
+    "popper.js": "^1.16.1",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"
@@ -39,7 +41,9 @@
     "@angular/compiler-cli": "~11.0.3",
     "@types/jasmine": "~3.6.0",
     "@types/node": "^12.11.1",
+    "bufferutil": "^4.0.1",
     "codelyzer": "^6.0.0",
+    "fibers": "^3.1.0",
     "jasmine-core": "~3.6.0",
     "jasmine-spec-reporter": "~5.0.0",
     "karma": "~5.1.0",
@@ -47,9 +51,13 @@
     "karma-coverage": "~2.0.3",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "^1.5.0",
+    "ng-packagr": "^11.0.3",
+    "node-sass": "^4.0.0",
+    "postcss": "^8.0.0",
     "protractor": "~7.0.0",
     "ts-node": "~8.3.0",
     "tslint": "~6.1.0",
-    "typescript": "~4.0.2"
+    "typescript": "~4.0.2",
+    "utf-8-validate": "^5.0.2"
   }
 }
