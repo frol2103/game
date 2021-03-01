@@ -10,7 +10,7 @@ RUN apk update \
 
 RUN mkdir -p /.npm && chmod -R a+rwx /.npm
 
-expose 4200
+EXPOSE 4200
 
-workdir /src
+WORKDIR /src
 
